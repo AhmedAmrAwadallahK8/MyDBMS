@@ -2,17 +2,16 @@
 #define NODE_H
 
 #include "entry.h"
+#include "abstract_node.h"
 
-class Node{
+class Node: public Abstract_Node {
     protected:
-        Entry *primary_key;
-        Node *child_ptr;
-        Node *next_node;
-        bool is_leaf;
+        Abstract_Node *child_ptr;
     public:
         Node();
         ~Node();
-        Node* get_child();
+        Abstract_Node* get_child();
+        void link_nodes(Abstract_Node *node_1, Abstract_Node *node_2);
 };
 
 #endif
