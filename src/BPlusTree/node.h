@@ -11,7 +11,7 @@ class Node: public Abstract_Node {
         Node();
         ~Node();
         Abstract_Node* get_child();
-        void link_nodes(Abstract_Node *node_1, Abstract_Node *node_2);
+        
 };
 
 #endif

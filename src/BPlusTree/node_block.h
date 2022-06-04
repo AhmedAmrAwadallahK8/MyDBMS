@@ -1,17 +1,18 @@
 #ifndef NODE_BLOCK_H
 #define NODE_BLOCK_H
 
+#include <vector>
 #include "node.h"
-#include "abstract_node_block.h"
+#include "abstract_block.h"
 
-class Node_Block: public Abstract_Node_Block {
+class Node_Block: public Abstract_Block {
     protected:
-        Node_Block *child_node_block;
+        Abstract_Block *child_node_block;
         std::vector<Node> node_vec;
     public:
         Node_Block();
         ~Node_Block();
-        Node_Block* get_child_node_block();
+        Abstract_Block* get_child_block();
 };
 
 #endif
