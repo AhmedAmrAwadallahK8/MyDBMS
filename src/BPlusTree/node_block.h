@@ -7,7 +7,7 @@
 
 class Node_Block: public Abstract_Block {
     protected:
-        Abstract_Block *child_node_block;
+        Abstract_Block *child_block;
         std::vector<Node> node_vec;
     public:
         Node_Block();

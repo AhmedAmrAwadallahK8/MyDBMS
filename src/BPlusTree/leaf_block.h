@@ -8,7 +8,7 @@ class Leaf_Block: public Abstract_Block{
     protected:
         Leaf_Block *next_leaf_block;
         Leaf_Block *prev_leaf_block;
-        std::vector<Leaf_Node> node_vec;
+        std::vector<Leaf_Node> nodes;
     public:
         Leaf_Block();
         ~Leaf_Block();

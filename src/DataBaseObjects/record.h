@@ -4,13 +4,14 @@
 #include <vector>
 #include <string>
 
-#include "Entry.h"
+#include "entry.h"
 
 class Record{
     protected:
         std::vector<std::string> attributes;
-        std::vector<Entry*> entries;
+        std::vector<Entry<data_types>*> entries;
     public:
+        
         Record();
         ~Record();
 };

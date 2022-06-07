@@ -3,14 +3,15 @@
 
 #include "entry.h"
 #include "abstract_node.h"
+#include "abstract_block.h"
 
 class Node: public Abstract_Node {
     protected:
-        Abstract_Node *child_ptr;
+        Abstract_Block *child_block_ptr;
     public:
         Node();
         ~Node();
-        Abstract_Node* get_child();
+         Abstract_Block* get_child();
         
 };
 

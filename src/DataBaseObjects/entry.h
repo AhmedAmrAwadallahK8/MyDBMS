@@ -6,13 +6,10 @@
 class Entry{
     protected:
         std::string type;
-        int int_data;
-        double dbl_data;
-        char char_data;
-        std::string str_data;
     public:
-        Entry();
+        Entry(std::string type);
         ~Entry();
+        std::string get_type();
 };
 
 #endif
