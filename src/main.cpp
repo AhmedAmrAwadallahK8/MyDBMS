@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "DataBaseObjects\entry.h"
-#include "DataBaseObjects\entry_factory.h"
 
 // Template Issue: Reflections?
 

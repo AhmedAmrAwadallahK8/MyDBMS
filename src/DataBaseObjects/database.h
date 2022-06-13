@@ -13,4 +13,6 @@ class Database{
     public:
         Database();
         ~Database();
-}
+};
+
+#endif
