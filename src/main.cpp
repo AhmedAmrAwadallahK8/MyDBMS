@@ -1,39 +1,30 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include "DataBaseObjects\entry.h"
+#include "DataBaseObjects\record.h"
 
 // Template Issue: Reflections?
 
+/* Entry is now a linked list of void pointers, retrive type information of data from the records attribute table */
+/*TODO
+    Revamp Entry for void pointers
+    Revemp record for new entry implementation
+    Strings currently unsupported?
+ */
 int main(){
-    //Entry *e = new Entry("Hello");
-    // Entry f(2);
-    // decltype(f) *g = &f;
-    Entry d = Entry("Hello", (int*)nullptr);
-    Entry c = Entry('a', &d);
-    Entry b = Entry(2.3, &c);
-    Entry a = Entry(2, &b);
-
-    /* Testing Normal Functions */
-    std::cout << "Int Test| Type: " << a.get_type()  << " Value: " << a.data << std::endl;
-    std::cout << "Double Test| Type: " << b.get_type()  << " Value: " << b.data << std::endl;
-    std::cout << "Char Test| Type: " << c.get_type()  << " Value: " << c.data << std::endl;
-    std::cout << "String Test| Type: " << d.get_type()  << " Value: " << d.data << std::endl;
-
-    /* Testing pointer relationships */
-    // std::cout << "A Test| Type: " << a.get_type()  << " Value: " << a.data << std::endl;
-
-    std::cout << "A Test| Address: " << &a << " Next Address: " << a.next_entry << " Value: " << a.data << std::endl;
-    std::cout << "B Test| Address: " << &b << " Next Address: " << b.next_entry << " Value: " << b.data << std::endl;
-    std::cout << "C Test| Address: " << &c << " Next Address: " << c.next_entry << " Value: " << c.data << std::endl;
-    std::cout << "D Test| Address: " << &d << " Next Address: " << d.next_entry << " Value: " << d.data << std::endl;
-    
-    // std::cout << "B Test| Type: " << b.get_type()  << " Value: " << b.data << std::endl;
-    // std::cout << "C Test| Type: " << c.get_type()  << " Value: " << c.data << std::endl;
-    // std::cout << "D Test| Type: " << d.get_type()  << " Value: " << d.data << std::endl;
-    
-
-    //std::cout << "Int Test| Type: " << e.get_type() << " Value: " << e.get_type() << std::endl;
-    //std::cout << "String Test| Type: " << g->data << " Value: " << g->get_type() << std::endl;
+    std::vector<std::string> entries;
+    entries.push_back("andy");
+    entries.push_back("2");
+    entries.push_back("3");
+    std::vector<int> attr;
+    attr.push_back(3);
+    attr.push_back(0);
+    attr.push_back(0);
+    Record a = Record(attr, entries);
+    std::cout << "Record Test| Type: " << ((Entry<std::string>*)(a.primary_key_ptr))->get_type()  << " Value: " << ((Entry<std::string>*)(a.primary_key_ptr))->data << std::endl;
+    //test_entry();
 
 
 

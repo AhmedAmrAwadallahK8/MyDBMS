@@ -6,13 +6,16 @@ CFLAGS = -Wall -g
 # ****************************************************
 # Targets needed to bring the executable up to date
  
-main: main.o entry_factory.o
+main: main.o
 	$(CC) $(CFLAGS) -o main main.o
  
 # The main.o target can be written more simply
  
-main.o: main.cpp DataBaseObjects/entry.h
+main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h
 	$(CC) $(CFLAGS) -c main.cpp
+
+#test_entry.o: DataBaseObjects/entry.h
+#	$(CC) $(CFLAGS) -c DataBaseObjects/test_entry.cpp
 
 #entry_factory.o: DataBaseObjects/entry_factory.cpp DataBaseObjects/entry_factory.h DataBaseObjects/entry.h
 #	$(CC) $(CFLAGS) -c DataBaseObjects/entry_factory.cpp
