@@ -1,20 +1,41 @@
 #include <iostream>
 
-#include "DataBaseObjects\int_entry.h"
-#include "DataBaseObjects\double_entry.h"
-#include "DataBaseObjects\char_entry.h"
-#include "DataBaseObjects\string_entry.h"
+#include "DataBaseObjects\entry.h"
+#include "DataBaseObjects\entry_factory.h"
+
+// Template Issue: Reflections?
 
 int main(){
-    Int_Entry a(2);
-    Double_Entry b(2.3);
-    Char_Entry c('a');
-    String_Entry d("Hello");
+    //Entry *e = new Entry("Hello");
+    // Entry f(2);
+    // decltype(f) *g = &f;
+    Entry d = Entry("Hello", (int*)nullptr);
+    Entry c = Entry('a', &d);
+    Entry b = Entry(2.3, &c);
+    Entry a = Entry(2, &b);
 
-    std::cout << "Int Test| Type: " << a.get_type() << " Value: " << a.get_data() << std::endl;
-    std::cout << "Double Test| Type: " << b.get_type() << " Value: " << b.get_data() << std::endl;
-    std::cout << "Char Test| Type: " << c.get_type() << " Value: " << c.get_data() << std::endl;
-    std::cout << "String Test| Type: " << d.get_type() << " Value: " << d.get_data() << std::endl;
+    /* Testing Normal Functions */
+    std::cout << "Int Test| Type: " << a.get_type()  << " Value: " << a.data << std::endl;
+    std::cout << "Double Test| Type: " << b.get_type()  << " Value: " << b.data << std::endl;
+    std::cout << "Char Test| Type: " << c.get_type()  << " Value: " << c.data << std::endl;
+    std::cout << "String Test| Type: " << d.get_type()  << " Value: " << d.data << std::endl;
+
+    /* Testing pointer relationships */
+    // std::cout << "A Test| Type: " << a.get_type()  << " Value: " << a.data << std::endl;
+
+    std::cout << "A Test| Address: " << &a << " Next Address: " << a.next_entry << " Value: " << a.data << std::endl;
+    std::cout << "B Test| Address: " << &b << " Next Address: " << b.next_entry << " Value: " << b.data << std::endl;
+    std::cout << "C Test| Address: " << &c << " Next Address: " << c.next_entry << " Value: " << c.data << std::endl;
+    std::cout << "D Test| Address: " << &d << " Next Address: " << d.next_entry << " Value: " << d.data << std::endl;
+    
+    // std::cout << "B Test| Type: " << b.get_type()  << " Value: " << b.data << std::endl;
+    // std::cout << "C Test| Type: " << c.get_type()  << " Value: " << c.data << std::endl;
+    // std::cout << "D Test| Type: " << d.get_type()  << " Value: " << d.data << std::endl;
+    
+
+    //std::cout << "Int Test| Type: " << e.get_type() << " Value: " << e.get_type() << std::endl;
+    //std::cout << "String Test| Type: " << g->data << " Value: " << g->get_type() << std::endl;
+
 
 
     std::cout << "Program Execution Complete";
