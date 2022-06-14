@@ -1,9 +1,6 @@
-#include<vector>
-#include<string>
-#include<iostream>
 
 #include "record.h"
-#include "entry.h"
+
 
 
 Record::Record(std::vector<int> table_attributes, std::vector<std::string> &entries):
@@ -18,18 +15,18 @@ Record::Record(std::vector<int> table_attributes, std::vector<std::string> &entr
 
     Entry* curr_entry = head_ptr;
     for(;table_attr_iterator != table_attributes.end() && entries_iterator != entries.end(); table_attr_iterator++, entries_iterator++){
-        curr_entry->next_entry = add_new_entry(*table_attr_iterator, *entries_iterator);
-        curr_entry = curr_entry->next_entry;
+        curr_entry->set_next_entry_ptr(add_new_entry(*table_attr_iterator, *entries_iterator));
+        curr_entry = curr_entry->get_next_entry_ptr();
     }
 }
 
 Record::~Record(){
     Entry* curr_entry = head_ptr;
-    Entry* next_entry = head_ptr->next_entry;
+    Entry* next_entry = head_ptr->get_next_entry_ptr();
     while(curr_entry != nullptr){
         delete curr_entry;
         curr_entry = next_entry;
-        next_entry = curr_entry->next_entry;
+        next_entry = curr_entry->get_next_entry_ptr();
     }
 }
 
@@ -37,7 +34,7 @@ void Record::print_record(){
     Entry* curr_entry = head_ptr;
     while(curr_entry!=nullptr){
         curr_entry->print_entry();
-        curr_entry = curr_entry->next_entry;
+        curr_entry = curr_entry->get_next_entry_ptr();
         std::cout << "\t\t";
     }
     std::cout << std::endl;

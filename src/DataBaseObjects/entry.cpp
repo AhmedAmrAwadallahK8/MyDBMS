@@ -1,5 +1,3 @@
-#include <string>
-#include <iostream>
 
 #include "entry.h"
 
@@ -48,25 +46,47 @@ void Entry::print_entry(){
     }
 }
 
+int Entry::get_int(){
+    return int_entry;
+}
+double Entry::get_dbl(){
+    return dbl_entry;
+}
+char Entry::get_char(){
+    return char_entry;
+}
+std::string Entry::get_str(){
+    return str_entry;
+}
+Entry* Entry::get_next_entry_ptr(){
+    return next_entry;
+}
+
+void Entry::set_next_entry_ptr(Entry* input){
+    next_entry = input;
+}
+
 void Entry::test(){
     Entry d = Entry("Hello");
     Entry c = Entry('a');
     Entry b = Entry(2.3);
     Entry a = Entry(2);
 
-    a.next_entry = &b;
-    b.next_entry = &c;
-    c.next_entry = &d;
+    a.set_next_entry_ptr(&b);
+    b.set_next_entry_ptr(&c);
+    c.set_next_entry_ptr(&d);
 
     /* Testing Normal Functions */
-    std::cout << "Int Test|" << " Value: " << a.int_entry << std::endl;
-    std::cout << "Double Test|" << " Value: " << b.dbl_entry << std::endl;
-    std::cout << "Char Test|" << " Value: " << c.char_entry << std::endl;
-    std::cout << "String Test|" << " Value: " << d.str_entry << std::endl;
+    std::cout << "Int Test|" << " Value: " << a.get_int() << std::endl;
+    std::cout << "Double Test|" << " Value: " << b.get_dbl() << std::endl;
+    std::cout << "Char Test|" << " Value: " << c.get_char() << std::endl;
+    std::cout << "String Test|" << " Value: " << d.get_str() << std::endl;
 
     /* Testing pointer relationships */
-    std::cout << "A Test| Address: " << &a << " Next Address: " << a.next_entry  << std::endl;
-    std::cout << "B Test| Address: " << &b << " Next Address: " << b.next_entry  << std::endl;
-    std::cout << "C Test| Address: " << &c << " Next Address: " << c.next_entry  << std::endl;
-    std::cout << "D Test| Address: " << &d << " Next Address: " << d.next_entry  << std::endl;
+    std::cout << "A Test| Address: " << &a << " Next Address: " << a.get_next_entry_ptr()  << std::endl;
+    std::cout << "B Test| Address: " << &b << " Next Address: " << b.get_next_entry_ptr()  << std::endl;
+    std::cout << "C Test| Address: " << &c << " Next Address: " << c.get_next_entry_ptr()  << std::endl;
+    std::cout << "D Test| Address: " << &d << " Next Address: " << d.get_next_entry_ptr()  << std::endl;
 }
+
+
