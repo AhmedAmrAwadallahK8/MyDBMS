@@ -6,13 +6,19 @@ CFLAGS = -Wall -g
 # ****************************************************
 # Targets needed to bring the executable up to date
  
-main: main.o
-	$(CC) $(CFLAGS) -o main main.o
+main: main.o entry.o record.o
+	$(CC) $(CFLAGS) -o main main.o entry.o record.o
  
 # The main.o target can be written more simply
  
 main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h
 	$(CC) $(CFLAGS) -c main.cpp
+
+entry.o: DataBaseObjects/entry.cpp DataBaseObjects/entry.h
+	$(CC) $(CFLAGS) -c DataBaseObjects/entry.cpp
+
+record.o: DataBaseObjects/record.cpp DataBaseObjects/record.h DataBaseObjects/entry.h
+	$(CC) $(CFLAGS) -c DataBaseObjects/record.cpp
 
 #test_entry.o: DataBaseObjects/entry.h
 #	$(CC) $(CFLAGS) -c DataBaseObjects/test_entry.cpp
@@ -20,8 +26,7 @@ main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h
 #entry_factory.o: DataBaseObjects/entry_factory.cpp DataBaseObjects/entry_factory.h DataBaseObjects/entry.h
 #	$(CC) $(CFLAGS) -c DataBaseObjects/entry_factory.cpp
  
-#entry.o: DataBaseObjects/entry.cpp DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/entry.cpp
+
 
 #int_entry.o: DataBaseObjects/int_entry.cpp DataBaseObjects/int_entry.h DataBaseObjects/entry.h
 #	$(CC) $(CFLAGS) -c DataBaseObjects/int_entry.cpp

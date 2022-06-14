@@ -13,9 +13,18 @@
     Revemp record for new entry implementation
     Strings currently unsupported?
  */
+
+
+
+
+
 int main(){
-    test_record();
-    //test_entry();
+    
+    Entry::test();
+    Record::test();
+
+
+
 
 
 
