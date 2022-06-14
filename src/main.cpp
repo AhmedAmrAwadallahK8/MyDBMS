@@ -14,18 +14,7 @@
     Strings currently unsupported?
  */
 int main(){
-    std::vector<std::string> entries{"2", "2.3", "a", "Hello"};
-    std::vector<int> attr{0, 1, 2, 3};
-    Record a = Record(attr, entries);
-
-    Entry* curr_entry = a.primary_key_ptr;
-    std::cout << "Record Test|" << " Value: " << curr_entry->int_entry << std::endl;
-    curr_entry = curr_entry->next_entry;
-    std::cout << "Record Test|" << " Value: " << curr_entry->dbl_entry << std::endl;
-    curr_entry = curr_entry->next_entry;
-    std::cout << "Record Test|" << " Value: " << curr_entry->char_entry << std::endl;
-    curr_entry = curr_entry->next_entry;
-    std::cout << "Record Test|" << " Value: " << curr_entry->str_entry << std::endl;
+    test_record();
     //test_entry();
 
 

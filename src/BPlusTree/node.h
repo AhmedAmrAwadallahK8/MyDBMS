@@ -11,7 +11,7 @@ class Node: public Abstract_Node {
     public:
         Node();
         ~Node();
-         Abstract_Block* get_child();
+        Abstract_Block* get_child();
         
 };
 

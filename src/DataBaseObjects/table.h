@@ -9,8 +9,9 @@
 class Table{
     protected:
         std::string table_name;
+        std::vector<std::string> attribute_names;
         std::vector<std::string> attributes;
-        B_Plus_Tree *tree;
+        B_Plus_Tree *root;
     public:
         Table();
         ~Table();

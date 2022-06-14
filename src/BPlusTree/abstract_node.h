@@ -6,7 +6,7 @@
 
 class Abstract_Node{
     protected:
-        Entry primary_key;
+        Entry* primary_key;
     public:
         Abstract_Node();
         ~Abstract_Node();
