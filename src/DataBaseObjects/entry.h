@@ -5,45 +5,45 @@
 #include <typeinfo>
 #include <iostream>
 
-template <typename Type>
 struct Entry{
-    Type data;
-    void *next_entry;
+    union{
+        int int_entry;
+        double dbl_entry;
+        char char_entry;
+        std::string str_entry;
+    };
+    Entry *next_entry;
 
-    Entry(Type data);
+    Entry(int);
+    Entry(double);
+    Entry(char);
+    Entry(std::string);
+
     ~Entry();
-    std::string get_type();
-
 };
 
-template<typename Type>
-Entry<Type>::Entry(Type data):
-    data(data),
+Entry::Entry(int input):
+    int_entry(input),
     next_entry(nullptr)
     {}
 
-template<typename Type>
-Entry<Type>::~Entry(){}
+Entry::Entry(double input):
+    dbl_entry(input),
+    next_entry(nullptr)
+    {}
 
-template<typename Type>
-std::string Entry<Type>::get_type(){
-    std::string type_info = typeid(data).name();
-    if(type_info == "i"){
-        return "int";
-    }
-    else if(type_info == "d"){
-        return "double";
-    }
-    else if(type_info == "c"){
-        return "char";
-    }
-    else if(type_info == "PKc"){
-        return "string";
-    }
-    else{
-        return type_info;
-    }
-}
+Entry::Entry(char input):
+    char_entry(input),
+    next_entry(nullptr)
+    {}
+
+Entry::Entry(std::string input):
+    str_entry(input),
+    next_entry(nullptr)
+    {}
+
+
+Entry::~Entry(){};
 
 void test_entry(){
     Entry d = Entry("Hello");
@@ -51,17 +51,21 @@ void test_entry(){
     Entry b = Entry(2.3);
     Entry a = Entry(2);
 
+    a.next_entry = &b;
+    b.next_entry = &c;
+    c.next_entry = &d;
+
     /* Testing Normal Functions */
-    std::cout << "Int Test| Type: " << a.get_type()  << " Value: " << a.data << std::endl;
-    std::cout << "Double Test| Type: " << b.get_type()  << " Value: " << b.data << std::endl;
-    std::cout << "Char Test| Type: " << c.get_type()  << " Value: " << c.data << std::endl;
-    std::cout << "String Test| Type: " << d.get_type()  << " Value: " << d.data << std::endl;
+    std::cout << "Int Test|" << " Value: " << a.int_entry << std::endl;
+    std::cout << "Double Test|" << " Value: " << b.dbl_entry << std::endl;
+    std::cout << "Char Test|" << " Value: " << c.char_entry << std::endl;
+    std::cout << "String Test|" << " Value: " << d.str_entry << std::endl;
 
     /* Testing pointer relationships */
-    std::cout << "A Test| Address: " << &a << " Next Address: " << a.next_entry << " Value: " << a.data << std::endl;
-    std::cout << "B Test| Address: " << &b << " Next Address: " << b.next_entry << " Value: " << b.data << std::endl;
-    std::cout << "C Test| Address: " << &c << " Next Address: " << c.next_entry << " Value: " << c.data << std::endl;
-    std::cout << "D Test| Address: " << &d << " Next Address: " << d.next_entry << " Value: " << d.data << std::endl;
+    std::cout << "A Test| Address: " << &a << " Next Address: " << a.next_entry  << std::endl;
+    std::cout << "B Test| Address: " << &b << " Next Address: " << b.next_entry  << std::endl;
+    std::cout << "C Test| Address: " << &c << " Next Address: " << c.next_entry  << std::endl;
+    std::cout << "D Test| Address: " << &d << " Next Address: " << d.next_entry  << std::endl;
 }
 
 #endif
