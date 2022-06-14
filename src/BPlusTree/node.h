@@ -2,16 +2,17 @@
 #define NODE_H
 
 #include "entry.h"
-#include "abstract_node.h"
-#include "abstract_block.h"
+#include "record.h"
 
-class Node: public Abstract_Node {
+class Node{
     protected:
-        Abstract_Block *child_block_ptr;
+        Entry* entry;
+        Node_Block *child_block_ptr;
+        Record *record_ptr;
     public:
         Node();
         ~Node();
-        Abstract_Block* get_child();  
+        Node_Block* get_child();  
 };
 
 #endif

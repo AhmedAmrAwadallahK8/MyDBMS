@@ -3,16 +3,20 @@
 
 #include <vector>
 #include "node.h"
-#include "abstract_block.h"
 
-class Node_Block: public Abstract_Block {
+class Node_Block{
     protected:
-        Abstract_Block *child_block;
+        Node_Block *parent_block;
+        Node_Block *child_block;
         std::vector<Node> node_vec;
+        Node_Block *next_leaf_block;
+        Node_Block *prev_leaf_block;
+        int block_size;
+        bool is_full, is_leaf, is_root;
     public:
         Node_Block();
         ~Node_Block();
-        Abstract_Block* get_child_block();
+        Node_Block* get_child_block();
 };
 
 #endif
