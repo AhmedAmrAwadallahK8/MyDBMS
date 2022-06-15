@@ -1,6 +1,11 @@
+#include <iostream>
+#include <vector>
 
-
+#include "..\DataBaseObjects\entry.h"
+#include "..\DataBaseObjects\record.h"
 #include "node.h"
+#include "node_block.h"
+
 
 Node::Node(Entry* input_entry, Node_Block* block_entry):
     entry_ptr(input_entry),
@@ -28,10 +33,20 @@ Record* Node::get_record_ptr(){
     return record_ptr;
 }
 
-/* TODO: Need to complete node_block before testing */
+
 void Node::test(){
     Entry a(2);
     std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
     std::vector<int> attr{0, 1, 2, 3};
-    Record b = Record(attr, entries); 
+    Record b(attr, entries);
+    Node_Block c(4, true, true);
+
+    Node node(&a, &c);
+    Node leaf(&a, &b);
+
+    std::cout << "Node Test. Entry Address: " << node.get_entry_ptr() << " Child Block Address: " << 
+                node.get_child_ptr() << " Record Address: " << node.get_record_ptr() << std::endl;
+
+    std::cout << "Leaf Test. Entry Address: " << leaf.get_entry_ptr() << " Child Block Address: " << 
+                leaf.get_child_ptr() << " Record Address: " << leaf.get_record_ptr() << std::endl;
 }

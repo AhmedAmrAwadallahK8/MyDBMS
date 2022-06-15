@@ -1,12 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <iostream>
-#include <vector>
-
-#include "entry.h"
-#include "record.h"
-#include "node_block.h"
+class Entry;
+class Record;
+class Node_Block;
 
 class Node{
     protected:
