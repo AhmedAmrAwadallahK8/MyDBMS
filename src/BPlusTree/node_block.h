@@ -2,14 +2,15 @@
 #define NODE_BLOCK_H
 
 class Node;
+class Entry;
 
 class Node_Block{
     protected:
-        Node_Block *parent_block;
-        Node_Block *child_block;
+        Node_Block *parent_block_ptr;
+        Node_Block *child_block_ptr;
         std::vector<Node> node_vec;
-        Node_Block *next_leaf_block;
-        Node_Block *prev_leaf_block;
+        Node_Block *next_leaf_block_ptr;
+        Node_Block *prev_leaf_block_ptr;
         int block_size;
         bool full, leaf, root;
     public:
@@ -24,13 +25,17 @@ class Node_Block{
         bool is_leaf();
         bool is_root();
 
-        void set_parent();
-        void set_child();
-        void set_next();
-        void set_prev();
-        void set_root();
+        void set_parent(Node_Block* input_block_ptr);
+        void set_child(Node_Block* input_block_ptr);
+        void set_next(Node_Block* input_block_ptr);
+        void set_prev(Node_Block* input_block_ptr);
+        void set_root(bool input_root);
 
-        void add_node();
+
+        void add_node(Entry* input_entry, Node_Block* input_block);
+        void add_leaf_node(Entry* input_entry, Record* input_record);
+        bool is_full();
+        
 };
 
 #endif
