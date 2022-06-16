@@ -11,7 +11,7 @@ main: main.o entry.o record.o node.o node_block.o
  
 # The main.o target can be written more simply
  
-main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h
+main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h BPlusTree/node_block.h
 	$(CC) $(CFLAGS) -c main.cpp
 
 entry.o: DataBaseObjects/entry.cpp DataBaseObjects/entry.h
@@ -23,26 +23,7 @@ record.o: DataBaseObjects/record.cpp DataBaseObjects/record.h
 node.o: BPlusTree/node.cpp BPlusTree/node.h 
 	$(CC) $(CFLAGS) -c BPlusTree/node.cpp
 
-node_block.o: BPlusTree/node_block.cpp BPlusTree/node_block.h
+node_block.o: BPlusTree/node_block.cpp BPlusTree/node_block.h BPlusTree/node.h DataBaseObjects/entry.h DataBaseObjects/record.h
 	$(CC) $(CFLAGS) -c BPlusTree/node_block.cpp
 
-#test_entry.o: DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/test_entry.cpp
-
-#entry_factory.o: DataBaseObjects/entry_factory.cpp DataBaseObjects/entry_factory.h DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/entry_factory.cpp
- 
-
-
-#int_entry.o: DataBaseObjects/int_entry.cpp DataBaseObjects/int_entry.h DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/int_entry.cpp
-
-#double_entry.o: DataBaseObjects/double_entry.cpp DataBaseObjects/double_entry.h DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/double_entry.cpp
-
-#char_entry.o: DataBaseObjects/char_entry.cpp DataBaseObjects/char_entry.h DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/char_entry.cpp
-
-#string_entry.o: DataBaseObjects/string_entry.cpp DataBaseObjects/string_entry.h DataBaseObjects/entry.h
-#	$(CC) $(CFLAGS) -c DataBaseObjects/string_entry.cpp
 

@@ -11,11 +11,14 @@ class Node_Block{
         std::vector<Node> node_vec;
         Node_Block *next_leaf_block_ptr;
         Node_Block *prev_leaf_block_ptr;
-        int block_size;
+        long long unsigned int block_size;
         bool full, leaf, root;
     public:
         Node_Block(int size_input, bool leaf_input, bool root_input);
         ~Node_Block();
+
+        void add_node(Entry* input_entry, Node_Block* input_block);
+        void add_leaf_node(Entry* input_entry, Record* input_record);
 
         Node_Block* get_parent_block_ptr();
         Node_Block* get_child_block_ptr();
@@ -31,10 +34,9 @@ class Node_Block{
         void set_prev(Node_Block* input_block_ptr);
         void set_root(bool input_root);
 
+        bool check_full();
 
-        void add_node(Entry* input_entry, Node_Block* input_block);
-        void add_leaf_node(Entry* input_entry, Record* input_record);
-        bool is_full();
+        void static test();
         
 };
 

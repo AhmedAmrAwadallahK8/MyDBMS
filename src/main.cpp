@@ -5,6 +5,7 @@
 #include "DataBaseObjects\entry.h"
 #include "DataBaseObjects\record.h"
 #include "BPlusTree\node.h"
+#include "BPlusTree\node_block.h"
 
 // Template Issue: Reflections?
 
@@ -23,7 +24,8 @@ int main(){
     
     //Entry::test();
     //Record::test();
-    Node::test();
+    //Node::test();
+    Node_Block::test();
 
 
 
