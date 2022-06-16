@@ -26,7 +26,9 @@ Record::~Record(){
     while(curr_entry != nullptr){
         delete curr_entry;
         curr_entry = next_entry;
-        next_entry = curr_entry->get_next_entry_ptr();
+        if(curr_entry != nullptr){
+            next_entry = curr_entry->get_next_entry_ptr();
+        }
     }
 }
 
