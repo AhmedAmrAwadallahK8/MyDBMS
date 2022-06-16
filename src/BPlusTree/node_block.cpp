@@ -94,13 +94,91 @@ void Node_Block::set_root(bool input_bool){
 
 void Node_Block::test(){
     bool test_success = true;
+    std::cout << "1" << std::endl;
+    test_success = test_pointers();
+    std::cout << "2" << std::endl;
+    test_success = test_root();
+    std::cout << "3" << std::endl;
+    test_success = test_adding_nodes();
+    std::cout << "4" << std::endl;
+    test_success = test_adding_leaf_nodes();
+    std::cout << "5" << std::endl;
+
+    if(test_success){
+        std::cout << "All test cases passed" << std::endl;
+    }
+    else{
+        std::cout << "One or more tests failed" << std::endl;
+    }
+    return;
+}
+
+bool Node_Block::test_adding_nodes(){
+    Node_Block test_node_block(3, false, false);
     Entry test_entry(2);
+    Node_Block child(3, true, true);
+    std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
+    std::vector<int> attr{0, 1, 2, 3};
+    Record test_record(attr, entries);
+    std::cout << "1";
+    test_node_block.add_node(&test_entry, &child);
+    if(test_node_block.node_vec.size() != (long long unsigned int)1){
+        std::cout <<"Failed to add node" << std::endl;
+        return false;
+    } 
+    std::cout << "2";
+    test_node_block.add_leaf_node(&test_entry, &test_record);
+    if(test_node_block.node_vec.size() != (long long unsigned int)1){
+        std::cout <<"Added a leaf node to a node block" << std::endl;
+        return false;
+    } 
+    std::cout << "3";
+    test_node_block.add_node(&test_entry, &child);
+    test_node_block.add_node(&test_entry, &child);
+    test_node_block.add_node(&test_entry, &child);
+    if(test_node_block.node_vec.size() > test_node_block.block_size){
+        std::cout << "Added node when this block was full" << std::endl;
+        return false;
+    }
+    std::cout << "4";
+    return true;
+
+}
+
+bool Node_Block::test_adding_leaf_nodes(){
+    Node_Block test_leaf_block(3, true, false);
+    Entry test_entry(2);
+    Node_Block child(3, true, true);
     std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
     std::vector<int> attr{0, 1, 2, 3};
     Record test_record(attr, entries);
 
+    test_leaf_block.add_leaf_node(&test_entry, &test_record);
+    if(test_leaf_block.node_vec.size() != (long long unsigned int)1){
+        std::cout <<"Failed to add leaf node" << std::endl;
+        return false;
+    } 
+
+    test_leaf_block.add_node(&test_entry, &child);
+    if(test_leaf_block.node_vec.size() != (long long unsigned int)1){
+        std::cout <<"Added a node to a leaf node block" << std::endl;
+        return false;
+    } 
+
+    test_leaf_block.add_leaf_node(&test_entry, &test_record);
+    test_leaf_block.add_leaf_node(&test_entry, &test_record);
+    test_leaf_block.add_leaf_node(&test_entry, &test_record);
+    if(test_leaf_block.node_vec.size() > test_leaf_block.block_size){
+        std::cout << "Added node when this leaf block was full" << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+bool Node_Block::test_pointers(){
     Node_Block test_node_block(3, false, false);
-    Node_Block test_leaf_block(3, true, false);
+
     Node_Block parent(3, true, true);
     Node_Block child(3, true, true);
     Node_Block next(3, true, true);
@@ -111,68 +189,24 @@ void Node_Block::test(){
     test_node_block.set_next(&next);
     test_node_block.set_prev(&next);
 
-    /* Pointer Testing */
     if((test_node_block.get_parent_block_ptr() != &parent) || (test_node_block.get_child_block_ptr() != &child) || 
         (test_node_block.get_next_leaf_ptr() != &next) || (test_node_block.get_prev_leaf_ptr() == &prev)){
         std::cout << "Block ptr set or retrieval failure" << std::endl;
-        test_success = false;
+        return false;
     }
+    
+    return true;
+}
 
-    /* Root set and get testing */
+bool Node_Block::test_root(){
+    Node_Block test_node_block(3, false, false);
+
     test_node_block.set_root(true);
     if(!test_node_block.is_root()){
         std::cout << "Root status set or retrieval failure" << std::endl;
-        test_success = false;
+        return false;
     }
 
-    /* Adding Nodes */
-    test_node_block.add_node(&test_entry, &child);
-    if(test_node_block.node_vec.size() != (long long unsigned int)1){
-        std::cout <<"Failed to add node" << std::endl;
-        test_success = false;
-    } 
-
-    test_node_block.add_leaf_node(&test_entry, &test_record);
-    if(test_node_block.node_vec.size() != (long long unsigned int)1){
-        std::cout <<"Added a leaf node to a node block" << std::endl;
-        test_success = false;
-    } 
-
-    test_node_block.add_node(&test_entry, &child);
-    test_node_block.add_node(&test_entry, &child);
-    test_node_block.add_node(&test_entry, &child);
-    if(test_node_block.node_vec.size() > test_node_block.block_size){
-        std::cout << "Added node when this block was full" << std::endl;
-        test_success = false;
-    }
-
-    /* Adding Leaf Nodes into a Leaf Block */
-    test_leaf_block.add_leaf_node(&test_entry, &test_record);
-    if(test_leaf_block.node_vec.size() != (long long unsigned int)1){
-        std::cout <<"Failed to add leaf node" << std::endl;
-        test_success = false;
-    } 
-
-    test_leaf_block.add_node(&test_entry, &child);
-    if(test_leaf_block.node_vec.size() != (long long unsigned int)1){
-        std::cout <<"Added a node to a leaf node block" << std::endl;
-        test_success = false;
-    } 
-
-    test_leaf_block.add_leaf_node(&test_entry, &test_record);
-    test_leaf_block.add_leaf_node(&test_entry, &test_record);
-    test_leaf_block.add_leaf_node(&test_entry, &test_record);
-    if(test_leaf_block.node_vec.size() > test_leaf_block.block_size){
-        std::cout << "Added node when this leaf block was full" << std::endl;
-        test_success = false;
-    }
-
-    /* Final Judgement */
-    if(test_success){
-        std::cout << "All test cases passed" << std::endl;
-    }
-    else{
-        std::cout << "One or more tests failed" << std::endl;
-    }
-    return;
+    return true;
 }
+

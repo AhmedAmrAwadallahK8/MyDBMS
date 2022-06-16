@@ -37,6 +37,10 @@ class Node_Block{
         bool check_full();
 
         void static test();
+        bool static test_root();
+        bool static test_pointers();
+        bool static test_adding_nodes();
+        bool static test_adding_leaf_nodes();
         
 };
 

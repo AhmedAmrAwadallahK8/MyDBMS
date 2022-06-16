@@ -2,6 +2,7 @@
 #define B_PLUS_TREE_H
 
 #include "entry.h"
+#include "record.h"
 #include "node_block.h"
 
 class B_Plus_Tree{
@@ -12,7 +13,7 @@ class B_Plus_Tree{
         B_Plus_Tree();
         ~B_Plus_Tree();
 
-        void insert(Entry* primary_key);
+        void insert(Record* input_record);
 
 };
 
