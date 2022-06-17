@@ -1,0 +1,54 @@
+Spaces and tabs don't matter
+Program structure is just one simple command followed by semicolon.
+
+Lexical Elements
+    Keyword
+        SELECT
+        CREATE
+        INSERT
+        DELETE
+        FROM
+        WHERE
+        JOIN
+        INTO
+        AND
+        OR
+        SHOW
+        USE
+        DROP
+        TABLE 
+        DATABASE 
+        TABLES
+        DATABASES
+    SYMBOL '(' | ')' | ' ' ' | ' " ' | ';' | ',' | '*'
+    integerConstant
+    stringConstant ' sequence of characters '
+    identifier
+ProgramStructure
+    type: int double char string
+    parameterList: (type identifier) ((, type identifier)*)?
+    attributeList: * | attributeName (, attributeName)*
+    stringConstantList: stringConstant (, stringConstant)*
+    tableName: identifier
+    databaseName: identifier
+    attributeName: identifier
+    tableReference: tableName '.' attributeName
+Statements
+    selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
+    createTableStatement: create table tableName '(' parameterList' )' ;
+    dropTableStatement: drop table tableName ;
+    useTableStatement: use table tableName ;
+    showTablesStatement: show tables ;
+    createDatabaseStatement: create database databaseName ;
+    dropDatabaseStatement: drop database databaseName ;
+    useDatabaseStatement: use database databaseName ;
+    showDatabasesStatement: show databases ;
+    insertRow: insert (stringExpressionList) into tableName ;
+    deleteStatement: delete from tableName where expression ;
+Expression 
+    expression: term (op term)*
+    term: integerConstant | stringConstant | tableReference | unaryOp term
+    op: '<' | '>' | '=' | 'and' | 'or' 
+    unaryOp: 'not'
+    keywordConstant: 'null'
+
