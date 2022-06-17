@@ -101,7 +101,7 @@ void Node_Block::test(){
     test_success = test_adding_leaf_nodes();
 
     if(test_success){
-        std::cout << "All test cases passed" << std::endl;
+        std::cout << "All Node_Block test cases passed" << std::endl;
     }
     else{
         std::cout << "One or more tests failed" << std::endl;
@@ -109,6 +109,7 @@ void Node_Block::test(){
     return;
 }
 
+/* Code in this function could be broken down further */
 bool Node_Block::test_adding_nodes(){
     Node_Block test_node_block(3, false, false);
     Entry test_entry(2);
@@ -141,6 +142,7 @@ bool Node_Block::test_adding_nodes(){
 
 }
 
+/* Code in this function could be broken down further */
 bool Node_Block::test_adding_leaf_nodes(){
     Node_Block test_leaf_block(3, true, false);
     Entry test_entry(2);

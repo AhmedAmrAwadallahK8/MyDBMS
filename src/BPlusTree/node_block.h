@@ -35,7 +35,7 @@ class Node_Block{
         void set_root(bool input_root);
 
         bool check_full();
-
+        /* Testing Code should probably be in a friend class called test_node_block */
         void static test();
         bool static test_root();
         bool static test_pointers();
