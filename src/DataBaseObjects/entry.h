@@ -5,6 +5,8 @@
 #include <typeinfo>
 #include <iostream>
 
+/* In retrospect Record could just inherit Entry, the methods for getting and 
+setting are not required in this case and thus increases code clarity */
 class Entry{
     protected:
         union{

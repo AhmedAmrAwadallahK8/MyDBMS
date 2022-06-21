@@ -18,6 +18,7 @@ class Record{
 
         Entry* add_new_entry(int entry_type, std::string data);
         Entry* get_head_ptr();
+
         void print_record();
 
         void static test();
