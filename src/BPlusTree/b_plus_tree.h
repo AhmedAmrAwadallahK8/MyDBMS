@@ -16,8 +16,10 @@ class B_Plus_Tree{
         B_Plus_Tree(int primary_key_type, int block_size);
         ~B_Plus_Tree();
 
-        void select_insert_protocol(Record input_record);
-        void insert(auto data);
+        void select_insert_protocol(Record *input_record);
+        void insert(Record *input_record);
+        template<typename T>
+        void do_insert(T data);
         void block_split();
         void block_split_left();
         void block_split_right();

@@ -12,26 +12,31 @@ B_Plus_Tree::B_Plus_Tree(int primary_key_type, int block_size):
 /* Later this will need to handle deleting all the pointers recursively */
 B_Plus_Tree::~B_Plus_Tree(){}
 
-void B_Plus_Tree::select_insert_protocol(Record input){
+void B_Plus_Tree::insert(Record *input){
+    select_insert_protocol(input);
+}
+
+void B_Plus_Tree::select_insert_protocol(Record *input){
     switch(type_flag){
         case Entry::INT:
-            insert(input.get_head_ptr()->get_int());
+            do_insert(input->get_head_ptr()->get_int());
             break;
         case Entry::DOUBLE:
-            insert(input.get_head_ptr()->get_dbl());
+            do_insert(input->get_head_ptr()->get_dbl());
             break;
         case Entry::CHAR:
-            insert(input.get_head_ptr()->get_char());
+            do_insert(input->get_head_ptr()->get_char());
             break;
         case Entry::STRING:
-            insert(input.get_head_ptr()->get_str());
+            do_insert(input->get_head_ptr()->get_str());
             break;
         default: /* Unhandled Case Logic */
             break; 
     }
 }
 
-void B_Plus_Tree::insert(auto data){
+template<typename T>
+void B_Plus_Tree::do_insert(T data){
     std::cout << "Data: " << data << std::endl;
 }
 
