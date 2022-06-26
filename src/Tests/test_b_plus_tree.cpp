@@ -45,4 +45,9 @@ void Test_B_Plus_Tree::test_correct_tree_type(){
     dbl_tree.insert(pk_dbl);
     char_tree.insert(pk_char);
     str_tree.insert(pk_str);
+
+    delete pk_int;
+    delete pk_dbl;
+    delete pk_char;
+    delete pk_str;
 }

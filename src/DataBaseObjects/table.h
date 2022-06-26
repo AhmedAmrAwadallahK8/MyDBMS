@@ -10,7 +10,7 @@ class Table{
     protected:
         std::string table_name;
         std::vector<std::string> attribute_names;
-        std::vector<std::string> attributes;
+        std::vector<int> attribute_flags;
         B_Plus_Tree *root;
     public:
         Table();
