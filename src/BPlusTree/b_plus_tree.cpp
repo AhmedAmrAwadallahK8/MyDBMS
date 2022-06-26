@@ -19,7 +19,7 @@ void B_Plus_Tree::insert(Record *input){
 void B_Plus_Tree::select_insert_protocol(Record *input){
     switch(type_flag){
         case Entry::INT:
-            do_insert(input->get_head_ptr()->get_int());
+            do_insert(input->get_head_ptr()->get_int()); /* Scope envy occuring here */
             break;
         case Entry::DOUBLE:
             do_insert(input->get_head_ptr()->get_dbl());
