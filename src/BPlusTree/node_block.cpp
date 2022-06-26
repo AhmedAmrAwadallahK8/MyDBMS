@@ -21,6 +21,15 @@ Node_Block::Node_Block(int input_size, bool input_leaf, bool input_root):
 
 Node_Block::~Node_Block(){}
 
+// void Node_Block::add_to_block(Entry* input_entry, Node_Block* input_block){
+//     if(leaf){
+//         add_leaf_node(input_entry, input_block);
+//     }
+//     else if(){
+
+//     }
+// }
+
 void Node_Block::add_node(Entry* input_entry, Node_Block* input_block){
     if((!full) && (!leaf)){
         node_vec.push_back(Node(input_entry, input_block));

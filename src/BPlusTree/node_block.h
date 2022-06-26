@@ -17,6 +17,7 @@ class Node_Block{
         Node_Block(int size_input, bool leaf_input, bool root_input);
         ~Node_Block();
 
+        void add_to_block(Entry* input_entry, Node_Block* input_block); /* Dead Code */
         void add_node(Entry* input_entry, Node_Block* input_block);
         void add_leaf_node(Entry* input_entry, Record* input_record);
 

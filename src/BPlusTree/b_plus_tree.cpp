@@ -6,7 +6,8 @@
 
 B_Plus_Tree::B_Plus_Tree(int primary_key_type, int block_size):
     root_block(new Node_Block(block_size, true, true)),
-    type_flag(primary_key_type)
+    type_flag(primary_key_type),
+    empty(true)
     {}
 
 /* Later this will need to handle deleting all the pointers recursively */
@@ -17,18 +18,22 @@ void B_Plus_Tree::insert(Record *input){
 }
 
 void B_Plus_Tree::select_insert_protocol(Record *input){
+    int int_data = input->get_head_ptr()->get_int(); /* Scope envy occuring here */
+    double dbl_data = input->get_head_ptr()->get_dbl();
+    char char_data = input->get_head_ptr()->get_char();
+    std::string str_data = input->get_head_ptr()->get_str();
     switch(type_flag){
         case Entry::INT:
-            do_insert(input->get_head_ptr()->get_int()); /* Scope envy occuring here */
+            do_insert(int_data, input); 
             break;
         case Entry::DOUBLE:
-            do_insert(input->get_head_ptr()->get_dbl());
+            do_insert(dbl_data, input);
             break;
-        case Entry::CHAR:
-            do_insert(input->get_head_ptr()->get_char());
+        case Entry::CHAR:    
+            do_insert(char_data, input);
             break;
         case Entry::STRING:
-            do_insert(input->get_head_ptr()->get_str());
+            do_insert(str_data, input);
             break;
         default: /* Unhandled Case Logic */
             break; 
@@ -36,8 +41,16 @@ void B_Plus_Tree::select_insert_protocol(Record *input){
 }
 
 template<typename T>
-void B_Plus_Tree::do_insert(T data){
+void B_Plus_Tree::do_insert(T data, Record *input){
+    if(empty){
+        empty = false;
+        first_insert(data, input)
+    }
     std::cout << "Data: " << data << std::endl;
+}
+
+void B_Plus_Tree::first_insert(Record *input){
+    root_block->add_leaf_node(input->get_head_ptr(), input);
 }
 
 void B_Plus_Tree::block_split(){
