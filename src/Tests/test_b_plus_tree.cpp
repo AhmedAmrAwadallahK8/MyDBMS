@@ -5,6 +5,7 @@
 #include "test_b_plus_tree.h"
 #include "..\DataBaseObjects\entry.h"
 #include "..\DataBaseObjects\record.h"
+#include "..\BPlusTree\node_block.h"
 
 void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
@@ -39,10 +40,17 @@ void Test_B_Plus_Tree::test_insertion(){
     std::vector<std::string> entries4{"1", "Hello"};
     Record *pk_int4 = new Record(attr1, entries4);
 
+    std::vector<std::string> entries5{"5", "Hello"};
+    Record *pk_int5 = new Record(attr1, entries5);
+
     int_tree.insert(pk_int1);
     int_tree.insert(pk_int2);
     int_tree.insert(pk_int3);
     int_tree.insert(pk_int4);
+    int_tree.insert(pk_int5);
+
+    Node_Block* root = int_tree.get_root();
+    root->print_block();
 
 
 }

@@ -1,13 +1,13 @@
 #include <vector>
 #include <iostream>
-#include <bits/stdc++.h>
+#include <algorithm>
 
 #include "..\DataBaseObjects\entry.h"
 #include "..\DataBaseObjects\record.h"
 #include "node.h"
 #include "node_block.h"
 
-
+/* Might do a revamp here, input an actual value instead of Entry */
 
 Node_Block::Node_Block(int input_size, bool input_leaf, bool input_root):
     parent_block_ptr(nullptr),
@@ -44,7 +44,13 @@ void Node_Block::add_leaf_node(Entry* input_entry, Record* input_record){
         node_vec.push_back(Node(input_entry, input_record));
         full = check_full();
     }
-    //sort(node_vec.begin(), node_vec.end());
+    //std::sort(node_vec.begin(), node_vec.end());
+}
+
+void Node_Block::print_block(){
+    for(Node n: node_vec){
+        n.get_entry_ptr()->print_entry();
+    }
 }
 
 bool Node_Block::check_full(){

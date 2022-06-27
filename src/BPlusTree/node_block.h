@@ -35,6 +35,8 @@ class Node_Block{
         void set_prev(Node_Block* input_block_ptr);
         void set_root(bool input_root);
 
+        void print_block();
+
         bool check_full();
         /* Testing Code should probably be in a friend class called test_node_block */
         void static test();

@@ -13,6 +13,10 @@ B_Plus_Tree::B_Plus_Tree(int primary_key_type, int block_size):
 /* Later this will need to handle deleting all the pointers recursively */
 B_Plus_Tree::~B_Plus_Tree(){}
 
+Node_Block* B_Plus_Tree::get_root(){
+    return root_block;
+}
+
 void B_Plus_Tree::insert(Record *input){
     select_insert_protocol(input);
 }

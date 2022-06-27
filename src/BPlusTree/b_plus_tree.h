@@ -17,6 +17,8 @@ class B_Plus_Tree{
         B_Plus_Tree(int primary_key_type, int block_size);
         ~B_Plus_Tree();
 
+        Node_Block* get_root();
+
         void select_insert_protocol(Record *input_record);
         void insert(Record *input_record);
         template<typename T>
