@@ -21,7 +21,7 @@ class B_Plus_Tree{
         void insert(Record *input_record);
         template<typename T>
         void do_insert(T data, Record *input);
-        void first_insert(Record *input);
+        void insert_leaf(Record *input, Node_Block *leaf_block);
         void block_split();
         void block_split_left();
         void block_split_right();

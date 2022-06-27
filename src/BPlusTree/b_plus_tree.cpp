@@ -42,15 +42,19 @@ void B_Plus_Tree::select_insert_protocol(Record *input){
 
 template<typename T>
 void B_Plus_Tree::do_insert(T data, Record *input){
-    if(empty){
-        empty = false;
-        first_insert(data, input)
+    if(root_block->is_leaf()){
+        insert_leaf(data, input)
     }
     std::cout << "Data: " << data << std::endl;
 }
 
-void B_Plus_Tree::first_insert(Record *input){
-    root_block->add_leaf_node(input->get_head_ptr(), input);
+void B_Plus_Tree::insert_leaf(Record *input, Node_Block *leaf_block){
+    if(leaf_block->is_full()){
+        /* add new block logic */
+    }
+    else{
+        leaf_block->add_leaf_node(input->get_head_ptr(), input);
+    }
 }
 
 void B_Plus_Tree::block_split(){
