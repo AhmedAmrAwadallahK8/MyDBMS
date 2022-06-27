@@ -36,7 +36,7 @@ void Node_Block::add_node(Entry* input_entry, Node_Block* input_block){
         node_vec.push_back(Node(input_entry, input_block));
         full = check_full();
     }
-    sort(node_vec.begin(), node_vec.end());
+    //sort(node_vec.begin(), node_vec.end());
 }
 
 void Node_Block::add_leaf_node(Entry* input_entry, Record* input_record){
@@ -44,7 +44,7 @@ void Node_Block::add_leaf_node(Entry* input_entry, Record* input_record){
         node_vec.push_back(Node(input_entry, input_record));
         full = check_full();
     }
-    sort(node_vec.begin(), node_vec.end());
+    //sort(node_vec.begin(), node_vec.end());
 }
 
 bool Node_Block::check_full(){

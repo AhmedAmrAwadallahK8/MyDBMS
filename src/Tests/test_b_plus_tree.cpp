@@ -8,7 +8,8 @@
 
 void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
-    test_correct_tree_type();
+    // test_correct_tree_type();
+    test_insertion();
 
 
 
@@ -19,6 +20,31 @@ void Test_B_Plus_Tree::test(){
     else{
         std::cout << "One more tests failed\n";
     }
+}
+
+void Test_B_Plus_Tree::test_insertion(){
+    int default_size = 4;
+    B_Plus_Tree int_tree(Entry::INT, default_size);
+
+    std::vector<std::string> entries1{"4", "Hello"};
+    std::vector<int> attr1{Entry::INT, Entry::STRING};
+    Record *pk_int1 = new Record(attr1, entries1);
+
+    std::vector<std::string> entries2{"2", "Hello"};
+    Record *pk_int2 = new Record(attr1, entries2);
+
+    std::vector<std::string> entries3{"3", "Hello"};
+    Record *pk_int3 = new Record(attr1, entries3);
+
+    std::vector<std::string> entries4{"1", "Hello"};
+    Record *pk_int4 = new Record(attr1, entries4);
+
+    int_tree.insert(pk_int1);
+    int_tree.insert(pk_int2);
+    int_tree.insert(pk_int3);
+    int_tree.insert(pk_int4);
+
+
 }
 
 void Test_B_Plus_Tree::test_correct_tree_type(){
