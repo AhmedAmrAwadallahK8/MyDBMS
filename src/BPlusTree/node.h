@@ -25,6 +25,10 @@ class Node{
 
         Node_Block<T>* get_child_ptr(); 
         Record* get_record_ptr();
+
+        bool operator< (const Node<T> &other) const {
+            return data < other.data;
+        }
         
         void static test();
 };

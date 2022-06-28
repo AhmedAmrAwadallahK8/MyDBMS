@@ -48,10 +48,11 @@ Node_Block<T>* B_Plus_Tree<T>::get_root(){
 
 template<typename T>
 void B_Plus_Tree<T>::insert(T data, Record *input){
+    std::cout << "Data entering Insert: " << data << std::endl;
     if(root_block->is_leaf()){
         insert_leaf(data, input, root_block);
     }
-    std::cout << "Data: " << data << std::endl;
+    
 }
 
 // template<typename T>

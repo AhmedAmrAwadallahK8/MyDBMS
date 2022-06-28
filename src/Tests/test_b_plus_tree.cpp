@@ -9,7 +9,7 @@
 
 void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
-    // test_correct_tree_type();
+    test_correct_tree_type();
     test_insertion();
 
 
@@ -57,32 +57,32 @@ void Test_B_Plus_Tree::test_insertion(){
 }
 
 void Test_B_Plus_Tree::test_correct_tree_type(){
-    // int default_size = 4;
-    // B_Plus_Tree<int> int_tree(Entry::INT, default_size);
-    // B_Plus_Tree<double> dbl_tree(Entry::DOUBLE, default_size);
-    // B_Plus_Tree<char> char_tree(Entry::CHAR, default_size);
-    // B_Plus_Tree<std::string> str_tree(Entry::STRING, default_size);
+    int default_size = 4;
+    B_Plus_Tree<int> int_tree(Entry::INT, default_size);
+    B_Plus_Tree<double> dbl_tree(Entry::DOUBLE, default_size);
+    B_Plus_Tree<char> char_tree(Entry::CHAR, default_size);
+    B_Plus_Tree<std::string> str_tree(Entry::STRING, default_size);
 
-    // std::vector<std::string> entries1{"2", "2.34", "a", "Hello"};
-    // std::vector<int> attr1{Entry::INT, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
-    // Record *pk_int = new Record(attr1, entries1);
-    // std::vector<std::string> entries2{"2.32", "2.34", "a", "Hello"};
-    // std::vector<int> attr2{Entry::DOUBLE, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
-    // Record *pk_dbl = new Record(attr2, entries2);
-    // std::vector<std::string> entries3{"c", "2.34", "a", "Hello"};
-    // std::vector<int> attr3{Entry::CHAR, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
-    // Record *pk_char = new Record(attr3, entries3);
-    // std::vector<std::string> entries4{"Dancing", "2.34", "a", "Hello"};
-    // std::vector<int> attr4{Entry::STRING, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
-    // Record *pk_str = new Record(attr4, entries4);
+    std::vector<std::string> entries1{"2", "2.34", "a", "Hello"};
+    std::vector<int> attr1{Entry::INT, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
+    Record *pk_int = new Record(attr1, entries1);
+    std::vector<std::string> entries2{"2.32", "2.34", "a", "Hello"};
+    std::vector<int> attr2{Entry::DOUBLE, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
+    Record *pk_dbl = new Record(attr2, entries2);
+    std::vector<std::string> entries3{"c", "2.34", "a", "Hello"};
+    std::vector<int> attr3{Entry::CHAR, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
+    Record *pk_char = new Record(attr3, entries3);
+    std::vector<std::string> entries4{"Dancing", "2.34", "a", "Hello"};
+    std::vector<int> attr4{Entry::STRING, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
+    Record *pk_str = new Record(attr4, entries4);
 
-    // int_tree.insert(pk_int->get_head_ptr()->get_int(), pk_int);
-    // dbl_tree.insert(pk_dbl->get_head_ptr()->get_dbl(), pk_dbl);
-    // char_tree.insert(pk_char->get_head_ptr()->get_char(), pk_char);
-    // str_tree.insert(pk_str->get_head_ptr()->get_str(), pk_str);
+    int_tree.insert(pk_int->get_head_ptr()->get_int(), pk_int);
+    dbl_tree.insert(pk_dbl->get_head_ptr()->get_dbl(), pk_dbl);
+    char_tree.insert(pk_char->get_head_ptr()->get_char(), pk_char);
+    str_tree.insert(pk_str->get_head_ptr()->get_str(), pk_str);
 
-    // delete pk_int;
-    // delete pk_dbl;
-    // delete pk_char;
-    // delete pk_str;
+    delete pk_int;
+    delete pk_dbl;
+    delete pk_char;
+    delete pk_str;
 }

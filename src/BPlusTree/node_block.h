@@ -41,9 +41,13 @@ class Node_Block{
         void set_prev(Node_Block<T>* input_block_ptr);
         void set_root(bool input_root);
 
+        bool compare_nodes(const Node<T>* lhs, const Node<T>* rhs);
+
         void print_block();
 
         bool check_full();
+
+
         /* Testing Code should probably be in a friend class called test_node_block */
         void static test();
         bool static test_root();
@@ -87,7 +91,7 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
         node_vec.push_back(Node<T>(input_data, input_block));
         full = check_full();
     }
-    //sort(node_vec.begin(), node_vec.end());
+    std::sort(node_vec.begin(), node_vec.end());
 }
 
 template<typename T>
@@ -96,7 +100,7 @@ void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
         node_vec.push_back(Node<T>(input_data, input_record));
         full = check_full();
     }
-    //std::sort(node_vec.begin(), node_vec.end());
+    std::sort(node_vec.begin(), node_vec.end());
 }
 
 template<typename T>
@@ -257,7 +261,7 @@ bool Node_Block<T>::test_adding_leaf_nodes(){
         std::cout << "Added node when this leaf block was full" << std::endl;
         return false;
     }
-    
+
     test_leaf_block.print_block();
 
     return true;
