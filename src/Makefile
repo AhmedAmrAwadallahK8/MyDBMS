@@ -11,7 +11,7 @@ main: main.o entry.o record.o node.o
 # node_block.o b_plus_tree.o test_b_plus_tree.o
 # The main.o target can be written more simply
  
-main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h 
+main.o: main.cpp DataBaseObjects/entry.h DataBaseObjects/record.h BPlusTree/node_block.h
 	$(CC) $(CFLAGS) -c main.cpp
 
 #BPlusTree/node_block.h

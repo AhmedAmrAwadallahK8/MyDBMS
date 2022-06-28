@@ -6,24 +6,26 @@
 
 #include "..\DataBaseObjects\entry.h"
 #include "..\DataBaseObjects\record.h"
-#include "node.h"
+#include "..\BPlusTree\node_block.h"
 
+template<typename T>
 class Node_Block;
+
 
 template<typename T>
 class Node{
     protected:
         T data;
-        Node_Block *child_block_ptr;
+        Node_Block<T> *child_block_ptr;
         Record *record_ptr;
     public:
-        Node(T data, Node_Block* input_block);
+        Node(T data, Node_Block<T>* input_block);
         Node(T data, Record* input_record);
         ~Node();
 
         T get_data();
 
-        Node_Block* get_child_ptr(); 
+        Node_Block<T>* get_child_ptr(); 
         Record* get_record_ptr();
         
         void static test();
@@ -32,7 +34,7 @@ class Node{
 
 
 template<typename T>
-Node<T>::Node(T input_data, Node_Block* block_entry):
+Node<T>::Node(T input_data, Node_Block<T>* block_entry):
     data(input_data),
     child_block_ptr(block_entry),
     record_ptr(nullptr)
@@ -54,7 +56,7 @@ T Node<T>::get_data(){
 }
 
 template<typename T>
-Node_Block* Node<T>::get_child_ptr(){
+Node_Block<T>* Node<T>::get_child_ptr(){
     return child_block_ptr;
 }
 
@@ -69,13 +71,13 @@ void Node<T>::test(){
     std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
     std::vector<int> attr{0, 1, 2, 3};
     Record b(attr, entries);
-    // Node_Block c(4, true, true);
-
-    // Node node(2, nullptr);
+    Node_Block c(0, 4, true, true);
+    
+    Node node(2, &c);
     Node leaf(2, &b);
 
-    // std::cout << "Node Test. Entry Data: " << node.get_data() << " Child Block Address: " << 
-    //             node.get_child_ptr() << " Record Address: " << node.get_record_ptr() << std::endl;
+    std::cout << "Node Test. Entry Data: " << node.get_data() << " Child Block Address: " << 
+                 node.get_child_ptr() << " Record Address: " << node.get_record_ptr() << std::endl;
 
     std::cout << "Leaf Test. Entry Data: " << leaf.get_data() << " Child Block Address: " << 
                 leaf.get_child_ptr() << " Record Address: " << leaf.get_record_ptr() << std::endl;

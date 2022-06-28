@@ -5,7 +5,7 @@
 #include "DataBaseObjects\entry.h"
 #include "DataBaseObjects\record.h"
 #include "BPlusTree\node.h"
-//#include "BPlusTree\node_block.h"
+#include "BPlusTree\node_block.h"
 //#include "BPlusTree\b_plus_tree.h"
 //#include "Tests\test_b_plus_tree.h"
 
@@ -27,7 +27,7 @@ int main(){
     //Entry::test();
     //Record::test();
     Node<int>::test();
-    //Node_Block::test();
+    //Node_Block<int>::test();
     //Test_B_Plus_Tree::test();
 
 
