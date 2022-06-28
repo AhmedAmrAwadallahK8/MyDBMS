@@ -1,14 +1,14 @@
 #ifndef NODE_BLOCK_H
 #define NODE_BLOCK_H
 
-class Node;
+class Node<T>;
 class Entry;
 
 class Node_Block{
     protected:
         Node_Block *parent_block_ptr;
         Node_Block *child_block_ptr;
-        std::vector<Node> node_vec;
+        std::vector<Node<T>> node_vec;
         Node_Block *next_leaf_block_ptr;
         Node_Block *prev_leaf_block_ptr;
         long long unsigned int block_size;
