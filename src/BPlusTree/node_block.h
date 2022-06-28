@@ -7,10 +7,8 @@
 
 #include "..\DataBaseObjects\record.h"
 
-template<typename T>
+template <typename T>
 class Node;
-
-
 template<typename T>
 class Node_Block{
     protected:
@@ -22,7 +20,7 @@ class Node_Block{
         long long unsigned int block_size;
         bool full, leaf, root;
     public:
-        Node_Block(T template_seed, int size_input, bool leaf_input, bool root_input);
+        Node_Block(int size_input, bool leaf_input, bool root_input);
         ~Node_Block();
 
         void add_to_block(T input_data, Node_Block<T>* input_block); /* Dead Code */
@@ -60,7 +58,7 @@ class Node_Block{
 /* Might do a revamp here, input an actual value instead of Entry */
 
 template<typename T>
-Node_Block<T>::Node_Block(T template_seed, int input_size, bool input_leaf, bool input_root):
+Node_Block<T>::Node_Block(int input_size, bool input_leaf, bool input_root):
     parent_block_ptr(nullptr),
     child_block_ptr(nullptr),
     next_leaf_block_ptr(nullptr),
@@ -86,7 +84,7 @@ Node_Block<T>::~Node_Block(){}
 template<typename T>
 void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
     if((!full) && (!leaf)){
-        node_vec.push_back(Node(input_data, input_block));
+        node_vec.push_back(Node<T>(input_data, input_block));
         full = check_full();
     }
     //sort(node_vec.begin(), node_vec.end());
@@ -95,7 +93,7 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
 template<typename T>
 void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
     if((!full) && (leaf)){
-        node_vec.push_back(Node(input_data, input_record));
+        node_vec.push_back(Node<T>(input_data, input_record));
         full = check_full();
     }
     //std::sort(node_vec.begin(), node_vec.end());
@@ -103,8 +101,8 @@ void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
 
 template<typename T>
 void Node_Block<T>::print_block(){
-    for(Node n: node_vec){
-        n.get_data();
+    for(Node<T> n: node_vec){
+        std::cout << "Data: " << n.get_data() << "\n";
     }
 }
 
@@ -259,6 +257,8 @@ bool Node_Block<T>::test_adding_leaf_nodes(){
         std::cout << "Added node when this leaf block was full" << std::endl;
         return false;
     }
+    
+    test_leaf_block.print_block();
 
     return true;
 }

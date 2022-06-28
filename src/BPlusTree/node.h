@@ -10,8 +10,6 @@
 
 template<typename T>
 class Node_Block;
-
-
 template<typename T>
 class Node{
     protected:
@@ -71,7 +69,7 @@ void Node<T>::test(){
     std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
     std::vector<int> attr{0, 1, 2, 3};
     Record b(attr, entries);
-    Node_Block c(0, 4, true, true);
+    Node_Block<int> c(4, true, true);
     
     Node node(2, &c);
     Node leaf(2, &b);
