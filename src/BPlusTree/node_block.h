@@ -27,6 +27,7 @@ class Node_Block{
         void add_node(T input_data, Node_Block<T>* input_block);
         void add_leaf_node(T input_data, Record* input_record);
         void add_leaf_direct(Node<T> leaf_node);
+        void add_node_direct(Node<T> node);
 
         Node_Block<T>* get_parent_block_ptr();
         Node_Block<T>* get_child_block_ptr();
@@ -109,6 +110,9 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
     }
 }
 
+
+
+
 template<typename T>
 void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
     if((!full) && (leaf)){
@@ -120,6 +124,11 @@ void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
         node_vec.push_back(Node<T>(input_data, input_record));
         std::sort(node_vec.begin(), node_vec.end());
     }
+}
+
+template<typename T>
+void Node_Block<T>::add_node_direct(Node<T> node){
+    node_vec.push_back(node);
 }
 
 template<typename T>

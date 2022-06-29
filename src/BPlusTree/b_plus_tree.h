@@ -28,7 +28,7 @@ class B_Plus_Tree{
         void insert_node(Node<T> node, Node_Block<T>* parent_block, Node_Block<T>* child_block);
 
         void leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block);
-        void node_block_split();
+        void node_block_split(Node_Block<T>* node_block);
 
         Node_Block<T>* get_correct_leaf_block(T data, Node_Block<T>* node_block);
 
@@ -149,10 +149,43 @@ void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_bloc
 
 template<typename T>
 void B_Plus_Tree<T>::insert_node(Node<T> node, Node_Block<T>* parent_block, Node_Block<T>* child_block){
-    parent_block->add_node(node.get_data(), child_block);
     if(parent_block->is_full()){
+        parent_block->add_node(node.get_data(), child_block);
+        node_block_split(parent_block);
         /* Node Block Split Logic */
-        return;
+        /*Root and Non Root Case */
+    }
+    else{
+        parent_block->add_node(node.get_data(), child_block);
+    }
+}
+
+template<typename T>
+void B_Plus_Tree<T>::node_block_split(Node_Block<T>* node_block){
+    if(node_block->is_root()){
+        Node_Block<T>* old_root = node_block;
+        old_root->set_root(false);
+        Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
+        Node_Block<T>* new_node = new Node_Block<T>(default_block_size, false, false);
+
+        new_root->set_child(old_root);
+
+        Node<T> last_node = old_root->get_and_remove_last_node();
+        Node<T> second_to_last_node = old_root->get_and_remove_last_node();
+
+        Node_Block<T>* child_leaf_block = second_to_last_node.get_child_ptr(); /* Sequence dependent code */
+        second_to_last_node.set_child_ptr(new_node);
+
+        new_root->add_node_direct(second_to_last_node);
+
+        new_node->add_node_direct(last_node);
+        new_node->set_child(child_leaf_block);
+
+        root_block=new_root;
+
+    }
+    else{
+        /*Non Root Case */
     }
 }
 
@@ -183,6 +216,7 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
     }
     else if(leaf_block->has_next()){
         Node_Block<T>* old_next = leaf_block->get_next_leaf_ptr();
+
         Node_Block<T>* parent = leaf_block->get_parent_block_ptr();
         Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
         
@@ -195,6 +229,7 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
         insert_node(old_leaf_node, parent, new_next);
 
         leaf_block->set_next(new_next);
+
         new_next->set_next(old_next);
 
     }

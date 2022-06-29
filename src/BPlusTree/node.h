@@ -23,6 +23,8 @@ class Node{
 
         T get_data();
 
+       void set_child_ptr(Node_Block<T>* new_child);
+
         Node_Block<T>* get_child_ptr(); 
         Record* get_record_ptr();
 
@@ -54,6 +56,11 @@ Node<T>::Node(T input_data, Record* input_record):
 
 template<typename T>
 Node<T>::~Node(){}
+
+template<typename T>
+void Node<T>::set_child_ptr(Node_Block<T>* new_child){
+    child_block_ptr = new_child;
+}
 
 template<typename T>
 void Node<T>::print_record(){
