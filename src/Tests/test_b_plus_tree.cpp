@@ -11,6 +11,7 @@ void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
     // test_correct_tree_type();
     test_insertion();
+    test_string_insertion();
 
 
 
@@ -111,18 +112,71 @@ void Test_B_Plus_Tree::test_insertion(){
     std::cout << "Printing Last Block\n";
     curr_node->print_block();
 
-    // std::cout << "Printing Child of Root...\n";
-    // root->get_child_block_ptr()->print_block();
-    // std::cout << "Printing Child Next..\n";
-    // root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
-    // std::cout << "Printing Child Next Next..\n";
-    // root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
-    // std::cout << "Printing Child Next Next Next..\n";
-    // root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
-    
-    
+}
 
+void Test_B_Plus_Tree::test_string_insertion(){
+    B_Plus_Tree<std::string> tree;
 
+    std::vector<std::string> entries1{"Ahmed2", "Hello"};
+    std::vector<int> attr1{Entry::STRING, Entry::STRING};
+    Record *pk1 = new Record(attr1, entries1);
+
+    std::vector<std::string> entries2{"Bob", "Hello"};
+    Record *pk2 = new Record(attr1, entries2);
+
+    std::vector<std::string> entries3{"Vanice", "Hello"};
+    Record *pk3 = new Record(attr1, entries3);
+
+    std::vector<std::string> entries4{"Janice", "Hello"};
+    Record *pk4 = new Record(attr1, entries4);
+
+    std::vector<std::string> entries5{"Vince", "Hello"};
+    Record *pk5 = new Record(attr1, entries5);
+
+    std::vector<std::string> entries6{"Zach", "Hello"};
+    Record *pk6 = new Record(attr1, entries6);
+
+    std::vector<std::string> entries7{"Mizzie", "Hello"};
+    Record *pk7 = new Record(attr1, entries7);
+
+    std::vector<std::string> entries8{"Eric", "Hello"};
+    Record *pk8 = new Record(attr1, entries8);
+
+    std::vector<std::string> entries9{"David", "Hello"};
+    Record *pk9 = new Record(attr1, entries9);
+
+    std::vector<std::string> entries10{"Nickan", "Hello"};
+    Record *pk10 = new Record(attr1, entries10);
+
+    std::vector<std::string> entries11{"Alex", "Hello"};
+    Record *pk11 = new Record(attr1, entries11);
+
+    std::vector<std::string> entries12{"Shiri", "Hello"};
+    Record *pk12 = new Record(attr1, entries12);
+
+    std::vector<std::string> entries13{"Anon", "Hello"};
+    Record *pk13 = new Record(attr1, entries13);
+
+    std::vector<std::string> entries14{"Wade", "Hello"};
+    Record *pk14 = new Record(attr1, entries14);
+
+    tree.insert(pk1->get_head_ptr()->get_str(), pk1);
+    tree.insert(pk2->get_head_ptr()->get_str(), pk2);
+    tree.insert(pk3->get_head_ptr()->get_str(), pk3);
+    tree.insert(pk4->get_head_ptr()->get_str(), pk4);
+    tree.insert(pk5->get_head_ptr()->get_str(), pk5);
+    tree.insert(pk6->get_head_ptr()->get_str(), pk6);
+    tree.insert(pk7->get_head_ptr()->get_str(), pk7);
+    tree.insert(pk8->get_head_ptr()->get_str(), pk8);
+    tree.insert(pk9->get_head_ptr()->get_str(), pk9);
+    tree.insert(pk10->get_head_ptr()->get_str(), pk10);
+    tree.insert(pk11->get_head_ptr()->get_str(), pk11);
+    tree.insert(pk12->get_head_ptr()->get_str(), pk12);
+    tree.insert(pk13->get_head_ptr()->get_str(), pk13);
+    tree.insert(pk14->get_head_ptr()->get_str(), pk14);
+
+    std::cout << "StrAttr\tStrAttr\n";
+    tree.print_tree();
 }
 
 void Test_B_Plus_Tree::test_correct_tree_type(){

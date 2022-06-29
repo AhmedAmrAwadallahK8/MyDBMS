@@ -11,9 +11,9 @@
 template<typename T>
 class B_Plus_Tree{
     protected:
-        Node_Block<T> *root_block;
         int type_flag;
         int default_block_size;
+        Node_Block<T> *root_block;
     public:
         B_Plus_Tree();
         B_Plus_Tree(int primary_key_type, int block_size);
@@ -47,9 +47,9 @@ class B_Plus_Tree{
 
 template<typename T>
 B_Plus_Tree<T>::B_Plus_Tree(int primary_key_type, int block_size):
-    root_block(new Node_Block<T>(block_size, true, true)),
     type_flag(primary_key_type),
-    default_block_size(block_size)
+    default_block_size(block_size),
+    root_block(new Node_Block<T>(block_size, true, true))
     {}
 
 template<typename T>

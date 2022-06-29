@@ -6,6 +6,7 @@ class Test_B_Plus_Tree{
         void static test();
         void static test_correct_tree_type();
         void static test_insertion();
+        void static test_string_insertion();
 };
 
 #endif
