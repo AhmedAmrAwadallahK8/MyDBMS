@@ -9,7 +9,7 @@
 
 void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
-    test_correct_tree_type();
+    // test_correct_tree_type();
     test_insertion();
 
 
@@ -56,7 +56,7 @@ void Test_B_Plus_Tree::test_insertion(){
     root->get_child_block_ptr()->print_block();
     std::cout << "Printing Child Next..\n";
     root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
-
+    std::cout << "IntAttr\tStrAttr\n";
     int_tree.print_tree();
 
 

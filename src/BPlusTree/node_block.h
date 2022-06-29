@@ -49,6 +49,8 @@ class Node_Block{
 
         bool check_full();
 
+        Node_Block<T>* find_next_child(T data);
+
         bool has_parent();
         bool has_next();
         bool has_prev();
@@ -130,7 +132,25 @@ Node<T> Node_Block<T>::get_and_remove_last_node(){
     std::cout << "REMOVING\n";
     Node<T> node = node_vec.back();
     node_vec.pop_back();
+    full = false;
     return node;
+}
+
+template<typename T>
+Node_Block<T>* Node_Block<T>::find_next_child(T data){
+    Node_Block<T>* correct_node = child_block_ptr;
+    for(Node<T> n : node_vec){
+        if(data == n.get_data()){
+            /* Has to be unique, don't allow the insertion */
+        }
+        else if(data < n.get_data()){
+            return correct_node;
+        }
+        else if(data > n.get_data()){
+            correct_node = n.get_child_ptr();
+        }
+    }
+    return correct_node;
 }
 
 template<typename T>

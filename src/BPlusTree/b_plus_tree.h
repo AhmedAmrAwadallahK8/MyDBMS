@@ -29,6 +29,8 @@ class B_Plus_Tree{
         void leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block);
         void node_block_split();
 
+        Node_Block<T>* get_correct_leaf_block(T data, Node_Block<T>* node_block);
+
         void no_parent();
         void no_right_neighbor();
         void no_left_neighbor();
@@ -79,13 +81,26 @@ void B_Plus_Tree<T>::print_tree(){
 
 template<typename T>
 void B_Plus_Tree<T>::insert(T data, Record *input){
+    std::cout << "Inserting Data: " << data << "\n";
     if(root_block->is_leaf()){
         insert_leaf(data, input, root_block);
     }
     else{ /* Get to the correct leaf block */
-        return;
+        Node_Block<T>* leaf_block =  get_correct_leaf_block(data, root_block);
+        insert_leaf(data, input, leaf_block);
     }
     
+}
+
+template<typename T>
+Node_Block<T>* B_Plus_Tree<T>::get_correct_leaf_block(T data, Node_Block<T>* node_block){
+    if(node_block->is_leaf()){
+        return node_block;
+    }
+    else{
+        Node_Block<T>* next_child_block = node_block->find_next_child(data);
+        return get_correct_leaf_block(data, next_child_block);
+    }
 }
 
 // template<typename T>
