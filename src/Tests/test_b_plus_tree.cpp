@@ -43,11 +43,23 @@ void Test_B_Plus_Tree::test_insertion(){
     std::vector<std::string> entries5{"12", "Hello"};
     Record *pk_int5 = new Record(attr1, entries5);
 
+    std::vector<std::string> entries6{"16", "Hello"};
+    Record *pk_int6 = new Record(attr1, entries6);
+
+    std::vector<std::string> entries7{"50", "Hello"};
+    Record *pk_int7 = new Record(attr1, entries7);
+
+    std::vector<std::string> entries8{"80", "Hello"};
+    Record *pk_int8 = new Record(attr1, entries8);
+
     int_tree.insert(pk_int1->get_head_ptr()->get_int(), pk_int1);
     int_tree.insert(pk_int2->get_head_ptr()->get_int(), pk_int2);
     int_tree.insert(pk_int3->get_head_ptr()->get_int(), pk_int3);
     int_tree.insert(pk_int4->get_head_ptr()->get_int(), pk_int4);
     int_tree.insert(pk_int5->get_head_ptr()->get_int(), pk_int5);
+    int_tree.insert(pk_int6->get_head_ptr()->get_int(), pk_int6);
+    int_tree.insert(pk_int7->get_head_ptr()->get_int(), pk_int7);
+    int_tree.insert(pk_int8->get_head_ptr()->get_int(), pk_int8);
 
     Node_Block<int>* root = int_tree.get_root();
     std::cout << "Printing Root1...\n";
@@ -56,6 +68,10 @@ void Test_B_Plus_Tree::test_insertion(){
     root->get_child_block_ptr()->print_block();
     std::cout << "Printing Child Next..\n";
     root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
+    std::cout << "Printing Child Next Next..\n";
+    root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
+    std::cout << "Printing Child Next Next Next..\n";
+    root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
     std::cout << "IntAttr\tStrAttr\n";
     int_tree.print_tree();
 

@@ -132,7 +132,7 @@ Node<T> Node_Block<T>::get_and_remove_last_node(){
     std::cout << "REMOVING\n";
     Node<T> node = node_vec.back();
     node_vec.pop_back();
-    full = false;
+    full = false; /* This could be a problem in the future */
     return node;
 }
 

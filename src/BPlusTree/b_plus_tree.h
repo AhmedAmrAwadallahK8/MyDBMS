@@ -25,6 +25,7 @@ class B_Plus_Tree{
         void insert(T data, Record *input_record);
         void do_insert(T data, Record *input);
         void insert_leaf(T data, Record *input, Node_Block<T> *leaf_block);
+        void insert_node(Node<T> node, Node_Block<T>* parent_block, Node_Block<T>* child_block);
 
         void leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block);
         void node_block_split();
@@ -140,8 +141,6 @@ void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_bloc
     if(leaf_block->is_full()){
         leaf_block->add_leaf_node(data, input);
         leaf_block_split(data, input, leaf_block);
-        
-        /* add new block logic */
     }
     else{
         leaf_block->add_leaf_node(data, input);
@@ -149,30 +148,71 @@ void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_bloc
 }
 
 template<typename T>
+void B_Plus_Tree<T>::insert_node(Node<T> node, Node_Block<T>* parent_block, Node_Block<T>* child_block){
+    parent_block->add_node(node.get_data(), child_block);
+    if(parent_block->is_full()){
+        /* Node Block Split Logic */
+        return;
+    }
+}
+
+/* Some abstraction can occur here(Repeating Code) */
+template<typename T>
 void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block){
     if(leaf_block->is_root()){
-            Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
-            Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
+        Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
+        Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
 
-            Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
-            Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
-            new_root->add_node(old_leaf_node.get_data(), new_next);
-            new_next->add_leaf_direct(old_leaf_node);
-            new_next->add_leaf_direct(new_leaf_node);
+        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
 
-            leaf_block->set_root(false);
+        new_root->add_node(old_leaf_node.get_data(), new_next);
+        new_next->add_leaf_direct(old_leaf_node);
+        new_next->add_leaf_direct(new_leaf_node);
 
-            leaf_block->set_parent(new_root);
-            new_next->set_parent(new_root);
-            new_root->set_child(leaf_block);
+        leaf_block->set_root(false);
 
-            leaf_block->set_next(new_next);
-            new_next->set_prev(leaf_block);
+        leaf_block->set_parent(new_root);
+        new_next->set_parent(new_root);
+        new_root->set_child(leaf_block);
 
-            root_block = new_root;    
+        leaf_block->set_next(new_next);
+        new_next->set_prev(leaf_block);
+
+        root_block = new_root;    
     }
-    else{
-        return;
+    else if(leaf_block->has_next()){
+        Node_Block<T>* parent = leaf_block->get_parent_block_ptr();
+        Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
+        Node_Block<T>* old_next = leaf_block->get_next_leaf_ptr();
+
+        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+
+        new_next->add_leaf_direct(old_leaf_node);
+        new_next->add_leaf_direct(new_leaf_node);
+
+        insert_node(old_leaf_node, parent, new_next);
+
+
+        new_next->set_next(old_next);
+        leaf_block->set_next(new_next);
+
+    }
+    else if(!leaf_block->has_next()){
+        Node_Block<T>* parent = leaf_block->get_parent_block_ptr();
+        Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
+
+        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+
+        new_next->add_leaf_direct(old_leaf_node);
+        new_next->add_leaf_direct(new_leaf_node);
+
+        insert_node(old_leaf_node, parent, new_next);
+
+        leaf_block->set_next(new_next);
+
     }
 }
 
