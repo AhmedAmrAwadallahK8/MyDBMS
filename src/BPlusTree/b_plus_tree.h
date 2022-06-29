@@ -108,6 +108,7 @@ void B_Plus_Tree<T>::insert(T data, Record *input){
 template<typename T>
 void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_block){
     if(leaf_block->is_full()){
+        leaf_block->add_leaf_node(data, input);
         leaf_block_split(data, input, leaf_block);
         
         /* add new block logic */
@@ -123,10 +124,11 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
             Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
             Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
 
+            Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
             Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
             new_root->add_node(old_leaf_node.get_data(), new_next);
             new_next->add_leaf_direct(old_leaf_node);
-            new_next->add_leaf_node(data, input);
+            new_next->add_leaf_direct(new_leaf_node);
 
             leaf_block->set_root(false);
 

@@ -98,6 +98,10 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
         std::sort(node_vec.begin(), node_vec.end());
         full = check_full();
     }
+    else if((node_vec.size()==block_size) && (leaf)){
+        node_vec.push_back(Node<T>(input_data, input_block));
+        std::sort(node_vec.begin(), node_vec.end());
+    }
 }
 
 template<typename T>
@@ -106,6 +110,10 @@ void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
         node_vec.push_back(Node<T>(input_data, input_record));
         std::sort(node_vec.begin(), node_vec.end());
         full = check_full();
+    }
+    else if((node_vec.size()==block_size) && (leaf)){
+        node_vec.push_back(Node<T>(input_data, input_record));
+        std::sort(node_vec.begin(), node_vec.end());
     }
 }
 
@@ -116,7 +124,8 @@ void Node_Block<T>::add_leaf_direct(Node<T> leaf_node){
 
 template<typename T>
 Node<T> Node_Block<T>::get_and_remove_last_node(){
-    Node<T> node = node_vec[block_size-1];
+    std::cout << "REMOVING\n";
+    Node<T> node = node_vec.back();
     node_vec.pop_back();
     return node;
 }
