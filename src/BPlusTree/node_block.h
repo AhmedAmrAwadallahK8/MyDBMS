@@ -52,6 +52,9 @@ class Node_Block{
         bool has_parent();
         bool has_next();
         bool has_prev();
+        bool has_child();
+
+        void print_block_records();
 
 
         /* Testing Code should probably be in a friend class called test_node_block */
@@ -209,7 +212,7 @@ void Node_Block<T>::set_root(bool input_bool){
 
 template<typename T>
 bool Node_Block<T>::has_parent(){
-    if(parent_block_ptr == nullptr){
+    if(parent_block_ptr != nullptr){
         return true;
     }
     else{
@@ -219,7 +222,7 @@ bool Node_Block<T>::has_parent(){
 
 template<typename T>
 bool Node_Block<T>::has_next(){
-    if(next_leaf_block_ptr == nullptr){
+    if(next_leaf_block_ptr != nullptr){
         return true;
     }
     else{
@@ -229,11 +232,29 @@ bool Node_Block<T>::has_next(){
 
 template<typename T>
 bool Node_Block<T>::has_prev(){
-    if(prev_leaf_block_ptr == nullptr){
+    if(prev_leaf_block_ptr != nullptr){
         return true;
     }
     else{
         return false;
+    }
+}
+
+template<typename T>
+bool Node_Block<T>::has_child(){
+    if(child_block_ptr != nullptr){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+template<typename T>
+void Node_Block<T>::print_block_records(){
+    for(Node<T> n: node_vec){
+        n.print_record();
     }
 }
 

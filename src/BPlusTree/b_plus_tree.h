@@ -37,6 +37,8 @@ class B_Plus_Tree{
         void block_split_right();
         void block_split_middle();
 
+        void print_tree();
+
         friend class test_b_plus_tree;
 };
 
@@ -60,6 +62,19 @@ B_Plus_Tree<T>::~B_Plus_Tree(){}
 template<typename T>
 Node_Block<T>* B_Plus_Tree<T>::get_root(){
     return root_block;
+}
+
+template<typename T>
+void B_Plus_Tree<T>::print_tree(){
+    Node_Block<T>* curr_block = root_block;
+    while(curr_block->has_child()){
+        curr_block = curr_block->get_child_block_ptr();
+    }
+    while(curr_block->has_next()){
+        curr_block->print_block_records();
+        curr_block = curr_block->get_next_leaf_ptr();
+    }
+    curr_block->print_block_records();
 }
 
 template<typename T>

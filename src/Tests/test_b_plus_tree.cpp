@@ -27,20 +27,20 @@ void Test_B_Plus_Tree::test_insertion(){
     int default_size = 3;
     B_Plus_Tree<int> int_tree(Entry::INT, default_size);
 
-    std::vector<std::string> entries1{"4", "Hello"};
+    std::vector<std::string> entries1{"20", "Hello"};
     std::vector<int> attr1{Entry::INT, Entry::STRING};
     Record *pk_int1 = new Record(attr1, entries1);
 
-    std::vector<std::string> entries2{"2", "Hello"};
+    std::vector<std::string> entries2{"70", "Hello"};
     Record *pk_int2 = new Record(attr1, entries2);
 
-    std::vector<std::string> entries3{"3", "Hello"};
+    std::vector<std::string> entries3{"30", "Hello"};
     Record *pk_int3 = new Record(attr1, entries3);
 
-    std::vector<std::string> entries4{"1", "Hello"};
+    std::vector<std::string> entries4{"5", "Hello"};
     Record *pk_int4 = new Record(attr1, entries4);
 
-    std::vector<std::string> entries5{"5", "Hello"};
+    std::vector<std::string> entries5{"12", "Hello"};
     Record *pk_int5 = new Record(attr1, entries5);
 
     int_tree.insert(pk_int1->get_head_ptr()->get_int(), pk_int1);
@@ -56,6 +56,8 @@ void Test_B_Plus_Tree::test_insertion(){
     root->get_child_block_ptr()->print_block();
     std::cout << "Printing Child Next..\n";
     root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
+
+    int_tree.print_tree();
 
 
 }

@@ -44,7 +44,6 @@ void Entry::print_entry(){
         default:
             std::cout << "Unknown Type";
     }
-    std::cout << "\n";
 }
 
 int Entry::get_int(){

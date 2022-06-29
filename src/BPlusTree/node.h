@@ -26,6 +26,9 @@ class Node{
         Node_Block<T>* get_child_ptr(); 
         Record* get_record_ptr();
 
+        void print_record();
+        bool has_record();
+
         bool operator< (const Node<T> &other) const {
             return data < other.data;
         }
@@ -51,6 +54,23 @@ Node<T>::Node(T input_data, Record* input_record):
 
 template<typename T>
 Node<T>::~Node(){}
+
+template<typename T>
+void Node<T>::print_record(){
+    if(has_record()){
+        record_ptr->print_record();
+    }
+}
+
+template<typename T>
+bool Node<T>::has_record(){
+    if(record_ptr != nullptr){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 template<typename T>
 T Node<T>::get_data(){

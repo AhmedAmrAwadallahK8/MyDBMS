@@ -37,7 +37,7 @@ void Record::print_record(){
     while(curr_entry!=nullptr){
         curr_entry->print_entry();
         curr_entry = curr_entry->get_next_entry_ptr();
-        std::cout << "\t\t";
+        std::cout << "\t";
     }
     std::cout << std::endl;
 }
