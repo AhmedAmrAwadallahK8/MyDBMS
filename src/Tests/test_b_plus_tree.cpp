@@ -24,7 +24,7 @@ void Test_B_Plus_Tree::test(){
 }
 
 void Test_B_Plus_Tree::test_insertion(){
-    int default_size = 4;
+    int default_size = 3;
     B_Plus_Tree<int> int_tree(Entry::INT, default_size);
 
     std::vector<std::string> entries1{"4", "Hello"};
@@ -50,8 +50,12 @@ void Test_B_Plus_Tree::test_insertion(){
     int_tree.insert(pk_int5->get_head_ptr()->get_int(), pk_int5);
 
     Node_Block<int>* root = int_tree.get_root();
-    std::cout << "Printing Block..\n";
+    std::cout << "Printing Root...\n";
     root->print_block();
+    std::cout << "Printing Child of Root...\n";
+    root->get_child_block_ptr()->print_block();
+    std::cout << "Printing Child Next..\n";
+    root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
 
 
 }

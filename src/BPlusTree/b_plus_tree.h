@@ -13,7 +13,9 @@ class B_Plus_Tree{
     protected:
         Node_Block<T> *root_block;
         int type_flag;
+        int default_block_size;
     public:
+        B_Plus_Tree();
         B_Plus_Tree(int primary_key_type, int block_size);
         ~B_Plus_Tree();
 
@@ -23,7 +25,14 @@ class B_Plus_Tree{
         void insert(T data, Record *input_record);
         void do_insert(T data, Record *input);
         void insert_leaf(T data, Record *input, Node_Block<T> *leaf_block);
-        void block_split();
+
+        void leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block);
+        void node_block_split();
+
+        void no_parent();
+        void no_right_neighbor();
+        void no_left_neighbor();
+
         void block_split_left();
         void block_split_right();
         void block_split_middle();
@@ -34,7 +43,14 @@ class B_Plus_Tree{
 template<typename T>
 B_Plus_Tree<T>::B_Plus_Tree(int primary_key_type, int block_size):
     root_block(new Node_Block<T>(block_size, true, true)),
-    type_flag(primary_key_type)
+    type_flag(primary_key_type),
+    default_block_size(block_size)
+    {}
+
+template<typename T>
+B_Plus_Tree<T>::B_Plus_Tree():
+    default_block_size(3),
+    root_block(new Node_Block<T>(default_block_size, true, true))
     {}
 
 /* Later this will need to handle deleting all the pointers recursively */
@@ -48,9 +64,11 @@ Node_Block<T>* B_Plus_Tree<T>::get_root(){
 
 template<typename T>
 void B_Plus_Tree<T>::insert(T data, Record *input){
-    std::cout << "Data entering Insert: " << data << std::endl;
     if(root_block->is_leaf()){
         insert_leaf(data, input, root_block);
+    }
+    else{ /* Get to the correct leaf block */
+        return;
     }
     
 }
@@ -90,8 +108,9 @@ void B_Plus_Tree<T>::insert(T data, Record *input){
 template<typename T>
 void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_block){
     if(leaf_block->is_full()){
+        leaf_block_split(data, input, leaf_block);
+        
         /* add new block logic */
-        std::cout << "Entered full block\n";
     }
     else{
         leaf_block->add_leaf_node(data, input);
@@ -99,8 +118,31 @@ void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_bloc
 }
 
 template<typename T>
-void B_Plus_Tree<T>::block_split(){
+void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block){
+    if(leaf_block->is_root()){
+            Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
+            Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
 
+            Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+            new_root->add_node(old_leaf_node.get_data(), new_next);
+            new_next->add_leaf_direct(old_leaf_node);
+            new_next->add_leaf_node(data, input);
+
+            leaf_block->set_root(false);
+
+            leaf_block->set_parent(new_root);
+            new_next->set_parent(new_root);
+            new_root->set_child(leaf_block);
+
+            leaf_block->set_next(new_next);
+            new_next->set_prev(leaf_block);
+
+            root_block = new_root;    
+    }
+    else{
+        return;
+    }
 }
+
 
 #endif

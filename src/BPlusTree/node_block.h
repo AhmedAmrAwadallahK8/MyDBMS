@@ -26,11 +26,13 @@ class Node_Block{
         void add_to_block(T input_data, Node_Block<T>* input_block); /* Dead Code */
         void add_node(T input_data, Node_Block<T>* input_block);
         void add_leaf_node(T input_data, Record* input_record);
+        void add_leaf_direct(Node<T> leaf_node);
 
         Node_Block<T>* get_parent_block_ptr();
         Node_Block<T>* get_child_block_ptr();
         Node_Block<T>* get_next_leaf_ptr();
         Node_Block<T>* get_prev_leaf_ptr();
+        Node<T> get_and_remove_last_node();
         bool is_full();
         bool is_leaf();
         bool is_root();
@@ -46,6 +48,10 @@ class Node_Block{
         void print_block();
 
         bool check_full();
+
+        bool has_parent();
+        bool has_next();
+        bool has_prev();
 
 
         /* Testing Code should probably be in a friend class called test_node_block */
@@ -89,18 +95,30 @@ template<typename T>
 void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
     if((!full) && (!leaf)){
         node_vec.push_back(Node<T>(input_data, input_block));
+        std::sort(node_vec.begin(), node_vec.end());
         full = check_full();
     }
-    std::sort(node_vec.begin(), node_vec.end());
 }
 
 template<typename T>
 void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
     if((!full) && (leaf)){
         node_vec.push_back(Node<T>(input_data, input_record));
+        std::sort(node_vec.begin(), node_vec.end());
         full = check_full();
     }
-    std::sort(node_vec.begin(), node_vec.end());
+}
+
+template<typename T>
+void Node_Block<T>::add_leaf_direct(Node<T> leaf_node){
+    node_vec.push_back(leaf_node);
+}
+
+template<typename T>
+Node<T> Node_Block<T>::get_and_remove_last_node(){
+    Node<T> node = node_vec[block_size-1];
+    node_vec.pop_back();
+    return node;
 }
 
 template<typename T>
@@ -179,6 +197,37 @@ template<typename T>
 void Node_Block<T>::set_root(bool input_bool){
     root = input_bool;
 }
+
+template<typename T>
+bool Node_Block<T>::has_parent(){
+    if(parent_block_ptr == nullptr){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+template<typename T>
+bool Node_Block<T>::has_next(){
+    if(next_leaf_block_ptr == nullptr){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+template<typename T>
+bool Node_Block<T>::has_prev(){
+    if(prev_leaf_block_ptr == nullptr){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 
 template<typename T>
 void Node_Block<T>::test(){
