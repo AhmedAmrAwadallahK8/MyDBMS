@@ -52,6 +52,12 @@ void Test_B_Plus_Tree::test_insertion(){
     std::vector<std::string> entries8{"80", "Hello"};
     Record *pk_int8 = new Record(attr1, entries8);
 
+    std::vector<std::string> entries9{"55", "Hello"};
+    Record *pk_int9 = new Record(attr1, entries9);
+
+    std::vector<std::string> entries10{"60", "Hello"};
+    Record *pk_int10 = new Record(attr1, entries10);
+
     int_tree.insert(pk_int1->get_head_ptr()->get_int(), pk_int1);
     int_tree.insert(pk_int2->get_head_ptr()->get_int(), pk_int2);
     int_tree.insert(pk_int3->get_head_ptr()->get_int(), pk_int3);
@@ -60,20 +66,45 @@ void Test_B_Plus_Tree::test_insertion(){
     int_tree.insert(pk_int6->get_head_ptr()->get_int(), pk_int6);
     int_tree.insert(pk_int7->get_head_ptr()->get_int(), pk_int7);
     int_tree.insert(pk_int8->get_head_ptr()->get_int(), pk_int8);
+    int_tree.insert(pk_int9->get_head_ptr()->get_int(), pk_int9);
+    int_tree.insert(pk_int10->get_head_ptr()->get_int(), pk_int10);
 
     Node_Block<int>* root = int_tree.get_root();
-    std::cout << "Printing Root0...\n";
-    root->print_block();
-    std::cout << "Printing Child of Root...\n";
-    root->get_child_block_ptr()->print_block();
-    std::cout << "Printing Child Next..\n";
-    root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
-    std::cout << "Printing Child Next Next..\n";
-    root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
-    std::cout << "Printing Child Next Next Next..\n";
-    root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
+    Node_Block<int>* curr_node = root;
     std::cout << "IntAttr\tStrAttr\n";
     int_tree.print_tree();
+
+
+    while(curr_node->has_child()){
+        if(curr_node->is_root()){
+            std::cout << "Printing Root\n";
+        }
+        else{
+            std::cout << "Printing Next Child\n";
+        }
+        curr_node->print_block();
+        curr_node = curr_node->get_child_block_ptr();
+    }
+    int i = 1;
+    while(curr_node->has_next()){
+        std::cout << "Printing Leaf Block" << i << "\n";
+        curr_node->print_block();
+        curr_node = curr_node->get_next_leaf_ptr();
+        i++;
+    }
+    std::cout << "Printing Last Block\n";
+    curr_node->print_block();
+
+    // std::cout << "Printing Child of Root...\n";
+    // root->get_child_block_ptr()->print_block();
+    // std::cout << "Printing Child Next..\n";
+    // root->get_child_block_ptr()->get_next_leaf_ptr()->print_block();
+    // std::cout << "Printing Child Next Next..\n";
+    // root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
+    // std::cout << "Printing Child Next Next Next..\n";
+    // root->get_child_block_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->get_next_leaf_ptr()->print_block();
+    
+    
 
 
 }

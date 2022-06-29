@@ -104,7 +104,7 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
         std::sort(node_vec.begin(), node_vec.end());
         full = check_full();
     }
-    else if((node_vec.size()==block_size) && (leaf)){
+    else if((node_vec.size()==block_size) && (!leaf)){
         node_vec.push_back(Node<T>(input_data, input_block));
         std::sort(node_vec.begin(), node_vec.end());
     }
