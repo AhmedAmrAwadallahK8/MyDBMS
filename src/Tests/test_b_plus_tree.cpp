@@ -58,6 +58,18 @@ void Test_B_Plus_Tree::test_insertion(){
     std::vector<std::string> entries10{"60", "Hello"};
     Record *pk_int10 = new Record(attr1, entries10);
 
+    std::vector<std::string> entries11{"13", "Hello"};
+    Record *pk_int11 = new Record(attr1, entries11);
+
+    std::vector<std::string> entries12{"14", "Hello"};
+    Record *pk_int12 = new Record(attr1, entries12);
+
+    std::vector<std::string> entries13{"21", "Hello"};
+    Record *pk_int13 = new Record(attr1, entries13);
+
+    std::vector<std::string> entries14{"22", "Hello"};
+    Record *pk_int14 = new Record(attr1, entries14);
+
     int_tree.insert(pk_int1->get_head_ptr()->get_int(), pk_int1);
     int_tree.insert(pk_int2->get_head_ptr()->get_int(), pk_int2);
     int_tree.insert(pk_int3->get_head_ptr()->get_int(), pk_int3);
@@ -68,6 +80,10 @@ void Test_B_Plus_Tree::test_insertion(){
     int_tree.insert(pk_int8->get_head_ptr()->get_int(), pk_int8);
     int_tree.insert(pk_int9->get_head_ptr()->get_int(), pk_int9);
     int_tree.insert(pk_int10->get_head_ptr()->get_int(), pk_int10);
+    int_tree.insert(pk_int11->get_head_ptr()->get_int(), pk_int11);
+    int_tree.insert(pk_int12->get_head_ptr()->get_int(), pk_int12);
+    int_tree.insert(pk_int13->get_head_ptr()->get_int(), pk_int13);
+    int_tree.insert(pk_int14->get_head_ptr()->get_int(), pk_int14);
 
     Node_Block<int>* root = int_tree.get_root();
     Node_Block<int>* curr_node = root;

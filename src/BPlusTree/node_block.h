@@ -110,9 +110,6 @@ void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
     }
 }
 
-
-
-
 template<typename T>
 void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
     if((!full) && (leaf)){
