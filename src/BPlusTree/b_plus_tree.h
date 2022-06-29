@@ -182,10 +182,10 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
         root_block = new_root;    
     }
     else if(leaf_block->has_next()){
+        Node_Block<T>* old_next = leaf_block->get_next_leaf_ptr();
         Node_Block<T>* parent = leaf_block->get_parent_block_ptr();
         Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
-        Node_Block<T>* old_next = leaf_block->get_next_leaf_ptr();
-
+        
         Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
         Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
 
@@ -194,9 +194,8 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
 
         insert_node(old_leaf_node, parent, new_next);
 
-
-        new_next->set_next(old_next);
         leaf_block->set_next(new_next);
+        new_next->set_next(old_next);
 
     }
     else if(!leaf_block->has_next()){
