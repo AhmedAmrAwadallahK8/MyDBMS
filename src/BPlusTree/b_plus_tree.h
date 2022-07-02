@@ -60,7 +60,10 @@ B_Plus_Tree<T>::B_Plus_Tree():
 
 /* Later this will need to handle deleting all the pointers recursively */
 template<typename T>
-B_Plus_Tree<T>::~B_Plus_Tree(){}
+B_Plus_Tree<T>::~B_Plus_Tree(){
+//    std::cout << "Deleting Rootblock...\n";
+//    delete root_block;
+}
 
 template<typename T>
 Node_Block<T>* B_Plus_Tree<T>::get_root(){

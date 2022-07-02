@@ -86,7 +86,11 @@ Node_Block<T>::Node_Block(int input_size, bool input_leaf, bool input_root):
     {}
 
 template<typename T>
-Node_Block<T>::~Node_Block(){}
+Node_Block<T>::~Node_Block(){
+//    std::cout << "Deleting child_block_ptr: " << child_block_ptr << std::endl;
+//    delete child_block_ptr;
+//    delete this;
+}
 
 // void Node_Block<T>::add_to_block(Entry* input_entry, Node_Block* input_block){
 //     if(leaf){

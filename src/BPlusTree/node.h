@@ -55,7 +55,15 @@ Node<T>::Node(T input_data, Record* input_record):
     {}
 
 template<typename T>
-Node<T>::~Node(){}
+Node<T>::~Node(){
+//    std::cout << "Deleting child_block_ptr: " << child_block_ptr << std::endl;
+//    delete child_block_ptr;
+//    if(record_ptr!=nullptr){
+//        std::cout << "Deleting Record\n";
+//        record_ptr->print_record();
+//    }
+//    delete record_ptr;
+}
 
 template<typename T>
 void Node<T>::set_child_ptr(Node_Block<T>* new_child){

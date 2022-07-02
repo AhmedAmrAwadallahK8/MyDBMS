@@ -10,7 +10,7 @@
 void Test_B_Plus_Tree::test(){
     bool all_tests_passed = true;
     // test_correct_tree_type();
-    test_insertion();
+    // test_insertion();
     test_string_insertion();
 
 
