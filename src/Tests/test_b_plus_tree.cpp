@@ -15,12 +15,11 @@ void Test_B_Plus_Tree::test(){
 
 
 
-
     if(all_tests_passed){
-        std::cout << "All tests passed\n";
+        // std::cout << "All tests passed\n";
     }
     else{
-        std::cout << "One more tests failed\n";
+        // std::cout << "One more tests failed\n";
     }
 }
 
