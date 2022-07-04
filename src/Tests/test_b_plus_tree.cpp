@@ -185,7 +185,7 @@ void Test_B_Plus_Tree::test_correct_tree_type(){
     B_Plus_Tree<char> char_tree(Entry::CHAR, default_size);
     B_Plus_Tree<std::string> str_tree(Entry::STRING, default_size);
 
-    std::vector<std::string> entries1{"2", "2.34", "a", "Hello"};
+    std::vector<std::string> entries1{"2", "2.33", "a", "Hello"};
     std::vector<int> attr1{Entry::INT, Entry::DOUBLE, Entry::CHAR, Entry::STRING};
     Record *pk_int = new Record(attr1, entries1);
     std::vector<std::string> entries2{"2.32", "2.34", "a", "Hello"};
