@@ -6,12 +6,12 @@ CFLAGS = -Wall -g3
 # ****************************************************
 # Targets needed to bring the executable up to date
  
-main: *.o 
-	$(CC) $(CFLAGS) -o main main.o entry.o record.o test_b_plus_tree.o
+main: main.o entry.o record.o test_b_plus_tree.o table.o test_table.o
+	$(CC) $(CFLAGS) -o main main.o entry.o record.o test_b_plus_tree.o table.o test_table.o
 # node_block.o b_plus_tree.o test_b_plus_tree.o
 # The main.o target can be written more simply
  
-main.o: main.cpp DataBaseObjects/*.h BPlusTree/*.h Tests/*.h 
+main.o: main.cpp Tests/test_table.h 
 	$(CC) $(CFLAGS) -c main.cpp
 
 entry.o: DataBaseObjects/entry.cpp DataBaseObjects/entry.h
@@ -19,6 +19,9 @@ entry.o: DataBaseObjects/entry.cpp DataBaseObjects/entry.h
 
 record.o: DataBaseObjects/record.cpp DataBaseObjects/record.h
 	$(CC) $(CFLAGS) -c DataBaseObjects/record.cpp
+
+table.o: DataBaseObjects/table.cpp DataBaseObjects/table.h
+	$(CC) $(CFLAGS) -c DataBaseObjects/table.cpp
 
 #node.o: BPlusTree/node.cpp BPlusTree/node.h 
 #	$(CC) $(CFLAGS) -c BPlusTree/node.cpp
@@ -32,4 +35,5 @@ record.o: DataBaseObjects/record.cpp DataBaseObjects/record.h
 test_b_plus_tree.o: Tests/test_b_plus_tree.cpp Tests/test_b_plus_tree.h BPlusTree/*.h 
 	$(CC) $(CFLAGS) -c Tests/test_b_plus_tree.cpp
 
-
+test_table.o: Tests/test_table.cpp DataBaseObjects/table.h 
+	$(CC) $(CFLAGS) -c Tests/test_table.cpp

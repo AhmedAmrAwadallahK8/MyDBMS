@@ -8,6 +8,7 @@
 #include "BPlusTree\node_block.h"
 #include "BPlusTree\b_plus_tree.h"
 #include "Tests\test_b_plus_tree.h"
+#include "Tests\test_table.h"
 
 // Template Issue: Reflections?
 
@@ -25,7 +26,8 @@ int main(){
     //Record::test();
     //Node<int>::test();
     //Node_Block<int>::test();
-    Test_B_Plus_Tree::test();
+    //Test_B_Plus_Tree::test();
+    Test_Table::test();
 
 
 

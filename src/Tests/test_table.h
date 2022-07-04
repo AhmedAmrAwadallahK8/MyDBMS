@@ -2,7 +2,8 @@
 #define TEST_TABLE_H
 
 class Test_Table{
-    void static test();
-    void static test_type_selection();
+    public:
+        void static test();
+        void static test_type_insert();
 };
 #endif
