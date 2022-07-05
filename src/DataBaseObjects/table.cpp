@@ -46,6 +46,10 @@ void Table::insert_record(Record* input_record){
 }
 
 void Table::print_table(){
+    for(std::string attr_name: attribute_names){
+        std::cout << attr_name << "\t";
+    }
+    std::cout << std::endl;
     switch(prim_key_type){
         case Entry::INT:
             int_tree->print_tree();
