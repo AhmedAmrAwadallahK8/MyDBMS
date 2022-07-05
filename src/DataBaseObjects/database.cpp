@@ -11,6 +11,7 @@ Database::Database(std::string input_name):
 
 Database::~Database(){}
 
+/* TODO: Handle new tables with a name already in the database*/
 void Database::create_table(std::string table_name, std::vector<std::string> attribute_names, std::vector<int> attributes_types){
     Table* new_table = new Table(table_name, attribute_names, attributes_types);
     tables.insert(std::pair<std::string, Table*>(table_name, new_table));
