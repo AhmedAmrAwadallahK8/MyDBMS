@@ -18,7 +18,7 @@ class Database{
         void create_table(std::string table_name, std::vector<std::string> attribute_names, std::vector<int> attributes_types);
         void insert_into_table(std::string table_name, Record* input_record);
         Table* get_table_by_name();
-        void print_table();
+        void print_table(std::string table_name);
 
         friend class Test_Database;
 };
