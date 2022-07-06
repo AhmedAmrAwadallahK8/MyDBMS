@@ -116,7 +116,7 @@ void Test_B_Plus_Tree::test_insertion(){
 void Test_B_Plus_Tree::test_string_insertion(){
     B_Plus_Tree<std::string> tree;
 
-    std::vector<std::string> entries1{"Ahmed2", "Hello"};
+    std::vector<std::string> entries1{"Ahmed", "Hello"};
     std::vector<int> attr1{Entry::STRING, Entry::STRING};
     Record *pk1 = new Record(attr1, entries1);
 

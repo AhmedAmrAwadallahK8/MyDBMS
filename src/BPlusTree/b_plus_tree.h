@@ -85,7 +85,6 @@ void B_Plus_Tree<T>::print_tree(){
 
 template<typename T>
 void B_Plus_Tree<T>::insert(T data, Record *input){
-    std::cout << "Inserting Data: " << data << "\n";
     if(root_block->is_leaf()){
         insert_leaf(data, input, root_block);
     }

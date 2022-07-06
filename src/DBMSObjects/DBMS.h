@@ -16,6 +16,7 @@ class DBMS{
         ~DBMS();
 
         void add_database(std::string input_name);
+        void select_database(std::string db_name);
 };
 
 #endif
