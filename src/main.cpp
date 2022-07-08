@@ -11,6 +11,7 @@
 #include "Tests\test_b_plus_tree.h"
 #include "Tests\test_table.h"
 #include "Tests\test_database.h"
+#include "Tests\test_parser.h"
 
 // Template Issue: Reflections?
 
@@ -30,7 +31,8 @@ int main(){
     //Node_Block<int>::test();
     //Test_B_Plus_Tree::test();
     //Test_Table::test();
-    Test_Database::test();
+    //Test_Database::test();
+    Test_Parser::test();
 
 
 

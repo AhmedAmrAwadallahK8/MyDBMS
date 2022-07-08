@@ -13,9 +13,9 @@ void Test_Parser::test(){
 void Test_Parser::test_basic(){
 
     Parser p("Hello my name is Ahmed;");
-    std::string token = "";
+    p.print_token_vec();
 
-    while(token != "END"){
-        p.get_token();
-    }
+//    while(token != "END"){
+//        p.get_token();
+//    }
 }

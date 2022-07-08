@@ -6,8 +6,8 @@ CFLAGS = -Wall -g3
 # ****************************************************
 # Targets needed to bring the executable up to date
  
-main: main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o
-	$(CC) $(CFLAGS) -o main main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o
+main: main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o lexer.o parser.o test_parser.o
+	$(CC) $(CFLAGS) -o main main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o lexer.o parser.o test_parser.o
 # node_block.o b_plus_tree.o test_b_plus_tree.o
 # The main.o target can be written more simply
  
@@ -26,6 +26,12 @@ table.o: DataBaseObjects/table.cpp
 database.o: DataBaseObjects/database.cpp
 	$(CC) $(CFLAGS) -c DataBaseObjects/database.cpp
 
+lexer.o: QueryLanguage/lexer.cpp
+	$(CC) $(CFLAGS) -c QueryLanguage/lexer.cpp
+
+parser.o: QueryLanguage/parser.cpp
+	$(CC) $(CFLAGS) -c QueryLanguage/parser.cpp
+
 #node.o: BPlusTree/node.cpp BPlusTree/node.h 
 #	$(CC) $(CFLAGS) -c BPlusTree/node.cpp
 
@@ -43,3 +49,6 @@ test_table.o: Tests/test_table.cpp
 
 test_database.o: Tests/test_database.cpp
 	$(CC) $(CFLAGS) -c Tests/test_database.cpp
+
+test_parser.o: Tests/test_parser.cpp
+	$(CC) $(CFLAGS) -c Tests/test_parser.cpp

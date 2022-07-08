@@ -13,6 +13,7 @@ class Parser{
         ~Parser();
 
         std::string get_token();
+        void print_token_vec();
 };
 
 #endif 
