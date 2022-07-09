@@ -1,11 +1,12 @@
 #include <map>
+#include <algorithm>
 #include <string>
 #include <chrono>
 #include <thread>
 #include <iostream>
 
 #include "..\DataBaseObjects\database.h"
-#include "DBMS.h"
+#include "dbms.h"
 
 DBMS::DBMS():
     current_database(nullptr),
@@ -20,24 +21,64 @@ DBMS::~DBMS(){
 }
 
 void DBMS::engine(){
-    std::string query;
+    std::cout << "Welcome to ASQL database. Type q or quit to exit the program.\n";
+    std::string query = "";
     while(running){
         query = get_query();
-        // analyze_syntax(query); /* Needs to be its own class */
         execute_query(query);
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        // analyze_syntax(query); /* Needs to be its own class */
     }
+    std::cout << "Thank you for using my DBMS\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    system("cls");
 }
 
 std::string DBMS::get_query(){
     std::string query = "";
     std::string input = "";
-    std::cout << "Enter Query: \n";
+    std::cout << "Enter Query:";
+    bool first_line = true;
     while(query_open(input)){
-        std::cin >> input;
+        if(first_line){
+            first_line = false;
+        }
+        else{
+            query += " ";
+            std::cout << "           >";
+        }
+        std::getline(std::cin, input);
+        input = clean_input(input);
+        if(user_quit(input)){
+            return "";
+        }
         query += input;
     }
+    std::string final_query = "";
+    for(char c : query){
+        if(c==';'){
+            final_query += c;
+            break;
+        }
+        else{
+            final_query += c;
+        }
+    }
+    return final_query;
     /* Remove trailing text after ; */
+}
+
+std::string DBMS::clean_input(std::string input){
+    input.erase(std::remove(input.begin(), input.end(), '\t'), input.end());
+    return input;
+}
+
+bool DBMS::user_quit(std::string input){
+    if((input == "quit") | (input == "q")){
+        running = false;
+        return true;
+    }
+    return false;
+
 }
 
 bool DBMS::query_open(std::string input){
@@ -50,7 +91,17 @@ bool DBMS::query_open(std::string input){
 }
 
 void DBMS::execute_query(std::string query){
+    if(query_empty(query)){
+        return;
+    }
+    std::cout << query << std::endl;
+}
 
+bool DBMS::query_empty(std::string query){
+    if(query == ""){
+        return true;
+    }
+    return false;
 }
 
 
