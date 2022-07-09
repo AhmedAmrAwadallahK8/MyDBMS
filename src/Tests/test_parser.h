@@ -5,6 +5,7 @@ class Test_Parser{
     public:
         void static test();
         void static test_lexer();
+        void static test_get_token();
 
 };
 #endif

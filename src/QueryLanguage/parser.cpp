@@ -4,17 +4,19 @@
 #include "parser.h"
 #include "lexer.h"
 
-Parser::Parser(std::string input):
-    text(input)
+Parser::Parser(std::string input)
     {
         Lexer temp_lex(input);
         token_vec = temp_lex.lex_text();
+        token_iter = token_vec.begin();
     }
 
 Parser::~Parser(){}
 
 std::string Parser::get_token(){
-    return "";    
+    std::string curr_token = *token_iter;
+    token_iter++;
+    return curr_token;    
 }
 
 void Parser::print_token_vec(){

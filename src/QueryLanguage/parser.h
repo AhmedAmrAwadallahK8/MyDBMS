@@ -6,8 +6,8 @@
 
 class Parser{
     protected:
-        std::string text;
         std::vector<std::string> token_vec;
+        std::vector<std::string>::const_iterator token_iter;
     public:
         Parser(std::string input);
         ~Parser();
