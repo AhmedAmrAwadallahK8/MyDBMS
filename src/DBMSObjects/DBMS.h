@@ -18,9 +18,12 @@ class DBMS{
 
         void engine();
         std::string get_query();
-        void parse_and_execute_query(std::string query);
+        void analyze_syntax(std::string query);
+        void execute_query(std::string query);
         void add_database(std::string input_name);
         void use_database(std::string db_name);
+
+        bool query_open(std::string query);
 };
 
 #endif

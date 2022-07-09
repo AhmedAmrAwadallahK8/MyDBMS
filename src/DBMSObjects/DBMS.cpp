@@ -2,6 +2,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 #include "..\DataBaseObjects\database.h"
 #include "DBMS.h"
@@ -22,16 +23,33 @@ void DBMS::engine(){
     std::string query;
     while(running){
         query = get_query();
-        parse_and_execute_query(query);
+        // analyze_syntax(query); /* Needs to be its own class */
+        execute_query(query);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
 std::string DBMS::get_query(){
-
+    std::string query = "";
+    std::string input = "";
+    std::cout << "Enter Query: \n";
+    while(query_open(input)){
+        std::cin >> input;
+        query += input;
+    }
+    /* Remove trailing text after ; */
 }
 
-void DBMS::parse_and_execute_query(std::string query){
+bool DBMS::query_open(std::string input){
+    for(char c : input){
+        if(c == ';'){
+            return false;
+        }
+    }
+    return true;
+}
+
+void DBMS::execute_query(std::string query){
 
 }
 
