@@ -4,7 +4,7 @@
 class Test_Parser{
     public:
         void static test();
-        void static test_basic();
+        void static test_lexer();
 
 };
 #endif

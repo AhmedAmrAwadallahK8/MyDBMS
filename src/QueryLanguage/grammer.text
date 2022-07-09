@@ -37,11 +37,10 @@ Statements
     selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
     createTableStatement: create table tableName '(' parameterList' )' ;
     dropTableStatement: drop table tableName ;
-    useTableStatement: use table tableName ;
     showTablesStatement: show tables ;
     createDatabaseStatement: create database databaseName ;
     dropDatabaseStatement: drop database databaseName ;
-    useDatabaseStatement: use database databaseName ;
+    useDatabaseStatement: use databaseName ;
     showDatabasesStatement: show databases ;
     insertRow: insert (stringExpressionList) into tableName ;
     deleteStatement: delete from tableName where expression ;

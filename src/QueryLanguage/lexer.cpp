@@ -13,7 +13,8 @@ Lexer::Lexer(std::string input):
 Lexer::~Lexer(){}
 
 bool Lexer::is_punctuation(char c){
-    if((c==';') | (c==',')| (c=='(')| (c==')') | (c=='.') | (c=='\"') | (c == '\'')){
+    if((c==';') | (c==',')| (c=='(')| (c==')') | (c=='.') | (c=='\"') | (c == '\'') | 
+        (c=='*')){
         return true;
     }
     return false;
