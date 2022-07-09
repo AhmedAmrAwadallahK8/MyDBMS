@@ -6,9 +6,11 @@
 #include <iostream>
 
 #include "..\DataBaseObjects\database.h"
+#include "..\QueryLanguage\parser.h"
 #include "dbms.h"
 
 DBMS::DBMS():
+    parsed_query(""),
     current_database(nullptr),
     running(true)
 {
@@ -53,6 +55,7 @@ std::string DBMS::get_query(){
         }
         query += input;
     }
+    /* this should be encapsulated in its own function */
     std::string final_query = "";
     for(char c : query){
         if(c==';'){
@@ -91,10 +94,12 @@ bool DBMS::query_open(std::string input){
 }
 
 void DBMS::execute_query(std::string query){
+    parsed_query = Parser(query);
     if(query_empty(query)){
         return;
     }
     std::cout << query << std::endl;
+    parsed_query.print_token_vec();
 }
 
 bool DBMS::query_empty(std::string query){

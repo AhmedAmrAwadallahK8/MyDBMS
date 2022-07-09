@@ -5,11 +5,13 @@
 #include<map>
 #include<string>
 
+class Parser;
 class Database;
 
 class DBMS{
     protected:
         std::map<std::string, Database*> databases;
+        Parser parsed_query;
         Database* current_database;
         bool running;
     public:
