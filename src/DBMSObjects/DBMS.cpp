@@ -94,12 +94,39 @@ bool DBMS::query_open(std::string input){
 }
 
 void DBMS::execute_query(std::string query){
-    parsed_query = Parser(query);
     if(query_empty(query)){
         return;
     }
-    std::cout << query << std::endl;
-    parsed_query.print_token_vec();
+    parsed_query = Parser(query);
+    parsed_query.get_token();
+    current_token = parsed_query.get_token();
+    if(current_token == "create"){
+        create_statement();
+    }
+    else{
+        std::cout << "Expected a statement token instead got " << current_token << std::endl;
+    }
+}
+
+void DBMS::create_statement(){
+    current_token = parsed_query.get_token();
+    if(current_token == "database"){
+        current_token = parsed_query.get_token();
+        if(current_token == "END TOKEN"){
+            std::cout << "Expected database identifier instead got nothing\n";
+        }
+        else{
+            create_database(current_token);
+        }
+    }
+    else{
+        if(current_token == "END TOKEN"){
+            std::cout << "Expected database identifier instead got nothing\n";
+        }
+        else{
+            /* create table */
+        }
+    }
 }
 
 bool DBMS::query_empty(std::string query){
@@ -112,12 +139,25 @@ bool DBMS::query_empty(std::string query){
 
 
 /* TODO: Handle new databases with a name already in the database */
-void DBMS::add_database(std::string input_name){
-    Database* new_db = new Database(input_name);
-    databases.insert(std::pair<std::string, Database*>(input_name, new_db));
+void DBMS::create_database(std::string input_name){
+    if(database_exists(input_name)){
+        std::cout << "Database with name " << input_name << " already exists\n";
+    }
+    else{
+        Database* new_db = new Database(input_name);
+        databases.insert(std::pair<std::string, Database*>(input_name, new_db));
+        std::cout << "Created Database " << input_name << "\n";
+    }
+}
+
+bool DBMS::database_exists(std::string db_name){
+    if(databases.count(db_name) == 1){
+        return true;
+    }
+    return false;
 }
 
 void DBMS::use_database(std::string db_name){
-    Database* selected_database = databases[db_name];
+    Database* selected_database = databases.at(db_name);
     current_database = selected_database;
 }
