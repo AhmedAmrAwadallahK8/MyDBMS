@@ -23,7 +23,9 @@ DBMS::~DBMS(){
 }
 
 void DBMS::engine(){
+    system("cls");
     std::cout << "Welcome to ASQL database. Type q or quit to exit the program.\n";
+    std::cout << "Querys are not executed until a semicolon(;) character is input into the program\n";
     std::string query = "";
     while(running){
         query = get_query();
@@ -97,16 +99,53 @@ void DBMS::execute_query(std::string query){
     if(query_empty(query)){
         return;
     }
-    parsed_query = Parser(query);
+    parsed_query = std::move(Parser(query));
     parsed_query.get_token();
     current_token = parsed_query.get_token();
     if(current_token == "create"){
         create_statement();
     }
+    else if(current_token == "show"){
+        show_statement();
+    }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
     }
 }
+
+void DBMS::show_statement(){
+    current_token = parsed_query.get_token();
+    if(current_token == "databases"){
+        show_databases();
+    }
+    else if(current_token == "tables"){
+        /* Code for showing table */
+    }
+    else{
+        std::cout << "Expected keyword databases or tables instead got " << current_token << "\n";
+    }
+}
+
+void DBMS::show_databases(){
+    current_token = parsed_query.get_token();
+    if(current_token == ";"){
+        print_databases();
+    }
+    else{
+        std::cout << "Expected ; got " << current_token << " instead\n";
+    }
+}
+
+void DBMS::print_databases(){
+    std::cout << "Databases\n";
+    std::string db_name;
+    for(const auto& pair: databases){
+        db_name = pair.first;
+        std::cout << db_name << "\n"; 
+    }
+}
+
+
 
 void DBMS::create_statement(){
     current_token = parsed_query.get_token();
@@ -119,13 +158,17 @@ void DBMS::create_statement(){
             create_database(current_token);
         }
     }
-    else{
+    else if(current_token == "table"){
+        current_token = parsed_query.get_token();
         if(current_token == ";"){
             std::cout << "Expected table identifier instead got nothing\n";
         }
         else{
             /* create table */
         }
+    }
+    else{
+        std::cout << "Expected keyword table or database instead got " << current_token << "\n";
     }
 }
 
@@ -138,7 +181,7 @@ bool DBMS::query_empty(std::string query){
 
 
 
-/* TODO: Handle new databases with a name already in the database */
+/* TODO: Check if token is ; before executing*/
 void DBMS::create_database(std::string input_name){
     if(database_exists(input_name)){
         std::cout << "Database with name " << input_name << " already exists\n";

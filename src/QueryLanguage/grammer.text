@@ -38,7 +38,7 @@ Statements
     createTableStatement: create table tableName '(' parameterList' )' ;
     dropTableStatement: drop table tableName ;
     showTablesStatement: show tables ;
-    createDatabaseStatement: create database databaseName ;
+    createDatabaseStatement: create database databaseName ; DONE
     dropDatabaseStatement: drop database databaseName ;
     useDatabaseStatement: use databaseName ;
     showDatabasesStatement: show databases ;

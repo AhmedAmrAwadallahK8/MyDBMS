@@ -11,6 +11,7 @@ class Parser{
     public:
         Parser(std::string input);
         ~Parser();
+        Parser& operator= (Parser&& x);
 
         std::string get_token();
         void print_token_vec();

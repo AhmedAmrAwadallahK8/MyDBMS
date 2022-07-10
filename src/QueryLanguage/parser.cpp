@@ -13,6 +13,12 @@ Parser::Parser(std::string input)
 
 Parser::~Parser(){}
 
+Parser& Parser::operator= (Parser&& x){
+    token_vec=x.token_vec;
+    token_iter = token_vec.begin();
+    return *this; 
+}
+
 std::string Parser::get_token(){
     std::string curr_token = *token_iter;
     token_iter++;
