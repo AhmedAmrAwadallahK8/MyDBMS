@@ -112,7 +112,7 @@ void DBMS::create_statement(){
     current_token = parsed_query.get_token();
     if(current_token == "database"){
         current_token = parsed_query.get_token();
-        if(current_token == "END TOKEN"){
+        if(current_token == ";"){
             std::cout << "Expected database identifier instead got nothing\n";
         }
         else{
@@ -120,8 +120,8 @@ void DBMS::create_statement(){
         }
     }
     else{
-        if(current_token == "END TOKEN"){
-            std::cout << "Expected database identifier instead got nothing\n";
+        if(current_token == ";"){
+            std::cout << "Expected table identifier instead got nothing\n";
         }
         else{
             /* create table */
