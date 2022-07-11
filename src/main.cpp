@@ -34,9 +34,9 @@ int main(){
     //Test_B_Plus_Tree::test();
     //Test_Table::test();
     //Test_Database::test();
-    Test_Parser::test();
-    //DBMS d;
-    //d.engine();
+    //Test_Parser::test();
+    DBMS d;
+    d.engine();
 
 
 

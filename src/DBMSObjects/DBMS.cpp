@@ -128,12 +128,10 @@ void DBMS::show_statement(){
 
 void DBMS::show_databases(){
     current_token = parsed_query.get_token();
-    if(current_token == ";"){
+    if(end_of_query()){
         print_databases();
     }
-    else{
-        std::cout << "Expected ; got " << current_token << " instead\n";
-    }
+    return;
 }
 
 void DBMS::print_databases(){
@@ -182,6 +180,7 @@ bool DBMS::query_empty(std::string query){
 
 
 /* TODO: Check if token is ; before executing*/
+/* Additonally need to update this function so that is compatible with our execution abstraction*/
 void DBMS::create_database(std::string input_name){
     if(database_exists(input_name)){
         std::cout << "Database with name " << input_name << " already exists\n";
@@ -204,10 +203,23 @@ void DBMS::use_database(std::string db_name){
     Database* selected_database = databases.at(db_name);
     current_database = selected_database;
 }
+/* Abstraction code for checking if a query has a semicolon, does not work but comment
+archiving this for now, can be deleted if needed*/
+//void DBMS::execute_if_end_of_query(std::function<void()>* dbms_func){
+//    current_token = parsed_query.get_token();
+//    if(end_of_query()){
+//       dbms_func(); 
+//    }
+//    else{
+//        std::cout << "Expected ; got " << current_token << " instead\n";
+//    }
+//}
 
-//void DBMS::execute_if_end_of_query(){
-//}
-//
-//bool DBMS::end_of_query(){
-//
-//}
+bool DBMS::end_of_query(){
+    if(current_token == ";"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
