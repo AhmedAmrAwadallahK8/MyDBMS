@@ -29,6 +29,7 @@ class DBMS{
 
         void create_statement();
         void show_statement();
+        void use_statement();
 
         void create_database(std::string input_name);
         void use_database(std::string db_name);

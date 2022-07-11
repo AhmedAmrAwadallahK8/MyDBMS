@@ -108,8 +108,21 @@ void DBMS::execute_query(std::string query){
     else if(current_token == "show"){
         show_statement();
     }
+    else if(current_token == "use"){
+        use_statement();
+    }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
+    }
+}
+
+void DBMS::use_statement(){
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        std::cout << "Expected identifier instead got ;\n";
+    }
+    else{
+        use_database(current_token);
     }
 }
 
@@ -209,8 +222,20 @@ bool DBMS::database_exists(std::string db_name){
 }
 
 void DBMS::use_database(std::string db_name){
-    Database* selected_database = databases.at(db_name);
-    current_database = selected_database;
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_exists(db_name)){
+            Database* selected_database = databases.at(db_name);
+            current_database = selected_database;
+            std::cout << "Database " << db_name << " is now selected.\n";
+        }
+        else{
+            std::cout << "Database with name " << db_name << " does not exist in system.\n";
+        }
+    }
+    else{
+        expected_end_of_query();
+    }
 }
 /* Abstraction code for checking if a query has a semicolon, does not work but comment
 archiving this for now, can be deleted if needed*/
