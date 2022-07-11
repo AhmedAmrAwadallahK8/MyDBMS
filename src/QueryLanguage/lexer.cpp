@@ -42,6 +42,7 @@ std::vector<std::string> Lexer::lex_text(){
             curr_token += c;
         }
     }
+    add_token();
     token_vec.push_back("END TOKEN");
     return token_vec;
 }

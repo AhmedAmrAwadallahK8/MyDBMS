@@ -204,3 +204,10 @@ void DBMS::use_database(std::string db_name){
     Database* selected_database = databases.at(db_name);
     current_database = selected_database;
 }
+
+//void DBMS::execute_if_end_of_query(){
+//}
+//
+//bool DBMS::end_of_query(){
+//
+//}

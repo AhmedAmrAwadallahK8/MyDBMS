@@ -23,6 +23,7 @@ class DBMS{
         std::string get_query();
         void analyze_syntax(std::string query);
         void execute_query(std::string query);
+        void execute_if_end_of_query();
         std::string clean_input(std::string input);
         void print_databases();
 
@@ -37,6 +38,7 @@ class DBMS{
         bool query_open(std::string query);
         bool user_quit(std::string input);
         bool query_empty(std::string query);
+        bool end_of_query();
 };
 
 #endif

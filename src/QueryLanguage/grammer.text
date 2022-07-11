@@ -41,7 +41,7 @@ Statements
     createDatabaseStatement: create database databaseName ; DONE
     dropDatabaseStatement: drop database databaseName ;
     useDatabaseStatement: use databaseName ;
-    showDatabasesStatement: show databases ;
+    showDatabasesStatement: show databases ; DONE
     insertRow: insert (stringExpressionList) into tableName ;
     deleteStatement: delete from tableName where expression ;
 Expression 

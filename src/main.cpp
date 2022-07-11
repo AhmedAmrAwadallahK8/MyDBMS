@@ -12,6 +12,7 @@
 #include "Tests\test_table.h"
 #include "Tests\test_database.h"
 #include "Tests\test_parser.h"
+#include "QueryLanguage\parser.h"
 #include "DBMSObjects\dbms.h"
 
 // Template Issue: Reflections?
@@ -33,9 +34,9 @@ int main(){
     //Test_B_Plus_Tree::test();
     //Test_Table::test();
     //Test_Database::test();
-    //Test_Parser::test();
-    DBMS d;
-    d.engine();
+    Test_Parser::test();
+    //DBMS d;
+    //d.engine();
 
 
 

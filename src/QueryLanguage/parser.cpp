@@ -30,3 +30,17 @@ void Parser::print_token_vec(){
         std::cout << s << std::endl;
     }
 }
+
+/*
+Handle situations where we look outside the scope of the vector
+*/
+std::string Parser::look_ahead(int n_tokens){
+    std::string future_token = "";
+    for(int i = 0; i < n_tokens; i++){
+        if(*(token_iter+i) == "END TOKEN"){
+            return "END TOKEN";
+        }
+    } 
+    future_token = *(token_iter+n_tokens);
+    return future_token;
+}

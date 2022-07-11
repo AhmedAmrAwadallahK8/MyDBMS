@@ -6,6 +6,7 @@ class Test_Parser{
         void static test();
         void static test_lexer();
         void static test_get_token();
+        void static test_look_ahead();
 
 };
 #endif

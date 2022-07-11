@@ -14,6 +14,7 @@ class Parser{
         Parser& operator= (Parser&& x);
 
         std::string get_token();
+        std::string look_ahead(int n_tokens);
         void print_token_vec();
 };
 
