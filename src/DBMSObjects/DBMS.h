@@ -39,6 +39,7 @@ class DBMS{
         bool user_quit(std::string input);
         bool query_empty(std::string query);
         bool end_of_query();
+        void expected_end_of_query();
 };
 
 #endif

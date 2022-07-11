@@ -131,6 +131,9 @@ void DBMS::show_databases(){
     if(end_of_query()){
         print_databases();
     }
+    else{
+        expected_end_of_query();
+    }
     return;
 }
 
@@ -144,7 +147,7 @@ void DBMS::print_databases(){
 }
 
 
-
+/*Need to handle when user wants to make a db name that is also a keyword*/
 void DBMS::create_statement(){
     current_token = parsed_query.get_token();
     if(current_token == "database"){
@@ -182,13 +185,19 @@ bool DBMS::query_empty(std::string query){
 /* TODO: Check if token is ; before executing*/
 /* Additonally need to update this function so that is compatible with our execution abstraction*/
 void DBMS::create_database(std::string input_name){
-    if(database_exists(input_name)){
-        std::cout << "Database with name " << input_name << " already exists\n";
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_exists(input_name)){
+            std::cout << "Database with name " << input_name << " already exists\n";
+        }
+        else{
+            Database* new_db = new Database(input_name);
+            databases.insert(std::pair<std::string, Database*>(input_name, new_db));
+            std::cout << "Created Database " << input_name << "\n";
+        }
     }
     else{
-        Database* new_db = new Database(input_name);
-        databases.insert(std::pair<std::string, Database*>(input_name, new_db));
-        std::cout << "Created Database " << input_name << "\n";
+        expected_end_of_query();
     }
 }
 
@@ -222,4 +231,8 @@ bool DBMS::end_of_query(){
     else{
         return false;
     }
+}
+
+void DBMS::expected_end_of_query(){
+    std::cout << "Expected ; instead got " << current_token << "\n";
 }
