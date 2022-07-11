@@ -21,7 +21,9 @@ Parser& Parser::operator= (Parser&& x){
 
 std::string Parser::get_token(){
     std::string curr_token = *token_iter;
-    token_iter++;
+    if(curr_token != "END TOKEN"){
+        token_iter++;
+    }
     return curr_token;    
 }
 
