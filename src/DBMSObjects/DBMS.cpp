@@ -11,7 +11,7 @@
 
 DBMS::DBMS():
     parsed_query(""),
-    current_database(nullptr),
+    current_database(""),
     running(true)
 {
 
@@ -155,7 +155,12 @@ void DBMS::print_databases(){
     std::string db_name;
     for(const auto& pair: databases){
         db_name = pair.first;
-        std::cout << db_name << "\n"; 
+        if(db_name == current_database){
+            std::cout << "->" << db_name << "\n"; 
+        }
+        else{
+            std::cout << "  " << db_name << "\n"; 
+        }
     }
 }
 
@@ -225,8 +230,7 @@ void DBMS::use_database(std::string db_name){
     current_token = parsed_query.get_token();
     if(end_of_query()){
         if(database_exists(db_name)){
-            Database* selected_database = databases.at(db_name);
-            current_database = selected_database;
+            current_database = db_name;
             std::cout << "Database " << db_name << " is now selected.\n";
         }
         else{

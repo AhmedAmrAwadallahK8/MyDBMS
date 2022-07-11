@@ -13,7 +13,7 @@ class DBMS{
         std::map<std::string, Database*> databases;
         Parser parsed_query;
         std::string current_token;
-        Database* current_database;
+        std::string current_database;
         bool running;
     public:
         DBMS();
