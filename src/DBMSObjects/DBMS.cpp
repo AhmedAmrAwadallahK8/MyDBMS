@@ -111,9 +111,54 @@ void DBMS::execute_query(std::string query){
     else if(current_token == "use"){
         use_statement();
     }
+    else if(current_token == "drop"){
+        drop_statement();
+    }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
     }
+}
+
+void DBMS::drop_statement(){
+    current_token = parsed_query.get_token();
+    if(current_token == "database"){
+        current_token = parsed_query.get_token(); 
+        if(end_of_query()){
+            std::cout << "Expected database identifier instead got ;\n";
+        }
+        else{
+            drop_database(current_token);
+        }
+    } 
+    else if(current_token == "table"){
+       /* Table Logic */ 
+    }
+    else{
+        std::cout << "Expected keyword database or table instead got " << current_token << "\n";
+    }
+}
+
+void DBMS::drop_database(std::string db_name){
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_exists(db_name)){
+            Database* db = databases[db_name];
+            delete_database(db);
+            databases.erase(db_name);
+            current_database = "";
+            std::cout << "Database " << db_name << " deleted.\n";
+        }
+        else{
+            std::cout << "Specified databases does not exist in the system.\n";
+        }
+    }
+    else{
+        expected_end_of_query();
+    }
+}
+
+void DBMS::delete_database(Database* db){
+    delete db;
 }
 
 void DBMS::use_statement(){

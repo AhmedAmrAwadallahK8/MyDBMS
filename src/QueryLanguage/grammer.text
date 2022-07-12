@@ -26,7 +26,7 @@ Lexical Elements
     identifier
 ProgramStructure
     type: int double char string
-    parameterList: (type identifier) ((, type identifier)*)?
+    parameterList: (identifier type) ((,identifier type)*)?
     attributeList: * | attributeName (, attributeName)*
     stringConstantList: stringConstant (, stringConstant)*
     tableName: identifier
@@ -40,7 +40,7 @@ Statements
     showTablesStatement: show tables ;
     createDatabaseStatement: create database databaseName ; DONE
     dropDatabaseStatement: drop database databaseName ;
-    useDatabaseStatement: use databaseName ;
+    useDatabaseStatement: use databaseName ; DONE
     showDatabasesStatement: show databases ; DONE
     insertRow: insert (stringExpressionList) into tableName ;
     deleteStatement: delete from tableName where expression ;

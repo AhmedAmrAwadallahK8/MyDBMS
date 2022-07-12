@@ -30,9 +30,13 @@ class DBMS{
         void create_statement();
         void show_statement();
         void use_statement();
+        void drop_statement();
 
         void create_database(std::string input_name);
         void use_database(std::string db_name);
+        void drop_database(std::string db_name);
+
+        void delete_database(Database* db);
 
         void show_databases();
         bool database_exists(std::string db_name);
