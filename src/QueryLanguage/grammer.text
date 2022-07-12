@@ -35,14 +35,14 @@ ProgramStructure
     tableReference: tableName '.' attributeName
 Statements
     selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
-    createTableStatement: create table tableName '(' parameterList' )' ;
+    createTableStatement: create table tableName '(' parameterList' )' ; TODO 
     dropTableStatement: drop table tableName ;
-    showTablesStatement: show tables ;
+    showTablesStatement: show tables ; TODO
     createDatabaseStatement: create database databaseName ; DONE
-    dropDatabaseStatement: drop database databaseName ;
+    dropDatabaseStatement: drop database databaseName ; DONE
     useDatabaseStatement: use databaseName ; DONE
     showDatabasesStatement: show databases ; DONE
-    insertRow: insert (stringExpressionList) into tableName ;
+    insertRow: insert (stringExpressionList) into tableName ; TODO
     deleteStatement: delete from tableName where expression ;
 Expression 
     expression: term (op term)*

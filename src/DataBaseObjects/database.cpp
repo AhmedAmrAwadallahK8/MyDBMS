@@ -26,3 +26,12 @@ void Database::print_table(std::string table_name){
     Table* specified_table = tables[table_name];
     specified_table->print_table();
 }
+
+void Database::print_tables(){
+    std::string table_name = "";
+    std::cout << "Tables\n";
+    for(const auto& pair: tables){
+        table_name = pair.first;
+        std::cout << "  " << table_name << "\n";
+    }
+}

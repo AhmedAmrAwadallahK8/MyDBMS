@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "..\DataBaseObjects\database.h"
+#include "..\DataBaseObjects\entry.h"
 #include "..\QueryLanguage\parser.h"
 #include "dbms.h"
 
@@ -177,10 +178,28 @@ void DBMS::show_statement(){
         show_databases();
     }
     else if(current_token == "tables"){
+        show_tables();
         /* Code for showing table */
     }
     else{
         std::cout << "Expected keyword databases or tables instead got " << current_token << "\n";
+    }
+}
+
+void DBMS::show_tables(){
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_selected()){
+           Database* db = databases[current_database]; 
+           db->print_tables();
+        }
+        else{
+            no_selected_db();
+        }
+
+    }
+    else{
+        expected_end_of_query();
     }
 }
 
@@ -224,15 +243,129 @@ void DBMS::create_statement(){
     }
     else if(current_token == "table"){
         current_token = parsed_query.get_token();
-        if(current_token == ";"){
+        if(current_token == "("){
             std::cout << "Expected table identifier instead got nothing\n";
         }
         else{
-            /* create table */
+            create_table(current_token);
         }
     }
     else{
         std::cout << "Expected keyword table or database instead got " << current_token << "\n";
+    }
+}
+
+    /* createTableStatement: create table tableName '(' parameterList' )' ; TODO */ 
+void DBMS::create_table(std::string table_name){
+    current_token = parsed_query.get_token();
+    if(current_token != "("){
+        std::cout << "Expected ( instead got " << current_token << "\n";
+    }
+    parameter_list();
+    if(current_token != ")"){
+        std::cout << "Expected ) instead got " << current_token << "\n";
+    }
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_selected()){
+            Database* db = databases[current_database];
+            db->create_table(table_name, attributes, attribute_types);
+            std::cout << "Created table " << table_name << "\n";
+            clean_up_attribs_and_types();
+        }
+        else{
+            no_selected_db();
+        }
+    }
+    else{
+        expected_end_of_query();
+    }
+}
+
+void DBMS::no_selected_db(){
+    std::cout << "No database currently selected.\n";
+}
+
+void DBMS::clean_up_attribs_and_types(){
+    attribute_types.clear();
+    attributes.clear();
+}
+
+bool DBMS::database_selected(){
+    if(current_database == ""){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+/* parameterList: (identifier type) ((,identifier type)*)? */
+void DBMS::parameter_list(){
+    parameter_pair();
+    while(current_token == ","){
+        parameter_pair();
+    }
+}
+
+void DBMS::parameter_pair(){
+    current_token = parsed_query.get_token();
+    if(current_token == ")"){
+        std::cout << "Expected identifier type pairs, instead got an empty set.\n";
+        return;
+    }
+    else{
+        add_attribute(current_token);
+    }
+    current_token = parsed_query.get_token();
+    if(current_token == ")"){
+        std::cout << "Expected identifier type pairs, instead got just an identifier\n";
+        return;
+    }
+    else{
+        if(valid_attribute_type(current_token)){
+            int attribute_type = convert_input_type_to_int(current_token);
+            add_attribute_type(attribute_type);
+        }
+        else{
+            std::cout << "Input attribute type is not recognized or unsupported. Type input was " << current_token << "\n";
+            return;
+        }
+    }
+    current_token = parsed_query.get_token();
+}
+
+void DBMS::add_attribute(std::string attribute_name){
+    attributes.push_back(attribute_name);
+}
+
+void DBMS::add_attribute_type(int attribute_type){
+    attribute_types.push_back(attribute_type);
+}
+
+bool DBMS::valid_attribute_type(std::string attribute_type){
+    if((attribute_type=="int") | (attribute_type=="double")|(attribute_type=="char")|(attribute_type=="string")){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+int DBMS::convert_input_type_to_int(std::string attribute_type){
+    if(attribute_type == "int"){
+        return Entry::INT;
+    }
+    else if(attribute_type == "double"){
+        return Entry::DOUBLE;
+    }
+    else if(attribute_type == "char"){
+        return Entry::CHAR;
+    }
+    else if(attribute_type == "string"){
+        return Entry::STRING;
+    }
+    else{
+        return -1;
     }
 }
 
