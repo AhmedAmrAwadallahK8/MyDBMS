@@ -22,6 +22,7 @@ class Table{
         ~Table();
 
         void insert_record(Record* input_record);
+        void create_and_insert_record(std::vector<std::string> input_strings);
         void print_table();
 
         friend class test_table;

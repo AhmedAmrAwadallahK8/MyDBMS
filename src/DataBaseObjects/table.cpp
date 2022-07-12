@@ -45,6 +45,11 @@ void Table::insert_record(Record* input_record){
     }
 }
 
+void Table::create_and_insert_record(std::vector<std::string> input_strings){
+    Record* rec = new Record(attribute_flags, input_strings);
+    insert_record(rec);
+}
+
 void Table::print_table(){
     for(std::string attr_name: attribute_names){
         std::cout << attr_name << "\t";

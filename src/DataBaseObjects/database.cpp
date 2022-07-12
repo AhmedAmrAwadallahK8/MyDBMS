@@ -22,6 +22,11 @@ void Database::insert_into_table(std::string table_name, Record* input_record){
     specified_table->insert_record(input_record);
 }
 
+void Database::insert_into_table(std::string table_name, std::vector<std::string> input_strings){
+    Table* t = tables[table_name];
+    t->create_and_insert_record(input_strings);
+}
+
 void Database::print_table(std::string table_name){
     Table* specified_table = tables[table_name];
     specified_table->print_table();

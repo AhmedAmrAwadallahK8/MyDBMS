@@ -12,6 +12,7 @@ class DBMS{
     protected:
         std::map<std::string, Database*> databases;
         std::vector<std::string> attributes;
+        std::vector<std::string> input_strings; 
         std::vector<int> attribute_types;
         Parser parsed_query;
         std::string current_token;
@@ -33,6 +34,8 @@ class DBMS{
         void show_statement();
         void use_statement();
         void drop_statement();
+        void insert_statement();
+        void select_statement();
 
         void create_database(std::string input_name);
         void use_database(std::string db_name);
@@ -41,12 +44,16 @@ class DBMS{
         void show_databases();
 
         void create_table(std::string table_name);
+        void insert_into_table(std::string table_name);
         void show_tables();
 
+        void string_constant_list();
+        void get_input_string();
         void parameter_list();
         void parameter_pair();
         void add_attribute(std::string attribute_name);
         void add_attribute_type(int attribute_type);
+        void add_string_input(std::string input);
         bool valid_attribute_type(std::string attribute_type);
         int convert_input_type_to_int(std::string attribute_type);
 

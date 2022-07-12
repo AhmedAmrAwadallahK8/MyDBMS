@@ -115,9 +115,80 @@ void DBMS::execute_query(std::string query){
     else if(current_token == "drop"){
         drop_statement();
     }
+    else if(current_token == "insert"){
+        insert_statement();
+    }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
     }
+}
+
+void DBMS::insert_statement(){
+    current_token = parsed_query.get_token();
+    if(current_token != "into"){
+        std::cout << "Expected keyword into instead got " << current_token << "\n";
+        return;
+    }
+    current_token = parsed_query.get_token();
+    if(current_token == "("){
+        std::cout << "Expected table name instead got (\n";
+        return;
+    }
+    else{
+        insert_into_table(current_token);
+    }
+}
+
+void DBMS::insert_into_table(std::string table_name){
+    current_token = parsed_query.get_token();
+    if(current_token != "("){
+        std::cout << "Expected ( instead got " << current_token << "\n";
+        return;
+    }
+    string_constant_list();
+    if(current_token != ")"){
+        std::cout << "Expected ) instead got " << current_token << "\n";
+        return;
+    }
+    current_token = parsed_query.get_token();
+    if(end_of_query()){
+        if(database_selected()){
+           Database* db = databases[current_database]; 
+           db->insert_into_table(table_name, input_strings);
+           db->print_table(table_name);
+           std::cout << "Inserted new record into table " << table_name << "\n";
+           clean_up_attribs_and_types();
+        }
+        else{
+            no_selected_db();
+            return;
+        }
+    }
+    else{
+        expected_end_of_query();
+    }
+
+
+}
+
+void DBMS::string_constant_list(){
+    get_input_string();
+    while(current_token == ","){
+        get_input_string();
+    }
+}
+
+void DBMS::get_input_string(){
+    current_token = parsed_query.get_token();
+    if(current_token == ")"){
+        std::cout << "Expected input value but instead got empty set\n";
+    }
+    add_string_input(current_token);
+    current_token = parsed_query.get_token();
+}
+
+void DBMS::add_string_input(std::string input){
+    input_strings.push_back(input);
 }
 
 void DBMS::drop_statement(){
@@ -179,7 +250,6 @@ void DBMS::show_statement(){
     }
     else if(current_token == "tables"){
         show_tables();
-        /* Code for showing table */
     }
     else{
         std::cout << "Expected keyword databases or tables instead got " << current_token << "\n";
@@ -289,6 +359,7 @@ void DBMS::no_selected_db(){
 void DBMS::clean_up_attribs_and_types(){
     attribute_types.clear();
     attributes.clear();
+    input_strings.clear();
 }
 
 bool DBMS::database_selected(){
