@@ -118,8 +118,40 @@ void DBMS::execute_query(std::string query){
     else if(current_token == "insert"){
         insert_statement();
     }
+    else if(current_token == "select"){
+        select_statement();
+    }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
+    }
+}
+/* Very basic needs major refinement */
+void DBMS::select_statement(){
+    current_token = parsed_query.get_token();
+    if(current_token == "*"){
+        current_token = parsed_query.get_token();
+        if(current_token == "from"){
+            current_token = parsed_query.get_token();
+            std::string table_name = current_token;
+            if(current_token == ";"){
+                std::cout << "Expected table name got ;\n";
+            }
+            else{
+                current_token = parsed_query.get_token();
+                if(end_of_query()){
+                    if(database_selected()){
+                        Database* db = databases[current_database];
+                        db->print_table(table_name);
+                    }
+                    else{
+                        no_selected_db();
+                    }
+                }
+                else{
+                    expected_end_of_query();
+                }
+            }
+        }
     }
 }
 
@@ -155,7 +187,6 @@ void DBMS::insert_into_table(std::string table_name){
         if(database_selected()){
            Database* db = databases[current_database]; 
            db->insert_into_table(table_name, input_strings);
-           db->print_table(table_name);
            std::cout << "Inserted new record into table " << table_name << "\n";
            clean_up_attribs_and_types();
         }
