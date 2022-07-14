@@ -27,6 +27,25 @@ void Database::insert_into_table(std::string table_name, std::vector<std::string
     t->create_and_insert_record(input_strings);
 }
 
+void Database::insert_into_table_if_exists(std::string table_name, std::vector<std::string> input_strings){
+    if(table_exists(table_name)){
+        insert_into_table(table_name, input_strings);
+    }
+    else{
+        std::cout << "Table with name " << table_name << " does not exist.\n";
+    }
+}
+
+bool Database::table_exists(std::string table_name){
+    if(tables.count(table_name) == 1){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
 void Database::print_table(std::string table_name){
     Table* specified_table = tables[table_name];
     specified_table->print_table();

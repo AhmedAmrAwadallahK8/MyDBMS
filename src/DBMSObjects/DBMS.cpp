@@ -188,8 +188,7 @@ void DBMS::insert_into_table(std::string table_name){
     if(end_of_query()){
         if(database_selected()){
            Database* db = databases[current_database]; 
-           db->insert_into_table(table_name, input_strings);
-           std::cout << "Inserted new record into table " << table_name << "\n";
+           db->insert_into_table_if_exists(table_name, input_strings);
            clean_up_attribs_and_types();
         }
         else{
