@@ -18,6 +18,7 @@ class DBMS{
         std::string current_token;
         std::string current_database;
         bool running;
+        bool valid_query;
     public:
         DBMS();
         ~DBMS();
@@ -63,6 +64,7 @@ class DBMS{
         bool query_open(std::string query);
         bool user_quit(std::string input);
         bool query_empty(std::string query);
+        void query_failure();
         bool end_of_query();
         void expected_end_of_query();
         bool database_selected();

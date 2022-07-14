@@ -42,7 +42,7 @@ Statements
     dropDatabaseStatement: drop database databaseName ; DONE
     useDatabaseStatement: use databaseName ; DONE
     showDatabasesStatement: show databases ; DONE
-    insertRow: insert () into tableName '(' stringConstantList ')' ; TODO
+    insertRow: insert into tableName '(' stringConstantList ')' ; TODO
     deleteStatement: delete from tableName where expression ;
 Expression 
     expression: term (op term)*

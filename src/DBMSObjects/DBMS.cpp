@@ -29,7 +29,9 @@ void DBMS::engine(){
     std::cout << "Querys are not executed until a semicolon(;) character is input into the program\n";
     std::string query = "";
     while(running){
+        clean_up_attribs_and_types();
         query = get_query();
+        valid_query = true;
         execute_query(query);
         // analyze_syntax(query); /* Needs to be its own class */
     }
@@ -159,12 +161,12 @@ void DBMS::insert_statement(){
     current_token = parsed_query.get_token();
     if(current_token != "into"){
         std::cout << "Expected keyword into instead got " << current_token << "\n";
-        return;
+        query_failure();
     }
     current_token = parsed_query.get_token();
     if(current_token == "("){
         std::cout << "Expected table name instead got (\n";
-        return;
+        query_failure();
     }
     else{
         insert_into_table(current_token);
@@ -175,12 +177,12 @@ void DBMS::insert_into_table(std::string table_name){
     current_token = parsed_query.get_token();
     if(current_token != "("){
         std::cout << "Expected ( instead got " << current_token << "\n";
-        return;
+        query_failure();
     }
     string_constant_list();
     if(current_token != ")"){
         std::cout << "Expected ) instead got " << current_token << "\n";
-        return;
+        query_failure();
     }
     current_token = parsed_query.get_token();
     if(end_of_query()){
@@ -213,6 +215,7 @@ void DBMS::get_input_string(){
     current_token = parsed_query.get_token();
     if(current_token == ")"){
         std::cout << "Expected input value but instead got empty set\n";
+        query_failure();
     }
     add_string_input(current_token);
     current_token = parsed_query.get_token();
@@ -228,6 +231,7 @@ void DBMS::drop_statement(){
         current_token = parsed_query.get_token(); 
         if(end_of_query()){
             std::cout << "Expected database identifier instead got ;\n";
+            query_failure();
         }
         else{
             drop_database(current_token);
@@ -238,6 +242,7 @@ void DBMS::drop_statement(){
     }
     else{
         std::cout << "Expected keyword database or table instead got " << current_token << "\n";
+        query_failure();
     }
 }
 
@@ -284,6 +289,7 @@ void DBMS::show_statement(){
     }
     else{
         std::cout << "Expected keyword databases or tables instead got " << current_token << "\n";
+        query_failure();
     }
 }
 
@@ -335,7 +341,7 @@ void DBMS::create_statement(){
     current_token = parsed_query.get_token();
     if(current_token == "database"){
         current_token = parsed_query.get_token();
-        if(current_token == ";"){
+        if(end_of_query()){
             std::cout << "Expected database identifier instead got nothing\n";
         }
         else{
@@ -353,6 +359,7 @@ void DBMS::create_statement(){
     }
     else{
         std::cout << "Expected keyword table or database instead got " << current_token << "\n";
+        query_failure();
     }
 }
 
@@ -361,10 +368,12 @@ void DBMS::create_table(std::string table_name){
     current_token = parsed_query.get_token();
     if(current_token != "("){
         std::cout << "Expected ( instead got " << current_token << "\n";
+        query_failure();
     }
     parameter_list();
     if(current_token != ")"){
         std::cout << "Expected ) instead got " << current_token << "\n";
+        query_failure();
     }
     current_token = parsed_query.get_token();
     if(end_of_query()){
@@ -413,7 +422,7 @@ void DBMS::parameter_pair(){
     current_token = parsed_query.get_token();
     if(current_token == ")"){
         std::cout << "Expected identifier type pairs, instead got an empty set.\n";
-        return;
+        query_failure();
     }
     else{
         add_attribute(current_token);
@@ -421,7 +430,7 @@ void DBMS::parameter_pair(){
     current_token = parsed_query.get_token();
     if(current_token == ")"){
         std::cout << "Expected identifier type pairs, instead got just an identifier\n";
-        return;
+        query_failure();
     }
     else{
         if(valid_attribute_type(current_token)){
@@ -430,7 +439,7 @@ void DBMS::parameter_pair(){
         }
         else{
             std::cout << "Input attribute type is not recognized or unsupported. Type input was " << current_token << "\n";
-            return;
+            query_failure();
         }
     }
     current_token = parsed_query.get_token();
@@ -544,4 +553,9 @@ bool DBMS::end_of_query(){
 
 void DBMS::expected_end_of_query(){
     std::cout << "Expected ; instead got " << current_token << "\n";
+    std::cout << "Or query failed an earlier syntax check.\n";
+}
+
+void DBMS::query_failure(){
+    valid_query = false;
 }
