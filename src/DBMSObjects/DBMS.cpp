@@ -529,17 +529,6 @@ void DBMS::use_database(std::string db_name){
         expected_end_of_query();
     }
 }
-/* Abstraction code for checking if a query has a semicolon, does not work but comment
-archiving this for now, can be deleted if needed*/
-//void DBMS::execute_if_end_of_query(std::function<void()>* dbms_func){
-//    current_token = parsed_query.get_token();
-//    if(end_of_query()){
-//       dbms_func(); 
-//    }
-//    else{
-//        std::cout << "Expected ; got " << current_token << " instead\n";
-//    }
-//}
 
 bool DBMS::end_of_query(){
     if(current_token == ";"){
