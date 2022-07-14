@@ -25,7 +25,7 @@ class B_Plus_Tree{
         void insert(T data, Record *input_record);
         void do_insert(T data, Record *input);
         void insert_leaf(T data, Record *input, Node_Block<T> *leaf_block);
-        void insert_node(Node<T> node, Node_Block<T>* child_block);
+        void insert_node(Node<T>* node, Node_Block<T>* child_block);
 
         void leaf_block_split(T data, Record *input, Node_Block<T> *leaf_block);
         void node_block_split(Node_Block<T>* node_block);
@@ -61,8 +61,7 @@ B_Plus_Tree<T>::B_Plus_Tree():
 /* Later this will need to handle deleting all the pointers recursively */
 template<typename T>
 B_Plus_Tree<T>::~B_Plus_Tree(){
-//    std::cout << "Deleting Rootblock...\n";
-//    delete root_block;
+    delete root_block;
 }
 
 template<typename T>
@@ -106,38 +105,6 @@ Node_Block<T>* B_Plus_Tree<T>::get_correct_leaf_block(T data, Node_Block<T>* nod
     }
 }
 
-// template<typename T>
-// void B_Plus_Tree<T>::select_insert_protocol(Record *input){
-//      /* Scope envy occuring here */
-//     if(type_flag == Entry::INT){
-//         int int_data = input->get_head_ptr()->get_int();
-//         do_insert(int_data, input);
-//     }
-//     else if(type_flag == Entry::DOUBLE){
-//         double dbl_data = input->get_head_ptr()->get_dbl();
-//         do_insert(dbl_data, input);
-//     }
-//     else if(type_flag == Entry::CHAR){
-//         char char_data = input->get_head_ptr()->get_char();
-//         do_insert(char_data, input);
-//     }
-//     else if(type_flag == Entry::STRING){
-//         std::string str_data = input->get_head_ptr()->get_str();
-//         do_insert(str_data, input);
-//     }
-//     else{
-//         std::cout << "Unhandled Type\n";
-//     }
-// }
-
-// template<typename T>
-// void B_Plus_Tree<T>::do_insert(T data, Record *input){
-//     if(root_block->is_leaf()){
-//         insert_leaf(input, root_block);
-//     }
-//     std::cout << "Data: " << data << std::endl;
-// }
-
 template<typename T>
 void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_block){
     if(leaf_block->is_full()){
@@ -149,31 +116,17 @@ void B_Plus_Tree<T>::insert_leaf(T data, Record *input, Node_Block<T> *leaf_bloc
     }
 }
 
-// template<typename T>
-// void B_Plus_Tree<T>::insert_node(Node<T> node, Node_Block<T>* parent_block, Node_Block<T>* child_block){
-//     Node_Block<T>* parent = child_block->get_parent_block_ptr();
-//     if(parent->is_full()){
-//         parent->add_node(node.get_data(), child_block);
-//         node_block_split(parent);
-//         /* Node Block Split Logic */
-//         /*Root and Non Root Case */
-//     }
-//     else{
-//         parent->add_node(node.get_data(), child_block);
-//     }
-// }
-
 template<typename T>
-void B_Plus_Tree<T>::insert_node(Node<T> node, Node_Block<T>* child_block){
+void B_Plus_Tree<T>::insert_node(Node<T>* node, Node_Block<T>* child_block){
     Node_Block<T>* parent = child_block->get_parent_block_ptr();
     if(parent->is_full()){
-        parent->add_node(node.get_data(), child_block);
+        parent->add_node(node->get_data(), child_block);
         node_block_split(parent);
         /* Node Block Split Logic */
         /*Root and Non Root Case */
     }
     else{
-        parent->add_node(node.get_data(), child_block);
+        parent->add_node(node->get_data(), child_block);
     }
 }
 
@@ -189,19 +142,19 @@ void B_Plus_Tree<T>::node_block_split(Node_Block<T>* node_block){
         old_root->set_parent(new_root);
         new_node->set_parent(new_root);
 
-        Node<T> last_node = old_root->get_and_remove_last_node();
-        Node<T> second_to_last_node = old_root->get_and_remove_last_node();
+        Node<T>* last_node = old_root->get_and_remove_last_node();
+        Node<T>* second_to_last_node = old_root->get_and_remove_last_node();
 
-        second_to_last_node.get_child_ptr()->set_parent(new_node);  /* Sequence dependent code */
-        Node_Block<T>* child_leaf_block = second_to_last_node.get_child_ptr(); /* Sequence dependent code */
-        second_to_last_node.set_child_ptr(new_node);    /* Sequence dependent code */
+        second_to_last_node->get_child_ptr()->set_parent(new_node);  /* Sequence dependent code */
+        Node_Block<T>* child_leaf_block = second_to_last_node->get_child_ptr(); /* Sequence dependent code */
+        second_to_last_node->set_child_ptr(new_node);    /* Sequence dependent code */
 
         new_root->add_node_direct(second_to_last_node);
 
         new_node->add_node_direct(last_node);
         new_node->set_child(child_leaf_block);
 
-        last_node.get_child_ptr()->set_parent(new_node);
+        last_node->get_child_ptr()->set_parent(new_node);
         child_leaf_block->set_parent(new_node);
         
 
@@ -213,17 +166,17 @@ void B_Plus_Tree<T>::node_block_split(Node_Block<T>* node_block){
         Node_Block<T>* new_node = new Node_Block<T>(default_block_size, false, false);
         new_node->set_parent(parent);
 
-        Node<T> last_node = node_block->get_and_remove_last_node();
-        Node<T> second_to_last_node = node_block->get_and_remove_last_node();
+        Node<T>* last_node = node_block->get_and_remove_last_node();
+        Node<T>* second_to_last_node = node_block->get_and_remove_last_node();
 
-        second_to_last_node.get_child_ptr()->set_parent(new_node);  /* Sequence dependent code */
-        Node_Block<T>* child_leaf_block = second_to_last_node.get_child_ptr(); /* Sequence dependent code */
-        second_to_last_node.set_child_ptr(new_node);    /* Sequence dependent code */
+        second_to_last_node->get_child_ptr()->set_parent(new_node);  /* Sequence dependent code */
+        Node_Block<T>* child_leaf_block = second_to_last_node->get_child_ptr(); /* Sequence dependent code */
+        second_to_last_node->set_child_ptr(new_node);    /* Sequence dependent code */
 
         new_node->add_node_direct(last_node);
         new_node->set_child(child_leaf_block);
 
-        last_node.get_child_ptr()->set_parent(new_node);
+        last_node->get_child_ptr()->set_parent(new_node);
         child_leaf_block->set_parent(new_node);
         
 
@@ -243,10 +196,10 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
         Node_Block<T>* new_root = new Node_Block<T>(default_block_size, false, true);
         Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
 
-        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
-        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* old_leaf_node = leaf_block->get_and_remove_last_node();
 
-        new_root->add_node(old_leaf_node.get_data(), new_next);
+        new_root->add_node(old_leaf_node->get_data(), new_next);
         new_next->add_leaf_direct(old_leaf_node);
         new_next->add_leaf_direct(new_leaf_node);
 
@@ -268,8 +221,8 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
         Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
         new_next->set_parent(parent);
         
-        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
-        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* old_leaf_node = leaf_block->get_and_remove_last_node();
 
         new_next->add_leaf_direct(old_leaf_node);
         new_next->add_leaf_direct(new_leaf_node);
@@ -286,8 +239,8 @@ void B_Plus_Tree<T>::leaf_block_split(T data, Record *input, Node_Block<T> *leaf
         Node_Block<T>* new_next = new Node_Block<T>(default_block_size, true, false);
         new_next->set_parent(parent);
 
-        Node<T> new_leaf_node = leaf_block->get_and_remove_last_node();
-        Node<T> old_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* new_leaf_node = leaf_block->get_and_remove_last_node();
+        Node<T>* old_leaf_node = leaf_block->get_and_remove_last_node();
 
         new_next->add_leaf_direct(old_leaf_node);
         new_next->add_leaf_direct(new_leaf_node);

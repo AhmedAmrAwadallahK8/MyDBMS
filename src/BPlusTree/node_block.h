@@ -14,7 +14,7 @@ class Node_Block{
     protected:
         Node_Block<T> *parent_block_ptr;
         Node_Block<T> *child_block_ptr;
-        std::vector<Node<T>> node_vec;
+        std::vector<Node<T>*> node_vec;
         Node_Block<T> *next_leaf_block_ptr;
         Node_Block<T> *prev_leaf_block_ptr;
         long long unsigned int block_size;
@@ -26,14 +26,14 @@ class Node_Block{
         void add_to_block(T input_data, Node_Block<T>* input_block); /* Dead Code */
         void add_node(T input_data, Node_Block<T>* input_block);
         void add_leaf_node(T input_data, Record* input_record);
-        void add_leaf_direct(Node<T> leaf_node);
-        void add_node_direct(Node<T> node);
+        void add_leaf_direct(Node<T>* leaf_node);
+        void add_node_direct(Node<T>* node);
 
         Node_Block<T>* get_parent_block_ptr();
         Node_Block<T>* get_child_block_ptr();
         Node_Block<T>* get_next_leaf_ptr();
         Node_Block<T>* get_prev_leaf_ptr();
-        Node<T> get_and_remove_last_node();
+        Node<T>* get_and_remove_last_node();
         bool is_full();
         bool is_leaf();
         bool is_root();
@@ -58,6 +58,12 @@ class Node_Block{
         bool has_child();
 
         void print_block_records();
+
+        struct data_compare{
+            bool operator()(Node<T>* node1, Node<T>* node2) {
+                return node1->get_data() < node2->get_data(); 
+            }
+        };
 
 
         /* Testing Code should probably be in a friend class called test_node_block */
@@ -87,9 +93,10 @@ Node_Block<T>::Node_Block(int input_size, bool input_leaf, bool input_root):
 
 template<typename T>
 Node_Block<T>::~Node_Block(){
-//    std::cout << "Deleting child_block_ptr: " << child_block_ptr << std::endl;
-//    delete child_block_ptr;
-//    delete this;
+    for(Node<T>* node: node_vec){
+        delete node;
+    }
+    delete child_block_ptr;
 }
 
 // void Node_Block<T>::add_to_block(Entry* input_entry, Node_Block* input_block){
@@ -104,42 +111,42 @@ Node_Block<T>::~Node_Block(){
 template<typename T>
 void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
     if((!full) && (!leaf)){
-        node_vec.push_back(Node<T>(input_data, input_block));
-        std::sort(node_vec.begin(), node_vec.end());
+        node_vec.push_back(new Node<T>(input_data, input_block));
+        std::sort(node_vec.begin(), node_vec.end(), data_compare());
         full = check_full();
     }
     else if((node_vec.size()==block_size) && (!leaf)){
-        node_vec.push_back(Node<T>(input_data, input_block));
-        std::sort(node_vec.begin(), node_vec.end());
+        node_vec.push_back(new Node<T>(input_data, input_block));
+        std::sort(node_vec.begin(), node_vec.end(), data_compare());
     }
 }
 
 template<typename T>
 void Node_Block<T>::add_leaf_node(T input_data, Record* input_record){
     if((!full) && (leaf)){
-        node_vec.push_back(Node<T>(input_data, input_record));
-        std::sort(node_vec.begin(), node_vec.end());
+        node_vec.push_back(new Node<T>(input_data, input_record));
+        std::sort(node_vec.begin(), node_vec.end(), data_compare());
         full = check_full();
     }
     else if((node_vec.size()==block_size) && (leaf)){
-        node_vec.push_back(Node<T>(input_data, input_record));
-        std::sort(node_vec.begin(), node_vec.end());
+        node_vec.push_back(new Node<T>(input_data, input_record));
+        std::sort(node_vec.begin(), node_vec.end(), data_compare());
     }
 }
 
 template<typename T>
-void Node_Block<T>::add_node_direct(Node<T> node){
+void Node_Block<T>::add_node_direct(Node<T>* node){
     node_vec.push_back(node);
 }
 
 template<typename T>
-void Node_Block<T>::add_leaf_direct(Node<T> leaf_node){
+void Node_Block<T>::add_leaf_direct(Node<T>* leaf_node){
     node_vec.push_back(leaf_node);
 }
 
 template<typename T>
-Node<T> Node_Block<T>::get_and_remove_last_node(){
-    Node<T> node = node_vec.back();
+Node<T>* Node_Block<T>::get_and_remove_last_node(){
+    Node<T>* node = node_vec.back();
     node_vec.pop_back();
     full = false; /* This could be a problem in the future */
     return node;
@@ -148,15 +155,15 @@ Node<T> Node_Block<T>::get_and_remove_last_node(){
 template<typename T>
 Node_Block<T>* Node_Block<T>::find_next_child(T data){
     Node_Block<T>* correct_node = child_block_ptr;
-    for(Node<T> n : node_vec){
-        if(data == n.get_data()){
+    for(Node<T>* n : node_vec){
+        if(data == n->get_data()){
             /* Has to be unique, don't allow the insertion */
         }
-        else if(data < n.get_data()){
+        else if(data < n->get_data()){
             return correct_node;
         }
-        else if(data > n.get_data()){
-            correct_node = n.get_child_ptr();
+        else if(data > n->get_data()){
+            correct_node = n->get_child_ptr();
         }
     }
     return correct_node;
@@ -164,8 +171,8 @@ Node_Block<T>* Node_Block<T>::find_next_child(T data){
 
 template<typename T>
 void Node_Block<T>::print_block(){
-    for(Node<T> n: node_vec){
-        std::cout << "Data: " << n.get_data() << "\n";
+    for(Node<T>* n: node_vec){
+        std::cout << "Data: " << n->get_data() << "\n";
     }
 }
 
@@ -282,8 +289,8 @@ bool Node_Block<T>::has_child(){
 
 template<typename T>
 void Node_Block<T>::print_block_records(){
-    for(Node<T> n: node_vec){
-        n.print_record();
+    for(Node<T>* n: node_vec){
+        n->print_record();
     }
 }
 

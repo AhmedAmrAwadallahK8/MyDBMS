@@ -35,7 +35,7 @@ void DBMS::engine(){
         execute_query(query);
         // analyze_syntax(query); /* Needs to be its own class */
     }
-    std::cout << "Thank you for using my DBMS\n";
+    std::cout << "Thank you for using my DBMS1\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     system("cls");
 }
