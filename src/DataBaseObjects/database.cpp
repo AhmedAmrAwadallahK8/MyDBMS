@@ -9,7 +9,13 @@ Database::Database(std::string input_name):
     database_name(input_name)
     {}
 
-Database::~Database(){}
+Database::~Database(){
+    Table* curr_table;
+    for(auto pair: tables){
+        curr_table = pair.second;
+        delete curr_table;
+    }
+}
 
 /* TODO: Handle new tables with a name already in the database*/
 void Database::create_table(std::string table_name, std::vector<std::string> attribute_names, std::vector<int> attributes_types){

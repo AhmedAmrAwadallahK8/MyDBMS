@@ -26,7 +26,23 @@ Table::Table(std::string input_name, std::vector<std::string> input_attributes, 
         }
     }
 
-Table::~Table(){}
+Table::~Table(){
+        switch(prim_key_type){
+            case Entry::INT:
+                delete int_tree;  
+                break;
+            case Entry::DOUBLE:
+                delete dbl_tree;
+                break;
+            case Entry::CHAR:
+                delete char_tree;
+                break;
+            case Entry::STRING:
+                delete str_tree;
+                break;
+        }
+    
+}
 
 void Table::insert_record(Record* input_record){
     switch(prim_key_type){
