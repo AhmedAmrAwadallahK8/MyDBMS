@@ -121,12 +121,116 @@ void DBMS::execute_query(std::string query){
         insert_statement();
     }
     else if(current_token == "select"){
-        select_statement();
+        simple_select_statement();
     }
     else{
         std::cout << "Expected a statement token instead got " << current_token << std::endl;
     }
 }
+
+/* simpleSelect: select attributeList from tableName where expression ; */
+void DBMS::simple_select_statement(){
+    next_token();
+    if(has_attribute_list()){
+        attribute_list();
+    }
+    else{
+        expected_attribute_list();
+    }
+    next_token();
+    if(is_keyword_from()){}
+    else{
+        expected_keyword_from();
+    }
+    next_token();
+    std::string table_name;
+    if(has_identifier()){
+        table_name = current_token;
+    }
+    else{
+        expected_identifier();
+    }
+    next_token();
+    if(end_of_query()){
+        if(database_selected()){
+            Database* db = databases[current_database];
+            Table* table = db->execute_select(table_name, attributes);
+            table->print_table();
+            delete table;
+        }
+        else{
+            no_selected_db();
+            return;
+        }
+    }
+    else{
+        expected_end_of_query();
+    }
+}
+
+bool DBMS::has_identifier(){
+    if((current_token == ";") | (current_token == "(") | (current_token == "where") | (current_token == "join")){
+        return false;
+    }
+    else{
+        return true;
+    }
+
+}
+
+void DBMS::expected_identifier(){
+    std::cout << "Expected identifier token instead got special token. Did you forget to specify the name of your table/database?\n";
+    valid_query = false;
+
+}
+
+bool DBMS::has_attribute_list(){
+    if(current_token == "from"){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+void DBMS::expected_attribute_list(){
+    std::cout << "Expected attribute list instead got empty set.\n";
+    valid_query = false;
+}
+
+bool DBMS::is_keyword_from(){
+    if(current_token == "from"){
+        return true;
+    }
+    else{
+        return true;
+    }
+
+}
+
+void DBMS::expected_keyword_from(){
+    std::cout << "Expected keyword from instead got " << current_token << ".\n";
+    valid_query = false;
+}
+
+void DBMS::attribute_list(){
+    if(current_token == "*"){
+        add_attribute(current_token);
+    }
+    else{
+        add_attribute(current_token);
+        next_token();
+        while(current_token == ","){
+            next_token();
+            add_attribute(current_token);
+        }
+    }
+}
+
+void DBMS::get_attribute(){
+
+}
+
 /* Very basic needs major refinement */
 void DBMS::select_statement(){
     current_token = parsed_query.get_token();
@@ -540,10 +644,14 @@ bool DBMS::end_of_query(){
 }
 
 void DBMS::expected_end_of_query(){
-    std::cout << "Expected ; instead got " << current_token << "\n";
-    std::cout << "Or query failed an earlier syntax check.\n";
+    std::cout << "Expected ; instead got " << current_token;
+    std::cout << " Or query failed an earlier syntax check.\n";
 }
 
 void DBMS::query_failure(){
     valid_query = false;
+}
+
+void DBMS::next_token(){
+    current_token = parsed_query.get_token();
 }

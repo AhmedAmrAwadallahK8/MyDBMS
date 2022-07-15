@@ -156,7 +156,7 @@ void Test_B_Plus_Tree::test_string_insertion(){
     std::vector<std::string> entries13{"Anon", "Hello"};
     Record *pk13 = new Record(attr1, entries13);
 
-    std::vector<std::string> entries14{"Wade", "Hello"};
+    std::vector<std::string> entries14{"Wades", "Hello"};
     Record *pk14 = new Record(attr1, entries14);
 
     tree.insert(pk1->get_head_ptr()->get_str(), pk1);

@@ -30,6 +30,7 @@ class DBMS{
         //void execute_if_end_of_query(std::function<void()>* dbms_func); /*archived code can be deleted though if needed */
         std::string clean_input(std::string input);
         void print_databases();
+        void next_token();
 
         void create_statement();
         void show_statement();
@@ -37,6 +38,20 @@ class DBMS{
         void drop_statement();
         void insert_statement();
         void select_statement();
+
+        void simple_select_statement();
+        void attribute_list();
+        void get_attribute();
+        bool has_identifier();
+        void expected_identifier();
+        bool has_attribute_list();
+        bool is_keyword_from();
+        void expected_keyword_from();
+        bool is_keyword_where();
+        void expected_keyword_where();
+        void expected_attribute_list();
+        void has_expression();
+        void expected_expression();
 
         void create_database(std::string input_name);
         void use_database(std::string db_name);

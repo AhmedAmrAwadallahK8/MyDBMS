@@ -23,6 +23,35 @@ void Database::create_table(std::string table_name, std::vector<std::string> att
     tables.insert(std::pair<std::string, Table*>(table_name, new_table));
 }
 
+Table* Database::execute_select(std::string table_name, std::vector<std::string> selected_attributes){
+    Table* new_table;
+    Table* from_table = tables[table_name];
+    if(select_all(selected_attributes)){
+        std::vector<int> attr_flags = from_table->get_attribute_flags();
+        std::vector<std::string> attr_names = from_table->get_attribute_names();
+        new_table = new Table(table_name, attr_names, attr_flags);
+        transfer_records(from_table, new_table);
+        return new_table;
+    }
+    else{
+        return nullptr;
+        /* Attribute list */
+    }
+}
+
+void Database::transfer_records(Table* orig_table, Table* new_table){
+    new_table->insert_record_vector(orig_table->get_all_records());
+}
+
+bool Database::select_all(std::vector<std::string> selected_attributes){
+    if((selected_attributes.size() == 1) && selected_attributes[0] == "*"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 void Database::insert_into_table(std::string table_name, Record* input_record){
     Table* specified_table = tables[table_name];
     specified_table->insert_record(input_record);

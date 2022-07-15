@@ -44,6 +44,43 @@ Table::~Table(){
     
 }
 
+std::vector<std::string> Table::get_attribute_names(){
+    return attribute_names;
+}
+
+std::vector<int> Table::get_attribute_flags(){
+    return attribute_flags;
+}
+
+std::string Table::get_table_name(){
+    return table_name;
+}
+
+void Table::insert_record_vector(std::vector<Record*> input_records){
+    for(Record* rec: input_records){
+        insert_record(rec);
+    }
+}
+
+std::vector<Record*> Table::get_all_records(){
+    std::vector<Record*> records;
+    switch(prim_key_type){
+        case Entry::INT:
+            records = int_tree->get_all_records();
+            break;
+        case Entry::DOUBLE:
+            records = dbl_tree->get_all_records();
+            break;
+        case Entry::CHAR:
+            records = char_tree->get_all_records();
+            break;
+        case Entry::STRING:
+            records = str_tree->get_all_records();
+            break;
+    }
+    return records; 
+}
+
 void Table::insert_record(Record* input_record){
     switch(prim_key_type){
         case Entry::INT:

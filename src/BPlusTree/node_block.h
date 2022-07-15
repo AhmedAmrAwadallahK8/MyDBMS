@@ -34,6 +34,7 @@ class Node_Block{
         Node_Block<T>* get_next_leaf_ptr();
         Node_Block<T>* get_prev_leaf_ptr();
         Node<T>* get_and_remove_last_node();
+        std::vector<Node<T>*> get_node_vec();
         bool is_full();
         bool is_leaf();
         bool is_root();
@@ -204,6 +205,11 @@ Node_Block<T>* Node_Block<T>::get_next_leaf_ptr(){
 template<typename T>
 Node_Block<T>* Node_Block<T>::get_prev_leaf_ptr(){
     return prev_leaf_block_ptr;
+}
+
+template<typename T>
+std::vector<Node<T>*> Node_Block<T>::get_node_vec(){
+    return node_vec;
 }
 
 template<typename T>

@@ -2,6 +2,7 @@
 #include "record.h"
 
 
+Record::Record(){}
 
 Record::Record(std::vector<int> table_attributes, std::vector<std::string> &entries):
     table_attributes(table_attributes)
@@ -30,6 +31,40 @@ Record::~Record(){
             next_entry = curr_entry->get_next_entry_ptr();
         }
     }
+}
+
+//Record::Record(const Record& rec){
+//    table_attributes = rec.table_attributes;
+//    Entry* curr_entry = rec.head_ptr;
+//    while(curr_entry != nullptr){
+//        Entry* copy = new Entry();
+//        *copy = *curr_entry;
+//        add_new_entry(copy);
+//        curr_entry = curr_entry->get_next_entry_ptr();
+//    }
+//}
+
+Record& Record::operator=(const Record& rec){
+    table_attributes = rec.table_attributes;
+    Entry* curr_entry = rec.head_ptr;
+    while(curr_entry != nullptr){
+        Entry* copy = new Entry();
+        *copy = *curr_entry;
+        add_new_entry(copy);
+        curr_entry = curr_entry->get_next_entry_ptr();
+    }
+    return *this;
+}
+
+void Record::add_new_entry(Entry* entry){
+    if(head_ptr == nullptr){
+        head_ptr = entry;
+    }
+    Entry* curr_entry = head_ptr;
+    while(curr_entry != nullptr){
+        curr_entry = curr_entry->get_next_entry_ptr();
+    }
+    curr_entry->set_next_entry_ptr(entry);
 }
 
 void Record::print_record(){

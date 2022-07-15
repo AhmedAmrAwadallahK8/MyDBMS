@@ -41,6 +41,7 @@ class B_Plus_Tree{
         void block_split_middle();
 
         void print_tree();
+        std::vector<Record*> get_all_records();
 
         friend class test_b_plus_tree;
 };
@@ -80,6 +81,28 @@ void B_Plus_Tree<T>::print_tree(){
         curr_block = curr_block->get_next_leaf_ptr();
     }
     curr_block->print_block_records();
+}
+
+template<typename T>
+std::vector<Record*> B_Plus_Tree<T>::get_all_records(){
+    std::vector<Record*> record_vec;
+    Node_Block<T>* curr_block = root_block;
+    while(curr_block->has_child()){
+        curr_block = curr_block->get_child_block_ptr();
+    }
+    std::vector<Node<T>*> node_vec;
+    while(curr_block->has_next()){
+        node_vec = curr_block->get_node_vec(); 
+        for(Node<T>* node: node_vec){
+            record_vec.push_back(node->get_record_ptr());
+        }
+        curr_block = curr_block->get_next_leaf_ptr();
+    }
+    node_vec = curr_block->get_node_vec(); 
+    for(Node<T>* node: node_vec){
+        record_vec.push_back(node->get_record_ptr());
+    }
+    return record_vec;
 }
 
 template<typename T>

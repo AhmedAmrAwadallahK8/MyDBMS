@@ -24,12 +24,13 @@ class Entry{
             CHAR = 2,
             STRING = 3
         };
-
+        Entry();
         Entry(int input);
         Entry(double input);
         Entry(char input);
         Entry(std::string input);
         ~Entry();
+        Entry& operator= (const Entry& entry);
 
         int get_int();
         double get_dbl();

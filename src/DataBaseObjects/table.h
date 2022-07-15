@@ -22,8 +22,13 @@ class Table{
         ~Table();
 
         void insert_record(Record* input_record);
+        void insert_record_vector(std::vector<Record*> input_records);
         void create_and_insert_record(std::vector<std::string> input_strings);
         void print_table();
+        std::vector<Record*> get_all_records();
+        std::string get_table_name();
+        std::vector<std::string> get_attribute_names();
+        std::vector<int> get_attribute_flags();
 
         friend class test_table;
 };

@@ -1,6 +1,8 @@
 
 #include "entry.h"
 
+Entry::Entry(){}
+
 Entry::Entry(int input):
     int_entry(input),
     next_entry(nullptr),
@@ -26,6 +28,26 @@ Entry::Entry(std::string input):
     {}
 
 Entry::~Entry(){};
+
+Entry& Entry::operator= (const Entry& entry){
+    next_entry = nullptr;
+    type = entry.type;
+    switch(type){
+        case Entry::INT:
+            int_entry = entry.int_entry;
+            break;
+        case Entry::DOUBLE:
+            char_entry = entry.char_entry;
+            break;
+        case Entry::CHAR:
+            char_entry = entry.char_entry;
+            break;
+        case Entry::STRING:
+            str_entry = entry.str_entry;
+            break;
+    }
+    return *this;
+}
 
 void Entry::print_entry(){
     switch(type){
