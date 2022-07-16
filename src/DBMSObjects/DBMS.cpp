@@ -154,9 +154,15 @@ void DBMS::simple_select_statement(){
     if(end_of_query()){
         if(database_selected()){
             Database* db = databases[current_database];
-            Table* table = db->execute_select(table_name, attributes);
-            table->print_table();
-            delete table;
+            if(db->table_exists(table_name)){
+                Table* table = db->execute_select(table_name, attributes);
+                table->print_table();
+                delete table;
+            }
+            else{
+                expected_table_to_exist();
+                return;
+            }
         }
         else{
             no_selected_db();
@@ -684,4 +690,8 @@ Database* DBMS::get_selected_db(){
 
 void DBMS::expected_selected_db(){
     std::cout << "No database currently select.\n";
+}
+
+void DBMS::expected_table_to_exist(){
+    std::cout << "Specific table does not exist.\n";
 }

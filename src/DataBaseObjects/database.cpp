@@ -29,7 +29,6 @@ void Database::drop_table(std::string table_name){
     }
 }
 
-/* TODO: Handle new tables with a name already in the database*/
 void Database::create_table(std::string table_name, std::vector<std::string> attribute_names, std::vector<int> attributes_types){
     if(table_exists(table_name)){
         expected_table_to_not_exist();

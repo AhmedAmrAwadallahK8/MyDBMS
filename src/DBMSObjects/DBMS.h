@@ -87,6 +87,7 @@ class DBMS{
         void no_selected_db();
         Database* get_selected_db();
         void expected_selected_db();
+        void expected_table_to_exist();
 };
 
 #endif

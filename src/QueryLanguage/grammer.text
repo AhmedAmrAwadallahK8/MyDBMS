@@ -34,10 +34,10 @@ ProgramStructure
     attributeName: identifier
     tableReference: tableName '.' attributeName
 Statements
-    simpleSelect: select attributeList from tableName where expression ;
+    simpleSelect: select attributeList from tableName where expression ; PARTIAL COMPLETION
     selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
     createTableStatement: create table tableName '(' parameterList' )' ; DONE 
-    dropTableStatement: drop table tableName ;
+    dropTableStatement: drop table tableName ; DONE
     showTablesStatement: show tables ; DONE 
     createDatabaseStatement: create database databaseName ; DONE
     dropDatabaseStatement: drop database databaseName ; DONE
