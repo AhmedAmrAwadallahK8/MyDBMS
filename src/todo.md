@@ -11,5 +11,8 @@
     - ~~Allocate Nodes to the Heap~~
     - ~~Implement Destruction~~
 - Implement Select
+    - ~~Simple Select~~
     - Select specified attributes
     - where clause
+- Fix table insertion
+    - Currently can't handle doubles

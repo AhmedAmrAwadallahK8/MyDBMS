@@ -341,11 +341,33 @@ void DBMS::drop_statement(){
         }
     } 
     else if(current_token == "table"){
-       /* Table Logic */ 
+        if(has_identifier()){
+            next_token();
+            drop_table(current_token);
+        }
+        else{
+            expected_identifier();
+        }
     }
     else{
         std::cout << "Expected keyword database or table instead got " << current_token << "\n";
         query_failure();
+    }
+}
+
+void DBMS::drop_table(std::string table_name){
+    next_token();
+    if(end_of_query()){
+        if(database_selected()){
+            Database* db = get_selected_db(); 
+            db->drop_table(table_name);
+        }
+        else{
+            expected_selected_db();
+        }
+    }
+    else{
+        expected_end_of_query();
     }
 }
 
@@ -654,4 +676,12 @@ void DBMS::query_failure(){
 
 void DBMS::next_token(){
     current_token = parsed_query.get_token();
+}
+
+Database* DBMS::get_selected_db(){
+    return databases[current_database];
+}
+
+void DBMS::expected_selected_db(){
+    std::cout << "No database currently select.\n";
 }

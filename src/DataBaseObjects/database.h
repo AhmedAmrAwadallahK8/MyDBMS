@@ -22,11 +22,15 @@ class Database{
         Table* get_table_by_name();
         void print_table(std::string table_name);
         void print_tables();
+        void drop_table(std::string table_name);
         Table* execute_select(std::string table_name, std::vector<std::string> selected_attributes);
         bool select_all(std::vector<std::string> selected_attributes);
         void transfer_records(Table* orig_table, Table* new_table);
 
         bool table_exists(std::string table_name);
+        void expected_table_to_exist();
+        void expected_table_to_not_exist();
+        void table_dropped();
 
         friend class Test_Database;
 };

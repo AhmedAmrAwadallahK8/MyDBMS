@@ -17,10 +17,27 @@ Database::~Database(){
     }
 }
 
+void Database::drop_table(std::string table_name){
+    if(table_exists(table_name)){
+        Table* table_to_be_dropped = tables[table_name];
+        tables.erase(table_name);
+        delete table_to_be_dropped;
+        table_dropped();
+    }
+    else{
+        expected_table_to_exist();
+    }
+}
+
 /* TODO: Handle new tables with a name already in the database*/
 void Database::create_table(std::string table_name, std::vector<std::string> attribute_names, std::vector<int> attributes_types){
-    Table* new_table = new Table(table_name, attribute_names, attributes_types);
-    tables.insert(std::pair<std::string, Table*>(table_name, new_table));
+    if(table_exists(table_name)){
+        expected_table_to_not_exist();
+    }
+    else{
+        Table* new_table = new Table(table_name, attribute_names, attributes_types);
+        tables.insert(std::pair<std::string, Table*>(table_name, new_table));
+    }
 }
 
 Table* Database::execute_select(std::string table_name, std::vector<std::string> selected_attributes){
@@ -93,4 +110,16 @@ void Database::print_tables(){
         table_name = pair.first;
         std::cout << "  " << table_name << "\n";
     }
+}
+
+void Database::expected_table_to_exist(){
+    std::cout << "Specified table does not exist in the database.\n";
+}
+
+void Database::expected_table_to_not_exist(){
+    std::cout << "Specfied table already exists in the database.\n";
+}
+
+void Database::table_dropped(){
+    std::cout << "Dropped the specified table.\n";
 }

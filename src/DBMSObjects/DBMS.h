@@ -61,6 +61,7 @@ class DBMS{
 
         void create_table(std::string table_name);
         void insert_into_table(std::string table_name);
+        void drop_table(std::string table_name);
         void show_tables();
 
         void string_constant_list();
@@ -84,6 +85,8 @@ class DBMS{
         void expected_end_of_query();
         bool database_selected();
         void no_selected_db();
+        Database* get_selected_db();
+        void expected_selected_db();
 };
 
 #endif
