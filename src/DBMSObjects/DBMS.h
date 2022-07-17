@@ -27,7 +27,6 @@ class DBMS{
         std::string get_query();
         void analyze_syntax(std::string query);
         void execute_query(std::string query);
-        //void execute_if_end_of_query(std::function<void()>* dbms_func); /*archived code can be deleted though if needed */
         std::string clean_input(std::string input);
         void print_databases();
         void next_token();

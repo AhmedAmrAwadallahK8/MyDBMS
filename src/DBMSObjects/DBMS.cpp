@@ -14,14 +14,9 @@ DBMS::DBMS():
     parsed_query(""),
     current_database(""),
     running(true)
-{
+{}
 
-}
-
-DBMS::~DBMS(){
-
-
-}
+DBMS::~DBMS(){}
 
 void DBMS::engine(){
     system("cls");
@@ -33,7 +28,6 @@ void DBMS::engine(){
         query = get_query();
         valid_query = true;
         execute_query(query);
-        // analyze_syntax(query); /* Needs to be its own class */
     }
     std::cout << "Thank you for using my DBMS1\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
@@ -86,7 +80,6 @@ bool DBMS::user_quit(std::string input){
         return true;
     }
     return false;
-
 }
 
 bool DBMS::query_open(std::string input){
@@ -234,10 +227,6 @@ void DBMS::attribute_list(){
     }
 }
 
-void DBMS::get_attribute(){
-
-}
-
 /* Very basic needs major refinement */
 void DBMS::select_statement(){
     current_token = parsed_query.get_token();
@@ -310,8 +299,6 @@ void DBMS::insert_into_table(std::string table_name){
     else{
         expected_end_of_query();
     }
-
-
 }
 
 void DBMS::string_constant_list(){
@@ -467,7 +454,6 @@ void DBMS::print_databases(){
     }
 }
 
-
 /*Need to handle when user wants to make a db name that is also a keyword*/
 void DBMS::create_statement(){
     current_token = parsed_query.get_token();
@@ -495,7 +481,6 @@ void DBMS::create_statement(){
     }
 }
 
-    /* createTableStatement: create table tableName '(' parameterList' )' ; TODO */ 
 void DBMS::create_table(std::string table_name){
     current_token = parsed_query.get_token();
     if(current_token != "("){
@@ -542,7 +527,7 @@ bool DBMS::database_selected(){
         return true;
     }
 }
-/* parameterList: (identifier type) ((,identifier type)*)? */
+
 void DBMS::parameter_list(){
     parameter_pair();
     while(current_token == ","){
@@ -619,10 +604,6 @@ bool DBMS::query_empty(std::string query){
     return false;
 }
 
-
-
-/* TODO: Check if token is ; before executing*/
-/* Additonally need to update this function so that is compatible with our execution abstraction*/
 void DBMS::create_database(std::string input_name){
     current_token = parsed_query.get_token();
     if(end_of_query()){

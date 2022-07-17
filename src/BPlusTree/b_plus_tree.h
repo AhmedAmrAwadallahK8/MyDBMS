@@ -6,8 +6,6 @@
 #include "node_block.h"
 #include "node.h"
 
-
-//insert into classroom values ('Packard', '101', '500');
 template<typename T>
 class B_Plus_Tree{
     protected:
@@ -59,7 +57,6 @@ B_Plus_Tree<T>::B_Plus_Tree():
     root_block(new Node_Block<T>(default_block_size, true, true))
     {}
 
-/* Later this will need to handle deleting all the pointers recursively */
 template<typename T>
 B_Plus_Tree<T>::~B_Plus_Tree(){
     delete root_block;
@@ -145,8 +142,6 @@ void B_Plus_Tree<T>::insert_node(Node<T>* node, Node_Block<T>* child_block){
     if(parent->is_full()){
         parent->add_node(node->get_data(), child_block);
         node_block_split(parent);
-        /* Node Block Split Logic */
-        /*Root and Non Root Case */
     }
     else{
         parent->add_node(node->get_data(), child_block);
@@ -204,11 +199,6 @@ void B_Plus_Tree<T>::node_block_split(Node_Block<T>* node_block){
         
 
         insert_node(last_node, new_node);
-
-
-
-
-        /*Non Root Case */
     }
 }
 

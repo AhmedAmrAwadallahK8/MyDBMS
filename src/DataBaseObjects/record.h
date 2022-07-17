@@ -6,8 +6,6 @@
 
 #include "entry.h"
 
-//insert into classroom values ('Packard', '101', '500');
-
 class Record{
     protected:
         Entry* head_ptr;
@@ -28,7 +26,6 @@ class Record{
         Entry* get_head_ptr();
 
         void print_record();
-
 
         void static test();
 };

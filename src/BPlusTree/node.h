@@ -38,8 +38,6 @@ class Node{
         void static test();
 };
 
-
-
 template<typename T>
 Node<T>::Node(T input_data, Node_Block<T>* block_entry):
     data(input_data),
@@ -59,8 +57,6 @@ Node<T>::~Node(){
     delete child_block_ptr;
     delete record_ptr;
 }
-
-
 
 template<typename T>
 void Node<T>::set_child_ptr(Node_Block<T>* new_child){

@@ -66,8 +66,6 @@ class Node_Block{
             }
         };
 
-
-        /* Testing Code should probably be in a friend class called test_node_block */
         void static test();
         bool static test_root();
         bool static test_pointers();
@@ -75,10 +73,6 @@ class Node_Block{
         bool static test_adding_leaf_nodes();
         
 };
-
-
-
-/* Might do a revamp here, input an actual value instead of Entry */
 
 template<typename T>
 Node_Block<T>::Node_Block(int input_size, bool input_leaf, bool input_root):
@@ -99,15 +93,6 @@ Node_Block<T>::~Node_Block(){
     }
     delete child_block_ptr;
 }
-
-// void Node_Block<T>::add_to_block(Entry* input_entry, Node_Block* input_block){
-//     if(leaf){
-//         add_leaf_node(input_entry, input_block);
-//     }
-//     else if(){
-
-//     }
-// }
 
 template<typename T>
 void Node_Block<T>::add_node(T input_data, Node_Block<T>* input_block){
@@ -292,14 +277,12 @@ bool Node_Block<T>::has_child(){
     }
 }
 
-
 template<typename T>
 void Node_Block<T>::print_block_records(){
     for(Node<T>* n: node_vec){
         n->print_record();
     }
 }
-
 
 template<typename T>
 void Node_Block<T>::test(){

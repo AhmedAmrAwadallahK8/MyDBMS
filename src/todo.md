@@ -12,7 +12,8 @@
     - ~~Implement Destruction~~
 - Implement Select
     - ~~Simple Select~~
-    - Select specified attributes
+    - ~~Select specified attributes~~
+    - Check valid specified attributes
     - where clause
 - Fix table insertion
     - Currently can't handle doubles

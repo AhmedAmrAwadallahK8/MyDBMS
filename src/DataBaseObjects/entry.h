@@ -45,6 +45,4 @@ class Entry{
         void static test();
 };
 
-
-
 #endif

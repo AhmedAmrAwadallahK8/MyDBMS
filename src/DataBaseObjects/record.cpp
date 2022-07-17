@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "record.h"
 
+#include "record.h"
 
 Record::Record():
     head_ptr(nullptr)
@@ -35,17 +35,6 @@ Record::~Record(){
         }
     }
 }
-
-//Record::Record(const Record& rec){
-//    table_attributes = rec.table_attributes;
-//    Entry* curr_entry = rec.head_ptr;
-//    while(curr_entry != nullptr){
-//        Entry* copy = new Entry();
-//        *copy = *curr_entry;
-//        add_new_entry(copy);
-//        curr_entry = curr_entry->get_next_entry_ptr();
-//    }
-//}
 
 Record& Record::operator=(const Record& rec){
     table_attributes = rec.table_attributes;

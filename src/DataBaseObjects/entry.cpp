@@ -117,5 +117,3 @@ void Entry::test(){
     std::cout << "C Test| Address: " << &c << " Next Address: " << c.get_next_entry_ptr()  << std::endl;
     std::cout << "D Test| Address: " << &d << " Next Address: " << d.get_next_entry_ptr()  << std::endl;
 }
-
-
