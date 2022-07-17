@@ -19,6 +19,9 @@ class Record{
         Record(const Record& rec);
 
         Record& operator= (const Record& rec);
+        void subset_record(std::vector<int> subset);
+        std::vector<Entry*> get_all_entries();
+        void delete_unused_entries(std::vector<Entry*> entries);
 
         Entry* add_new_entry(int entry_type, std::string data);
         void add_new_entry(Entry* entry);

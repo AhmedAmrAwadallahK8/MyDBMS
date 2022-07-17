@@ -10,6 +10,11 @@ Table::Table(std::string input_name, std::vector<std::string> input_attributes, 
     attribute_flags(input_flags),
     prim_key_type(input_flags[0])
     {
+        int i = 0;
+        for(std::string attr: input_attributes){
+            attr_to_ind_map.insert(std::pair<std::string, int>(attr, i));
+            i++;
+        }
         switch(prim_key_type){
             case Entry::INT:
                 int_tree = new B_Plus_Tree<int>;
@@ -56,10 +61,34 @@ std::string Table::get_table_name(){
     return table_name;
 }
 
+std::vector<int> Table::get_subset_flags(std::vector<std::string> attr_subset){
+    std::vector<int> subset_flags;
+    for(std::string attr: attr_subset){
+        int type_ind = attr_to_ind_map[attr];
+        subset_flags.push_back(attribute_flags[type_ind]);
+    }
+    return subset_flags;
+}
+
 void Table::insert_record_vector(std::vector<Record*> input_records){
     for(Record* rec: input_records){
         insert_record(rec);
     }
+}
+
+void Table::subset_record_vector(std::vector<Record*> input_records, std::vector<std::string> attr_subset){
+    for(Record* rec: input_records){
+        subset_record(rec, attr_subset);
+    }
+}
+
+void Table::subset_record(Record* input_record, std::vector<std::string> attr_subset){
+    std::vector<int> index_subset;
+    for(std::string attr: attr_subset){
+        int index = attr_to_ind_map[attr];
+        index_subset.push_back(index);
+    }
+    input_record->subset_record(index_subset);
 }
 
 std::vector<Record*> Table::get_all_records(){
@@ -79,6 +108,23 @@ std::vector<Record*> Table::get_all_records(){
             break;
     }
     return records; 
+}
+
+std::vector<Record*> Table::get_copy_of_all_records(){
+    std::vector<Record*> real_records = get_all_records();
+    std::vector<Record*> copy_records;
+    for(Record* rec: real_records){
+        Record* temp = new Record();
+        *temp = *rec;
+        copy_records.push_back(temp);
+    }
+    return copy_records;
+}
+
+std::vector<Record*> Table::get_all_records_subset(std::vector<std::string> attr_subset){
+    std::vector<Record*> records = get_copy_of_all_records();
+    subset_record_vector(records, attr_subset);
+    return records;
 }
 
 void Table::insert_record(Record* input_record){

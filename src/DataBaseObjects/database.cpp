@@ -50,13 +50,22 @@ Table* Database::execute_select(std::string table_name, std::vector<std::string>
         return new_table;
     }
     else{
-        return nullptr;
-        /* Attribute list */
+        /*TODO: Check if identifiers even exist in table*/
+        std::vector<int> sub_flags = from_table->get_subset_flags(selected_attributes);
+        new_table = new Table(table_name, selected_attributes, sub_flags);
+        transfer_records_subset(from_table, new_table, selected_attributes);
+        return new_table;
     }
 }
 
+void Database::transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset){
+    std::vector<Record*> copy = orig_table->get_all_records_subset(attr_subset);
+    new_table->insert_record_vector(copy);
+}
+
 void Database::transfer_records(Table* orig_table, Table* new_table){
-    new_table->insert_record_vector(orig_table->get_all_records());
+    std::vector<Record*> copy = orig_table->get_copy_of_all_records();
+    new_table->insert_record_vector(copy);
 }
 
 bool Database::select_all(std::vector<std::string> selected_attributes){

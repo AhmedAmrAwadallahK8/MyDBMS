@@ -7,6 +7,8 @@
 
 #include "table.h"
 
+class Record;
+
 class Database{
     protected:
         std::string database_name;
@@ -26,6 +28,8 @@ class Database{
         Table* execute_select(std::string table_name, std::vector<std::string> selected_attributes);
         bool select_all(std::vector<std::string> selected_attributes);
         void transfer_records(Table* orig_table, Table* new_table);
+        void transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset);
+        std::vector<Record*> get_copy_of_all_records(std::vector<Record*> records);
 
         bool table_exists(std::string table_name);
         void expected_table_to_exist();

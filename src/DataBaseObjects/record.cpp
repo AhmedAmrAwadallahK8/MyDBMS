@@ -1,10 +1,13 @@
-
+#include <algorithm>
 #include "record.h"
 
 
-Record::Record(){}
+Record::Record():
+    head_ptr(nullptr)
+    {}
 
 Record::Record(std::vector<int> table_attributes, std::vector<std::string> &entries):
+    head_ptr(nullptr),
     table_attributes(table_attributes)
 {
     std::vector<int>::iterator table_attr_iterator = table_attributes.begin();
@@ -56,12 +59,45 @@ Record& Record::operator=(const Record& rec){
     return *this;
 }
 
+void Record::subset_record(std::vector<int> subset){
+    std::vector<Entry*> entries = get_all_entries();
+    head_ptr = nullptr;
+    table_attributes.clear();
+    std::copy(subset.begin(), subset.end(), back_inserter(table_attributes));
+    for(int entry_ind: subset){
+        Entry* entry = entries[entry_ind];
+        add_new_entry(entry);
+        entries.erase(std::remove(entries.begin(), entries.end(), entry), entries.end());
+    }
+    delete_unused_entries(entries);
+}
+
+void Record::delete_unused_entries(std::vector<Entry*> entries){
+    for(Entry* entry: entries){
+        delete entry;
+    }
+}
+
+std::vector<Entry*> Record::get_all_entries(){
+    std::vector<Entry*> entry_vec;
+    Entry* curr_entry = head_ptr;
+    Entry* next_entry;
+    while(curr_entry != nullptr){
+        next_entry = curr_entry->get_next_entry_ptr();
+        curr_entry->set_next_entry_ptr(nullptr);
+        entry_vec.push_back(curr_entry);
+        curr_entry = next_entry;
+    }
+    return entry_vec;
+}
+
 void Record::add_new_entry(Entry* entry){
     if(head_ptr == nullptr){
         head_ptr = entry;
+        return;
     }
     Entry* curr_entry = head_ptr;
-    while(curr_entry != nullptr){
+    while(curr_entry->get_next_entry_ptr() != nullptr){
         curr_entry = curr_entry->get_next_entry_ptr();
     }
     curr_entry->set_next_entry_ptr(entry);

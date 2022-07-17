@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 #include "../BPlusTree/b_plus_tree.h"
 
@@ -16,6 +17,7 @@ class Table{
         B_Plus_Tree<double>* dbl_tree;
         B_Plus_Tree<char>* char_tree;
         B_Plus_Tree<std::string>* str_tree;
+        std::map<std::string, int> attr_to_ind_map;
     public:
         Table(std::string input_name, std::vector<std::string> input_attributes, 
                 std::vector<int> input_flags);
@@ -23,12 +25,17 @@ class Table{
 
         void insert_record(Record* input_record);
         void insert_record_vector(std::vector<Record*> input_records);
+        void subset_record(Record* input_record, std::vector<std::string> attr_subset);
+        void subset_record_vector(std::vector<Record*> input_records, std::vector<std::string> attr_subset);
         void create_and_insert_record(std::vector<std::string> input_strings);
         void print_table();
         std::vector<Record*> get_all_records();
+        std::vector<Record*> get_copy_of_all_records();
+        std::vector<Record*> get_all_records_subset(std::vector<std::string> attr_subset);
         std::string get_table_name();
         std::vector<std::string> get_attribute_names();
         std::vector<int> get_attribute_flags();
+        std::vector<int> get_subset_flags(std::vector<std::string> attr_subset);
 
         friend class test_table;
 };

@@ -137,7 +137,6 @@ void DBMS::simple_select_statement(){
     else{
         expected_attribute_list();
     }
-    next_token();
     if(is_keyword_from()){}
     else{
         expected_keyword_from();
@@ -222,6 +221,7 @@ void DBMS::expected_keyword_from(){
 void DBMS::attribute_list(){
     if(current_token == "*"){
         add_attribute(current_token);
+        next_token();
     }
     else{
         add_attribute(current_token);
@@ -229,6 +229,7 @@ void DBMS::attribute_list(){
         while(current_token == ","){
             next_token();
             add_attribute(current_token);
+            next_token();
         }
     }
 }

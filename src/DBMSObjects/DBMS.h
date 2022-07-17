@@ -1,5 +1,5 @@
 #ifndef DBMS_H
-#define DBMUS_H
+#define DBMS_H
 
 #include<vector>
 #include<map>

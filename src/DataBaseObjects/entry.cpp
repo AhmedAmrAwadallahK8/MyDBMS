@@ -1,7 +1,10 @@
 
 #include "entry.h"
 
-Entry::Entry(){}
+Entry::Entry():
+    str_entry("stringscanonlybethismanycharacterslong"),
+    next_entry(nullptr)
+    {}
 
 Entry::Entry(int input):
     int_entry(input),
@@ -32,19 +35,23 @@ Entry::~Entry(){};
 Entry& Entry::operator= (const Entry& entry){
     next_entry = nullptr;
     type = entry.type;
-    switch(type){
-        case Entry::INT:
-            int_entry = entry.int_entry;
-            break;
-        case Entry::DOUBLE:
-            char_entry = entry.char_entry;
-            break;
-        case Entry::CHAR:
-            char_entry = entry.char_entry;
-            break;
-        case Entry::STRING:
-            str_entry = entry.str_entry;
-            break;
+    if(type == Entry::INT){
+        int copy = entry.int_entry;
+        int_entry = copy;
+    }
+    else if(type == Entry::DOUBLE){
+        double copy = entry.dbl_entry;
+        dbl_entry = copy;
+    }
+    else if (type == Entry::CHAR){
+        char copy = entry.char_entry;
+        char_entry = copy;
+
+    }
+    else if (type == Entry::STRING){
+        std::string copy = entry.str_entry;
+        str_entry = copy;
+
     }
     return *this;
 }
