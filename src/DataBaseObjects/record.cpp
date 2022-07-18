@@ -47,7 +47,7 @@ Record& Record::operator=(const Record& rec){
     }
     return *this;
 }
-
+//Magistic was here
 void Record::subset_record(std::vector<int> subset){
     std::vector<Entry*> entries = get_all_entries();
     head_ptr = nullptr;
@@ -55,15 +55,22 @@ void Record::subset_record(std::vector<int> subset){
     std::copy(subset.begin(), subset.end(), back_inserter(table_attributes));
     for(int entry_ind: subset){
         Entry* entry = entries[entry_ind];
+        Entry* temp = new Entry();
+        *temp = *entry;
+        entries[entry_ind] = temp;
         add_new_entry(entry);
-        entries.erase(std::remove(entries.begin(), entries.end(), entry), entries.end());
+    }
+    for(int entry_ind: subset){
+        entries[entry_ind] = nullptr;
     }
     delete_unused_entries(entries);
 }
 
 void Record::delete_unused_entries(std::vector<Entry*> entries){
     for(Entry* entry: entries){
-        delete entry;
+        if(entry!= nullptr){
+            delete entry;
+        }
     }
 }
 
