@@ -36,6 +36,11 @@ class Table{
         std::vector<std::string> get_attribute_names();
         std::vector<int> get_attribute_flags();
         std::vector<int> get_subset_flags(std::vector<std::string> attr_subset);
+        bool attributes_exist(std::vector<std::string> select_attr);
+        void expected_attributes_to_exist();
+        bool valid_attribute_size(std::vector<std::string> select_attr);
+        void expected_valid_attribute_size();
+        bool valid_attribute_list(std::vector<std::string> select_attr);
 
         friend class test_table;
 };

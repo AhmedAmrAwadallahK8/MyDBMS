@@ -61,6 +61,53 @@ std::string Table::get_table_name(){
     return table_name;
 }
 
+bool Table::attributes_exist(std::vector<std::string> select_attr){
+    bool attr_exists = true;
+    for(std::string attr: select_attr){
+        attr_exists = std::find(attribute_names.begin(), attribute_names.end(), attr) != attribute_names.end();
+        if(attr_exists == false){
+            return attr_exists;
+        }
+    }
+    return attr_exists;
+}
+
+void Table::expected_attributes_to_exist(){
+    std::cout << "Encountered one or more attributes that do not exist in the table.\n";
+}
+
+bool Table::valid_attribute_size(std::vector<std::string> select_attr){
+    if(select_attr.size() <= attribute_names.size()){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
+void Table::expected_valid_attribute_size(){
+    std::cout << "Encountered an attribute list longer than this table.\n";
+
+}
+
+bool Table::valid_attribute_list(std::vector<std::string> select_attr){
+    if(valid_attribute_size(select_attr) && attributes_exist(select_attr)){
+        return true;
+    }
+    else if(valid_attribute_size(select_attr)){
+        expected_attributes_to_exist();
+        return false;
+    }
+    else if(attributes_exist(select_attr)){
+        expected_valid_attribute_size();
+        return false;
+    }
+    else{
+        return false;
+    }
+}
+
 std::vector<int> Table::get_subset_flags(std::vector<std::string> attr_subset){
     std::vector<int> subset_flags;
     for(std::string attr: attr_subset){

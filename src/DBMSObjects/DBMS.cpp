@@ -22,6 +22,7 @@ void DBMS::engine(){
     system("cls");
     std::cout << "Welcome to ASQL database. Type q or quit to exit the program.\n";
     std::cout << "Querys are not executed until a semicolon(;) character is input into the program\n";
+    std::cout << "All queries are expected to be lower case.\n";
     std::string query = "";
     while(running){
         clean_up_attribs_and_types();
@@ -148,8 +149,10 @@ void DBMS::simple_select_statement(){
             Database* db = databases[current_database];
             if(db->table_exists(table_name)){
                 Table* table = db->execute_select(table_name, attributes);
-                table->print_table();
-                delete table;
+                if(table != nullptr){
+                    table->print_table();
+                    delete table;
+                }
             }
             else{
                 expected_table_to_exist();
@@ -163,6 +166,7 @@ void DBMS::simple_select_statement(){
     }
     else{
         expected_end_of_query();
+        return;
     }
 }
 

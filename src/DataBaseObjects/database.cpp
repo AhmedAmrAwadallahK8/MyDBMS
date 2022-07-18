@@ -50,12 +50,17 @@ Table* Database::execute_select(std::string table_name, std::vector<std::string>
         return new_table;
     }
     else{
-        /*TODO: Check if identifiers even exist in table*/
-        std::vector<int> sub_flags = from_table->get_subset_flags(selected_attributes);
-        new_table = new Table(table_name, selected_attributes, sub_flags);
-        transfer_records_subset(from_table, new_table, selected_attributes);
-        return new_table;
+        if(from_table->valid_attribute_list(selected_attributes)){
+            std::vector<int> sub_flags = from_table->get_subset_flags(selected_attributes);
+            new_table = new Table(table_name, selected_attributes, sub_flags);
+            transfer_records_subset(from_table, new_table, selected_attributes);
+            return new_table;
+        }
+        else{
+            return nullptr;
+        }
     }
+
 }
 
 void Database::transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset){
