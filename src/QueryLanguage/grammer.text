@@ -23,6 +23,7 @@ Lexical Elements
     SYMBOL '(' | ')' | ' ' ' | ' " ' | ';' | ',' | '*'
     integerConstant
     stringConstant ' sequence of characters '
+    doubleConstant ' integerConstant (. integerConstant)? '
     identifier
 ProgramStructure
     type: int double char string
@@ -34,15 +35,15 @@ ProgramStructure
     attributeName: identifier
     tableReference: tableName '.' attributeName
 Statements
-    simpleSelect: select attributeList from tableName where expression ; PARTIAL COMPLETION
+    simpleSelect: select attributeList from tableName where expression ;
     selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
-    createTableStatement: create table tableName '(' parameterList' )' ; DONE 
-    dropTableStatement: drop table tableName ; DONE
-    showTablesStatement: show tables ; DONE 
-    createDatabaseStatement: create database databaseName ; DONE
-    dropDatabaseStatement: drop database databaseName ; DONE
-    useDatabaseStatement: use databaseName ; DONE
-    showDatabasesStatement: show databases ; DONE
+    createTableStatement: create table tableName '(' parameterList' )' ;
+    dropTableStatement: drop table tableName ;
+    showTablesStatement: show tables ;
+    createDatabaseStatement: create database databaseName ;
+    dropDatabaseStatement: drop database databaseName ;
+    useDatabaseStatement: use databaseName ;
+    showDatabasesStatement: show databases ;
     insertRow: insert into tableName '(' stringConstantList ')' ; Done but needs improvement 
     deleteStatement: delete from tableName where expression ;
 Expression 
@@ -51,4 +52,3 @@ Expression
     op: '<' | '>' | '=' | 'and' | 'or' 
     unaryOp: 'not'
     keywordConstant: 'null'
-
