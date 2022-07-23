@@ -1,32 +1,33 @@
 Spaces and tabs don't matter
-Program structure is just one simple command followed by semicolon.
+Program structure is just one statement followed by semicolon.
 
 Lexical Elements
-    Keyword
-        SELECT
-        CREATE
-        INSERT
-        DELETE
-        FROM
-        WHERE
-        JOIN
-        INTO
-        AND
-        OR
-        SHOW
-        USE
-        DROP
-        TABLE 
-        DATABASE 
-        TABLES
-        DATABASES
-    SYMBOL '(' | ')' | ' ' ' | ' " ' | ';' | ',' | '*'
-    integerConstant
-    stringConstant ' sequence of characters '
-    doubleConstant ' integerConstant (. integerConstant)? '
-    identifier
-ProgramStructure
-    type: int double char string
+    keyword:
+        'select'
+        'create'
+        'insert'
+        'delete'
+        'from'
+        'where'
+        'join'
+        'into'
+        'and'
+        'on'
+        'or'
+        'show'
+        'use'
+        'drop'
+        'table' 
+        'database' 
+        'tables'
+        'databases'
+    symbol: '(' | ')' | ' " ' | ';' | ',' | '*'
+    integerConstant simple number 
+    stringConstant '"' sequence of characters '"'
+    doubleConstant '"' integerConstant ('.' integerConstant)? '"'
+    identifier single word that doesnt start with a number
+Program Structure
+    type: 'int' 'double' 'char' 'string'
     parameterList: (identifier type) ((,identifier type)*)?
     attributeList: * | attributeName (, attributeName)*
     stringConstantList: stringConstant (, stringConstant)*
@@ -35,17 +36,19 @@ ProgramStructure
     attributeName: identifier
     tableReference: tableName '.' attributeName
 Statements
-    simpleSelect: select attributeList from tableName where expression ;
-    selectStatements: select attributeList from tableName (join tableName on (attributeName | tableReference) = (attributeName | tableReference))? (where expression)? ;
-    createTableStatement: create table tableName '(' parameterList' )' ;
-    dropTableStatement: drop table tableName ;
-    showTablesStatement: show tables ;
-    createDatabaseStatement: create database databaseName ;
-    dropDatabaseStatement: drop database databaseName ;
-    useDatabaseStatement: use databaseName ;
-    showDatabasesStatement: show databases ;
-    insertRow: insert into tableName '(' stringConstantList ')' ; Done but needs improvement 
-    deleteStatement: delete from tableName where expression ;
+    simpleSelect: 'select' 'attributeList' 'from' tableName 'where' expression ';'
+    selectStatements: 'select' attributeList 'from' tableName 
+    ('join' tableName 'on' (attributeName | tableReference) '=' (attributeName | tableReference))?
+    ('where' expression)? ';'
+    createTableStatement: 'create' 'table' tableName '(' parameterList ')' ';'
+    dropTableStatement: 'drop' 'table' tableName ';'
+    showTablesStatement: 'show' 'tables' ';'
+    createDatabaseStatement: 'create' 'database' databaseName ';'
+    dropDatabaseStatement: 'drop' 'database' databaseName ';'
+    useDatabaseStatement: 'use' databaseName ';'
+    showDatabasesStatement: 'show' 'databases' ';'
+    insertRow: 'insert' 'into' tableName '(' stringConstantList ')' ';'
+    deleteStatement: 'delete' 'from' tableName 'where' expression ';'
 Expression 
     expression: term (op term)*
     term: integerConstant | stringConstant | tableReference | unaryOp term

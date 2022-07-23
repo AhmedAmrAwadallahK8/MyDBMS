@@ -14,7 +14,7 @@
     - ~~Simple Select~~
     - ~~Select specified attributes~~
     - ~~Check valid specified attributes~~
-    - Bug: If user inputs the same attribute multiple times there is undefined behavior
+    - ~~Bug: If user inputs the same attribute multiple times there is undefined behavior~~
     - where clause
 - Fix table insertion
     - Currently can't handle doubles
