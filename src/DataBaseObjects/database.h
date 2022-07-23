@@ -25,7 +25,7 @@ class Database{
         void print_table(std::string table_name);
         void print_tables();
         void drop_table(std::string table_name);
-        Table* execute_select(std::string table_name, std::vector<std::string> selected_attributes);
+        Table* execute_select(std::string table_name, std::vector<std::string> selected_attributes, std::vector<std::string> expression_sequence);
         bool select_all(std::vector<std::string> selected_attributes);
         void transfer_records(Table* orig_table, Table* new_table);
         void transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset);

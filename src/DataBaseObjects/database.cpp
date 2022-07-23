@@ -39,26 +39,31 @@ void Database::create_table(std::string table_name, std::vector<std::string> att
     }
 }
 
-Table* Database::execute_select(std::string table_name, std::vector<std::string> selected_attributes){
+Table* Database::execute_select(std::string table_name, std::vector<std::string> selected_attributes, std::vector<std::string> expression_sequence){
     Table* new_table;
     Table* from_table = tables[table_name];
-    if(select_all(selected_attributes)){
-        std::vector<int> attr_flags = from_table->get_attribute_flags();
-        std::vector<std::string> attr_names = from_table->get_attribute_names();
-        new_table = new Table(table_name, attr_names, attr_flags);
-        transfer_records(from_table, new_table);
-        return new_table;
-    }
-    else{
-        if(from_table->valid_attribute_list(selected_attributes)){
-            std::vector<int> sub_flags = from_table->get_subset_flags(selected_attributes);
-            new_table = new Table(table_name, selected_attributes, sub_flags);
-            transfer_records_subset(from_table, new_table, selected_attributes);
+    if(expression_sequence.empty()){
+        if(select_all(selected_attributes)){
+            std::vector<int> attr_flags = from_table->get_attribute_flags();
+            std::vector<std::string> attr_names = from_table->get_attribute_names();
+            new_table = new Table(table_name, attr_names, attr_flags);
+            transfer_records(from_table, new_table);
             return new_table;
         }
         else{
-            return nullptr;
+            if(from_table->valid_attribute_list(selected_attributes)){
+                std::vector<int> sub_flags = from_table->get_subset_flags(selected_attributes);
+                new_table = new Table(table_name, selected_attributes, sub_flags);
+                transfer_records_subset(from_table, new_table, selected_attributes);
+                return new_table;
+            }
+            else{
+                return nullptr;
+            }
         }
+    }
+    else{
+        /* Where statement code */
     }
 
 }

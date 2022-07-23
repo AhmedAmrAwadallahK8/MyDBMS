@@ -165,9 +165,89 @@ void DBMS::simple_select_statement(){
         }
     }
     else{
+        if(is_keyword_where()){
+        }
+        else{
+            expected_end_of_query();
+            return;
+        }
+    }
+    if(is_keyword_where()){
+        expression();
+    }
+    else{
+        expected_keyword_where();
+    }
+    if(end_of_query()){
+        select_setup_and_execute(table_name);
+    }
+    else{
         expected_end_of_query();
         return;
     }
+}
+
+void DBMS::expression(){
+    next_token();
+    expression_sequence.push_back(current_token);
+    next_token();
+    if(valid_op()){
+       expression_sequence.push_back(current_token); 
+       next_token();
+    }
+    else{
+        expected_valid_op();
+    }
+    expression_sequence.push_back(current_token);
+    next_token();
+}
+
+bool DBMS::valid_op(){
+    if(current_token == "<" || current_token == ">" || current_token == "="){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void DBMS::expected_valid_op(){
+    std::cout << "Expected valid operation instead got " << current_token << ";";
+    valid_query = false;
+}
+void DBMS::select_setup_and_execute(std::string table_name){
+    if(database_selected()){
+        Database* db = databases[current_database];
+        if(db->table_exists(table_name)){
+            Table* table = db->execute_select(table_name, attributes);
+            if(table != nullptr){
+                table->print_table();
+                delete table;
+            }
+        }
+        else{
+            expected_table_to_exist();
+            return;
+        }
+    }
+    else{
+        no_selected_db();
+        return;
+    }
+}
+
+bool DBMS::is_keyword_where(){
+    if(current_token == "where"){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+void DBMS::expected_keyword_where(){
+    std::cout << "Expected keyword where instead got " << current_token << ";";
+    valid_query = false;
 }
 
 bool DBMS::has_identifier(){
@@ -521,6 +601,7 @@ void DBMS::clean_up_attribs_and_types(){
     attribute_types.clear();
     attributes.clear();
     input_strings.clear();
+    expression_sequence.clear();
 }
 
 bool DBMS::database_selected(){

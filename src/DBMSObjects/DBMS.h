@@ -14,6 +14,7 @@ class DBMS{
         std::vector<std::string> attributes;
         std::vector<std::string> input_strings; 
         std::vector<int> attribute_types;
+        std::vector<std::string> expression_sequence;
         Parser parsed_query;
         std::string current_token;
         std::string current_database;
@@ -49,8 +50,12 @@ class DBMS{
         bool is_keyword_where();
         void expected_keyword_where();
         void expected_attribute_list();
-        void has_expression();
+        bool has_expression();
         void expected_expression();
+        void expression();
+        void select_setup_and_execute(std::string table_name);
+        bool valid_op();
+        void expected_valid_op();
 
         void create_database(std::string input_name);
         void use_database(std::string db_name);
