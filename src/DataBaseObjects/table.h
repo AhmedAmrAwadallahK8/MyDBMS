@@ -25,6 +25,10 @@ class Table{
 
         void insert_record(Record* input_record);
         void insert_record_vector(std::vector<Record*> input_records);
+        void insert_record_vector(std::vector<Record*> input_records, std::vector<std::string> expression_seq);
+        bool greater_than(std::string string_op);
+        bool less_than(std::string string_op);
+        bool equals(std::string string_op);
         void subset_record(Record* input_record, std::vector<std::string> attr_subset);
         void subset_record_vector(std::vector<Record*> input_records, std::vector<std::string> attr_subset);
         void create_and_insert_record(std::vector<std::string> input_strings);

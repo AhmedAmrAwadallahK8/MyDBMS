@@ -140,6 +140,14 @@ Entry* Record::get_head_ptr(){
     return head_ptr;
 }
 
+Entry* Record::get_entry_at_index(int ind){
+    Entry* curr_entry = head_ptr;
+    for(int i = 0; i < ind; i++){
+        curr_entry = head_ptr->get_next_entry_ptr();
+    }
+    return curr_entry;
+}
+
 void Record::test(){
     std::vector<std::string> entries{"2", "2.34", "a", "Hello"};
     std::vector<int> attr{0, 1, 2, 3};

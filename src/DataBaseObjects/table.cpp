@@ -123,6 +123,187 @@ void Table::insert_record_vector(std::vector<Record*> input_records){
     }
 }
 
+void Table::insert_record_vector(std::vector<Record*> input_records, std::vector<std::string> expression_seq){
+    std::string attribute = expression_seq[0];
+    int attribute_ind = attr_to_ind_map[attribute];
+    int attribute_type = attribute_flags[attribute_ind];
+    std::string where_op = expression_seq[1];
+    std::string value = expression_seq[2];
+    bool valid_record = false;
+    for(Record* rec: input_records){
+        valid_record = false;
+        Entry* entry = rec->get_entry_at_index(attribute_ind);
+        if(greater_than(where_op)){
+            if(attribute_type == Entry::INT){
+                int entry_value = entry->get_int();
+                int int_value = std::stoi(value);
+                if(entry_value > int_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+            }
+            else if (attribute_type == Entry::DOUBLE){
+                double entry_value = entry->get_dbl();
+                double dbl_value = std::stod(value);
+                if(entry_value > dbl_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::CHAR){
+                char entry_value = entry->get_char();
+                char char_value = (value).data()[0];
+                if(entry_value > char_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::STRING){
+                std::string entry_value = entry->get_str();
+                std::string str_value = value;
+                if(entry_value > str_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+        }
+        else if(less_than(where_op)){
+            if(attribute_type == Entry::INT){
+                int entry_value = entry->get_int();
+                int int_value = std::stoi(value);
+                if(entry_value < int_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+            }
+            else if (attribute_type == Entry::DOUBLE){
+                double entry_value = entry->get_dbl();
+                double dbl_value = std::stod(value);
+                if(entry_value < dbl_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::CHAR){
+                char entry_value = entry->get_char();
+                char char_value = (value).data()[0];
+                if(entry_value < char_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::STRING){
+                std::string entry_value = entry->get_str();
+                std::string str_value = value;
+                if(entry_value < str_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+
+        }
+        else if(equals(where_op)){
+            if(attribute_type == Entry::INT){
+                int entry_value = entry->get_int();
+                int int_value = std::stoi(value);
+                if(entry_value == int_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+            }
+            else if (attribute_type == Entry::DOUBLE){
+                double entry_value = entry->get_dbl();
+                double dbl_value = std::stod(value);
+                if(entry_value == dbl_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::CHAR){
+                char entry_value = entry->get_char();
+                char char_value = (value).data()[0];
+                if(entry_value == char_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+
+            }
+            else if (attribute_type == Entry::STRING){
+                std::string entry_value = entry->get_str();
+                std::string str_value = value;
+                if(entry_value == str_value){
+                    valid_record = true;
+                }
+                else{
+                    delete rec;
+                }
+            }
+        }
+        if(valid_record){
+            insert_record(rec);
+        }
+    }
+}
+
+bool Table::greater_than(std::string string_op){
+    if(string_op == ">"){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
+bool Table::less_than(std::string string_op){
+    if(string_op == "<"){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
+bool Table::equals(std::string string_op){
+    if(string_op == "="){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
 void Table::subset_record_vector(std::vector<Record*> input_records, std::vector<std::string> attr_subset){
     for(Record* rec: input_records){
         subset_record(rec, attr_subset);

@@ -148,11 +148,12 @@ void DBMS::simple_select_statement(){
         if(database_selected()){
             Database* db = databases[current_database];
             if(db->table_exists(table_name)){
-                Table* table = db->execute_select(table_name, attributes);
+                Table* table = db->execute_select(table_name, attributes, expression_sequence);
                 if(table != nullptr){
                     table->print_table();
                     delete table;
                 }
+                return;
             }
             else{
                 expected_table_to_exist();
@@ -212,14 +213,14 @@ bool DBMS::valid_op(){
 }
 
 void DBMS::expected_valid_op(){
-    std::cout << "Expected valid operation instead got " << current_token << ";";
+    std::cout << "Expected valid operation instead got " << current_token << ";\n";
     valid_query = false;
 }
 void DBMS::select_setup_and_execute(std::string table_name){
     if(database_selected()){
         Database* db = databases[current_database];
         if(db->table_exists(table_name)){
-            Table* table = db->execute_select(table_name, attributes);
+            Table* table = db->execute_select(table_name, attributes, expression_sequence);
             if(table != nullptr){
                 table->print_table();
                 delete table;
@@ -246,7 +247,7 @@ bool DBMS::is_keyword_where(){
 }
 
 void DBMS::expected_keyword_where(){
-    std::cout << "Expected keyword where instead got " << current_token << ";";
+    std::cout << "Expected keyword where instead got " << current_token << ";\n";
     valid_query = false;
 }
 

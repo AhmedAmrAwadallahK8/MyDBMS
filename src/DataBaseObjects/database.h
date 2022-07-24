@@ -29,6 +29,9 @@ class Database{
         bool select_all(std::vector<std::string> selected_attributes);
         void transfer_records(Table* orig_table, Table* new_table);
         void transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset);
+        void transfer_records(Table* orig_table, Table* new_table, std::vector<std::string> expression_seq);
+        void transfer_records_subset(Table* orig_table, Table* new_table, std::vector<std::string> attr_subset, std::vector<std::string> expression_seq);
+        std::vector<Record*> subset_copy(std::vector<std::string> expression_seq);
         std::vector<Record*> get_copy_of_all_records(std::vector<Record*> records);
 
         bool table_exists(std::string table_name);

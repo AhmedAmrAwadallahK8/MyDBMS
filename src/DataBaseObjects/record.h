@@ -24,6 +24,7 @@ class Record{
         Entry* add_new_entry(int entry_type, std::string data);
         void add_new_entry(Entry* entry);
         Entry* get_head_ptr();
+        Entry* get_entry_at_index(int ind);
 
         void print_record();
 
