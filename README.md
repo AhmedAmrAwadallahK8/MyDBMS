@@ -1,1 +1,17 @@
 ## My Simple SQLlike Database
+- This is my term project for DS 7330
+- Final Iteration of the Project was completed on 7/25/2022
+- DBMS Functions
+    - Select Statement
+        - Only supports select attributeList from table where;
+        - Select *
+        - Select attr1, attr2, etc
+        - Where
+            - Only supports =, <, > 
+    - Create Statement
+        - Create table or database
+    - Drop Statement
+        - Drop table or database 
+    - Use Statement 
+    - Show Statement
+        - Show tables or databases 
