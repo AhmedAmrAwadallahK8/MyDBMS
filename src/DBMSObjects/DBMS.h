@@ -70,6 +70,7 @@ class DBMS{
 
         void string_constant_list();
         void get_input_string();
+        std::string string_constant();
         void parameter_list();
         void parameter_pair();
         void add_attribute(std::string attribute_name);

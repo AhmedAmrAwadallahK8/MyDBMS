@@ -16,6 +16,7 @@ class Parser{
         std::string get_token();
         std::string look_ahead(int n_tokens);
         void print_token_vec();
+        bool token_is_ahead(std::string input_token);
 };
 
 #endif 

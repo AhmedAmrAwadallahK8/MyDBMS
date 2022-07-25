@@ -34,12 +34,29 @@ void Parser::print_token_vec(){
 }
 
 std::string Parser::look_ahead(int n_tokens){
+    n_tokens--;
+    if(n_tokens < 0){
+        return "";
+    }
     std::string future_token = "";
-    for(int i = 0; i < n_tokens; i++){
+    for(int i = 0; i <= n_tokens; i++){
         if(*(token_iter+i) == "END TOKEN"){
             return "END TOKEN";
         }
     } 
     future_token = *(token_iter+n_tokens);
     return future_token;
+}
+
+bool Parser::token_is_ahead(std::string input_token){
+    int i = 1;
+    std::string future_token = "";
+    while(future_token != "END TOKEN"){
+        future_token = look_ahead(i);
+        if(future_token == input_token){
+            return true;
+        }
+        i++;
+    } 
+    return false;
 }

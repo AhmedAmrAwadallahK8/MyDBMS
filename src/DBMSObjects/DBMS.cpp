@@ -394,13 +394,49 @@ void DBMS::string_constant_list(){
 }
 
 void DBMS::get_input_string(){
-    current_token = parsed_query.get_token();
+    std::string input;
+    next_token();
     if(current_token == ")"){
         std::cout << "Expected input value but instead got empty set\n";
         query_failure();
     }
-    add_string_input(current_token);
-    current_token = parsed_query.get_token();
+    if(current_token == "\""){
+        if(parsed_query.token_is_ahead("\"")){
+            input = string_constant();
+        }
+        else{
+            std::cout << "Expected string to close but never encountered a close quotation mark.\n";
+            query_failure();
+        }
+    }
+    else if(parsed_query.look_ahead(1) == "."){
+        std::string unit = current_token;
+        next_token();
+        std::string decimal = current_token; 
+        next_token();
+        std::string incomplete_unit = current_token;
+        next_token();
+        input = unit + decimal + incomplete_unit;
+    }
+    else{
+        input = current_token;
+        next_token();
+    }
+    add_string_input(input);
+}
+
+std::string DBMS::string_constant(){
+    std::string str;
+    next_token();
+    while(current_token != "\""){
+        str += current_token;
+        next_token();
+        if(current_token != "\""){
+            str += " ";
+        }
+    }
+    next_token();
+    return str;
 }
 
 void DBMS::add_string_input(std::string input){
