@@ -18,5 +18,6 @@
     - ~~Bug: If user inputs the same attribute multiple times there is undefined behavior~~
     - ~~where clause~~
 - Fix table insertion
-    - Strings aren't inserted in the correct way
-    - Currently can't handle doubles
+    - ~~Strings aren't inserted in the correct way~~
+    - ~~Currently can't handle doubles~~
+    - Catch situations where user inputs an integer when db expects string
