@@ -1,13 +1,13 @@
 # Variables to control Makefile operation
  
 CC = g++
-CFLAGS = -Wall -g3
+CFLAGS = -Wall -g3 -static
  
 # ****************************************************
 # Targets needed to bring the executable up to date
  
 main: main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o lexer.o parser.o test_parser.o dbms.o
-	$(CC) $(CFLAGS) -o main main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o lexer.o parser.o test_parser.o dbms.o
+	$(CC) $(CFLAGS) -o mydbms main.o entry.o record.o test_b_plus_tree.o table.o test_table.o database.o test_database.o lexer.o parser.o test_parser.o dbms.o
 # node_block.o b_plus_tree.o test_b_plus_tree.o
 # The main.o target can be written more simply
  
