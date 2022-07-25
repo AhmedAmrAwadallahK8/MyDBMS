@@ -4,6 +4,8 @@
 #include <chrono>
 #include <thread>
 #include <iostream>
+#include <windows.h>
+#include <excpt.h>
 
 #include "..\DataBaseObjects\database.h"
 #include "..\DataBaseObjects\entry.h"
@@ -30,7 +32,7 @@ void DBMS::engine(){
         valid_query = true;
         execute_query(query);
     }
-    std::cout << "Thank you for using my DBMS1\n";
+    std::cout << "Thank you for using my DBMS\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     system("cls");
 }
@@ -373,11 +375,11 @@ void DBMS::insert_into_table(std::string table_name){
     if(end_of_query()){
         if(database_selected()){
            Database* db = databases[current_database]; 
-            __try{
+            try {
                 db->insert_into_table_if_exists(table_name, input_strings);
             }
-            __except(filterException(GetExceptionCode(), GetExceptionInformation())) {
-                std::cout << "caught" << std::endl;
+            catch(std::exception& e) {
+                std::cerr << "User entered the wrong type for one of the attributes of this table, aborting insertion." << std::endl;
             }
            clean_up_attribs_and_types();
         }

@@ -26,7 +26,6 @@
 
 
 int main(){
-    
     //Entry::test();
     //Record::test();
     //Node<int>::test();
@@ -37,14 +36,4 @@ int main(){
     //Test_Parser::test();
     DBMS d;
     d.engine();
-
-
-
-
-
-
-
-
-
-    std::cout << "Program Execution Complete6";
 }
